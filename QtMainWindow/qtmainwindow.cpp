@@ -13,16 +13,6 @@ QtMainWindow::QtMainWindow(QWidget *parent)
 
 void QtMainWindow::on_action_New_triggered()
 {
-    auto& objs = centralWidget()->children();
-    for (auto& o : objs) {
-        auto q = o->objectName();
-        if (q == "graphicsView")
-        {
-            QGraphicsView* v = (QGraphicsView * ) o;
-            auto n = v->items().count();
-        }
-    }
-    return;
 }
 
 void QtMainWindow::on_action_Open_triggered()
@@ -69,6 +59,6 @@ void QtMainWindow::on_action_Picture_triggered()
     auto* qpizza = scene.addPixmap(QPixmap::fromImage(qim));
     qpizza->setFlag(QGraphicsItem::ItemIsMovable);
     qpizza->setFlag(QGraphicsItem::ItemIsSelectable);
-
+    qpizza->setScale(0.25);
     return;
 }

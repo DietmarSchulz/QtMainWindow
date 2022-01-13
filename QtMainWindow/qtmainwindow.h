@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_qtmainwindow.h"
+#include "MyGraphicsView.h"
 
 class QtMainWindow : public QMainWindow
 {
