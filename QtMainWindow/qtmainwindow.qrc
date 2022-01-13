@@ -8,5 +8,7 @@
         <file>images/save.png</file>
         <file>images/ico_draw_rect.png</file>
         <file>images/canvas.png</file>
+        <file>images/ico_layer_add.png</file>
+        <file>images/ico_layer_erase.png</file>
     </qresource>
 </RCC>

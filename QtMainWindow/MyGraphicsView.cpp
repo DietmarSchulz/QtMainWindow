@@ -30,3 +30,8 @@ void MyGraphicsView::mouseReleaseEvent(QMouseEvent* event)
 {
 	QGraphicsView::mouseReleaseEvent(event);
 }
+
+void wheelEvent(QWheelEvent* event)
+{
+	QGraphicsView::wheelEvent(event);
+}

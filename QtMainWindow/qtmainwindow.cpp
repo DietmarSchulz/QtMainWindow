@@ -62,3 +62,13 @@ void QtMainWindow::on_action_Picture_triggered()
     qpizza->setScale(0.25);
     return;
 }
+
+void QtMainWindow::on_actionZoomIn_triggered()
+{
+    ui.graphicsView->zoomIn();
+}
+
+void QtMainWindow::on_actionZoomOut_triggered()
+{
+    ui.graphicsView->zoomOut();
+}

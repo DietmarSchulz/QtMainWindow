@@ -25,4 +25,7 @@ private slots:
 
     void on_action_Rect_triggered();
     void on_action_Picture_triggered();
+
+    void on_actionZoomIn_triggered();
+    void on_actionZoomOut_triggered();
 };
