@@ -4,8 +4,14 @@
 
 class MyGraphicsView : public QGraphicsView
 {
+Q_OBJECT
 public:
     MyGraphicsView(QWidget* parent) : QGraphicsView(parent) {};
+public slots:
+    void zoomIn() { scale(1.2, 1.2); }
+    void zoomOut() { scale(1 / 1.2, 1 / 1.2); }
+    void rotateLeft() { rotate(-10); }
+    void rotateRight() { rotate(10); }
 protected:
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
