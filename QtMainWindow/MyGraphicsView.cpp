@@ -1,5 +1,4 @@
 #include "MyGraphicsView.h"
-#include <qt5/QtCore/qdebug.h>
 
 void MyGraphicsView::keyPressEvent(QKeyEvent* event)
 {
@@ -18,6 +17,9 @@ void MyGraphicsView::mouseDoubleClickEvent(QMouseEvent* event)
 
 void MyGraphicsView::mousePressEvent(QMouseEvent* event)
 {
+    if (event->button() == Qt::MouseButton::RightButton) {
+        contextMenu.exec(event->globalPos());
+    }
 	QGraphicsView::mousePressEvent(event);
 }
 

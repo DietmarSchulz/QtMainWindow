@@ -9,6 +9,8 @@ QtMainWindow::QtMainWindow(QWidget *parent)
 {
     ui.setupUi(this);
     ui.graphicsView->setScene(&scene);
+    ui.graphicsView->contextMenu.addAction(ui.action_Rect);
+    ui.graphicsView->contextMenu.addAction(ui.action_Picture);
 }
 
 void QtMainWindow::on_action_New_triggered()

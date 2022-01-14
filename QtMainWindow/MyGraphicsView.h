@@ -2,12 +2,14 @@
 #include <QtWidgets/QMainWindow>
 #include <qt5/QtWidgets/qgraphicsview.h>
 #include <qt5/QtGui/QWheelEvent>
+#include <qt5/QtWidgets/qmenu.h>
 
 class MyGraphicsView : public QGraphicsView
 {
 Q_OBJECT
 public:
-    MyGraphicsView(QWidget* parent) : QGraphicsView(parent) {};
+    QMenu contextMenu;
+    MyGraphicsView(QWidget* parent) : QGraphicsView(parent), contextMenu(this) {};
 public slots:
     void zoomIn() { scale(1.2, 1.2); }
     void zoomOut() { scale(1 / 1.2, 1 / 1.2); }
