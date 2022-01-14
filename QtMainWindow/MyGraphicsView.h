@@ -1,6 +1,7 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
 #include <qt5/QtWidgets/qgraphicsview.h>
+#include <qt5/QtGui/QWheelEvent>
 
 class MyGraphicsView : public QGraphicsView
 {
@@ -19,6 +20,6 @@ protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
-    //void wheelEvent(QWheelEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
 };
 
