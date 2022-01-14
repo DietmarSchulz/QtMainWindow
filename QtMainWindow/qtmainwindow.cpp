@@ -1,4 +1,5 @@
 #include <opencv2/opencv.hpp>
+#include <filesystem>
 
 #include "qtmainwindow.h"
 #include "stdafx.h"
@@ -58,12 +59,17 @@ void QtMainWindow::on_action_Rect_triggered()
 
 void QtMainWindow::on_action_Picture_triggered()
 {
-    cv::Mat pizza = cv::imread(R"(D:\sorted_pics\2021\8\23\20210823_194050.jpg)");
-    QImage qim = OpenCVWrapper::Mat2QImage(pizza);
-    auto* qpizza = scene.addPixmap(QPixmap::fromImage(qim));
-    qpizza->setFlag(QGraphicsItem::ItemIsMovable);
-    qpizza->setFlag(QGraphicsItem::ItemIsSelectable);
-    qpizza->setScale(0.25);
+    QString filename = QFileDialog::getOpenFileName(this, "Hole Bild", currdir, "All picture Files (*.jpg *.jpeg *.png *.tiff *.bmp)");
+    if (filename.isEmpty())
+        return;
+    std::filesystem::path p = filename.toStdString();
+    currdir = QString::fromStdString(p.parent_path().string());
+    cv::Mat picture = cv::imread(p.generic_string());
+    QImage qim = OpenCVWrapper::Mat2QImage(picture);
+    auto* qimage = scene.addPixmap(QPixmap::fromImage(qim));
+    qimage->setFlag(QGraphicsItem::ItemIsMovable);
+    qimage->setFlag(QGraphicsItem::ItemIsSelectable);
+    qimage->setScale(0.25);
     return;
 }
 

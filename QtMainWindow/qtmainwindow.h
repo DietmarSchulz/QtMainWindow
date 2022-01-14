@@ -14,6 +14,7 @@ public:
 private:
     Ui::QtMainWindowClass ui;
     QGraphicsScene scene;
+    QString currdir{ "D:/sorted_pics" };
 private slots:
     void on_action_New_triggered();
     void on_action_Open_triggered();

@@ -63,8 +63,10 @@
     <ClInclude Include="OpenCVWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyGraphicsView.h">
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="MyGraphicsView.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </QtMoc>
   </ItemGroup>
 </Project>
