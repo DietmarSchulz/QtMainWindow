@@ -1,3 +1,4 @@
+#include <qt5/QtWidgets/qgraphicsitem.h>
 #include "MyGraphicsView.h"
 
 void MyGraphicsView::keyPressEvent(QKeyEvent* event)
@@ -18,7 +19,13 @@ void MyGraphicsView::mouseDoubleClickEvent(QMouseEvent* event)
 void MyGraphicsView::mousePressEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::MouseButton::RightButton) {
-        contextMenu.exec(event->globalPos());
+        QGraphicsItem* item = scene()->itemAt(event->pos(), QTransform());
+        if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
+            pictureContextMenu.exec(event->globalPos());
+        }
+        else {
+            contextMenu.exec(event->globalPos());
+        }
     }
 	QGraphicsView::mousePressEvent(event);
 }

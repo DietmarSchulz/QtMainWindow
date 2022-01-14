@@ -9,7 +9,8 @@ class MyGraphicsView : public QGraphicsView
 Q_OBJECT
 public:
     QMenu contextMenu;
-    MyGraphicsView(QWidget* parent) : QGraphicsView(parent), contextMenu(this) {};
+    QMenu pictureContextMenu;
+    MyGraphicsView(QWidget* parent) : QGraphicsView(parent), contextMenu(this), pictureContextMenu(this) {};
 public slots:
     void zoomIn() { scale(1.2, 1.2); }
     void zoomOut() { scale(1 / 1.2, 1 / 1.2); }

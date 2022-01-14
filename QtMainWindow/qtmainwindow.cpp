@@ -11,6 +11,8 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.graphicsView->setScene(&scene);
     ui.graphicsView->contextMenu.addAction(ui.action_Rect);
     ui.graphicsView->contextMenu.addAction(ui.action_Picture);
+
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_Brightnesss);
 }
 
 void QtMainWindow::on_action_New_triggered()

@@ -17,6 +17,9 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="MyGraphicsView" name="graphicsView">
+      <property name="contextMenuPolicy">
+       <enum>Qt::ActionsContextMenu</enum>
+      </property>
       <property name="statusTip">
        <string>Graphics view</string>
       </property>
@@ -84,10 +87,23 @@
     <addaction name="actionZoomIn"/>
     <addaction name="actionZoomOut"/>
    </widget>
+   <widget class="QMenu" name="menuAusf_hren">
+    <property name="title">
+     <string>Ausführen</string>
+    </property>
+    <widget class="QMenu" name="menuBild">
+     <property name="title">
+      <string>Bild</string>
+     </property>
+     <addaction name="action_Brightnesss"/>
+    </widget>
+    <addaction name="menuBild"/>
+   </widget>
    <addaction name="menuDatei"/>
    <addaction name="menuEdit"/>
    <addaction name="menuEinf_gen"/>
    <addaction name="menuZoom"/>
+   <addaction name="menuAusf_hren"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -140,6 +156,18 @@
    </attribute>
    <addaction name="actionZoomIn"/>
    <addaction name="actionZoomOut"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar_2">
+   <property name="windowTitle">
+    <string>toolBar_2</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_Brightnesss"/>
   </widget>
   <action name="action_New">
    <property name="icon">
@@ -271,6 +299,18 @@
    </property>
    <property name="statusTip">
     <string>Verkleinern der Ansicht</string>
+   </property>
+  </action>
+  <action name="action_Brightnesss">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/ico_select_fill.png</normaloff>:/QtMainWindow/images/ico_select_fill.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Helligkeit</string>
+   </property>
+   <property name="statusTip">
+    <string>Helligkeit des selektiertem Bildes</string>
    </property>
   </action>
  </widget>
