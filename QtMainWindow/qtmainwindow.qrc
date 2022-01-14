@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="/QtMainWindow">
+    <file>images/undo.png</file>
+    <file>images/redo.png</file>
+    <file>images/remove.png</file>
+    <file>images/ok.png</file>
     <file>images/ico_select_fill.png</file>
     <file>images/copy.png</file>
     <file>images/cut.png</file>
