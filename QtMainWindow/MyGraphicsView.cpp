@@ -33,5 +33,28 @@ void MyGraphicsView::mouseReleaseEvent(QMouseEvent* event)
 
 void MyGraphicsView::wheelEvent(QWheelEvent* event)
 {
-	QGraphicsView::wheelEvent(event);
+    if (event->modifiers() & Qt::ShiftModifier)
+    {
+        // Rotate
+        if (event->delta() > 0) {
+            rotateLeft();
+        }
+        else {
+            rotateRight();
+        }
+    }
+    else if (event->modifiers() & Qt::ControlModifier)
+    {
+        // Zoom
+        if (event->delta() > 0) {
+            zoomIn();
+        }
+        else {
+            zoomOut();
+        }
+    }
+    else
+    {
+        QGraphicsView::wheelEvent(event);
+    }
 }
