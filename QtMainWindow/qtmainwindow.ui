@@ -124,6 +124,7 @@
    <addaction name="action_Paste"/>
    <addaction name="action_Undo"/>
    <addaction name="action_Redo"/>
+   <addaction name="action_Delete"/>
    <addaction name="action_Rect"/>
    <addaction name="action_Picture"/>
   </widget>

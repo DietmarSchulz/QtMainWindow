@@ -25,7 +25,7 @@ bool MoveCommand::mergeWith(const QUndoCommand* command)
         return false;
 
     newPos = item->pos();
-    setText(QObject::tr("Move %1")
+    setText(QObject::tr("Bewege %1")
         .arg(createCommandString(myItem, newPos)));
 
     return true;

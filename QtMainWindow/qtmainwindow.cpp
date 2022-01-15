@@ -70,6 +70,11 @@ void QtMainWindow::on_action_Rect_triggered()
     text->setFlag(QGraphicsItem::ItemIsSelectable);
     rect->setFlag(QGraphicsItem::ItemIsSelectable);
     rectangle->setFlag(QGraphicsItem::ItemIsSelectable);
+
+    connect(ui.menuEdit, &QMenu::aboutToShow,
+        this, &QtMainWindow::itemMenuAboutToShow);
+    connect(ui.menuEdit, &QMenu::aboutToHide,
+        this, &QtMainWindow::itemMenuAboutToHide);
 }
 
 void QtMainWindow::on_action_Picture_triggered()
@@ -115,4 +120,14 @@ void QtMainWindow::on_action_Delete_triggered()
 
     QUndoCommand* deleteCommand = new DeleteCommand(&scene);
     undoStack.push(deleteCommand);
+}
+
+void QtMainWindow::itemMenuAboutToShow()
+{
+    ui.action_Delete->setEnabled(!scene.selectedItems().isEmpty());
+}
+
+void QtMainWindow::itemMenuAboutToHide()
+{
+    ui.action_Delete->setEnabled(true);
 }
