@@ -22,3 +22,15 @@ private:
     QPointF newPos;
 };
 
+class DeleteCommand : public QUndoCommand
+{
+public:
+    explicit DeleteCommand(QGraphicsScene* graphicsScene, QUndoCommand* parent = nullptr);
+
+    void undo() override;
+    void redo() override;
+
+private:
+    QGraphicsItem* myItem;
+    QGraphicsScene* myGraphicsScene;
+};

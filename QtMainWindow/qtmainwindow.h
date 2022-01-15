@@ -40,4 +40,6 @@ private slots:
  
     void on_action_Undo_triggered();
     void on_action_Redo_triggered();
+
+    void on_action_Delete_triggered();
 };

@@ -67,6 +67,9 @@ void QtMainWindow::on_action_Rect_triggered()
     text->setFlag(QGraphicsItem::ItemIsMovable);
     rect->setFlag(QGraphicsItem::ItemIsMovable);
     rectangle->setFlag(QGraphicsItem::ItemIsMovable);
+    text->setFlag(QGraphicsItem::ItemIsSelectable);
+    rect->setFlag(QGraphicsItem::ItemIsSelectable);
+    rectangle->setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 void QtMainWindow::on_action_Picture_triggered()
@@ -103,4 +106,13 @@ void QtMainWindow::on_action_Undo_triggered()
 void QtMainWindow::on_action_Redo_triggered()
 {
     undoStack.redo();
+}
+
+void QtMainWindow::on_action_Delete_triggered()
+{
+    if (scene.selectedItems().isEmpty())
+        return;
+
+    QUndoCommand* deleteCommand = new DeleteCommand(&scene);
+    undoStack.push(deleteCommand);
 }

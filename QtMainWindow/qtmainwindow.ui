@@ -74,6 +74,8 @@
     <addaction name="action_Paste"/>
     <addaction name="action_Undo"/>
     <addaction name="action_Redo"/>
+    <addaction name="separator"/>
+    <addaction name="action_Delete"/>
    </widget>
    <widget class="QMenu" name="menuEinf_gen">
     <property name="title">
@@ -354,6 +356,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="action_Delete">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/remove.png</normaloff>:/QtMainWindow/images/remove.png</iconset>
+   </property>
+   <property name="text">
+    <string>Löschen</string>
+   </property>
+   <property name="statusTip">
+    <string>Selektiertes Objekt löschen</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
    </property>
   </action>
  </widget>
