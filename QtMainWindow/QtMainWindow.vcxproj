@@ -108,13 +108,17 @@
     <QtRcc Include="qtmainwindow.qrc" />
     <QtUic Include="qtmainwindow.ui" />
     <QtMoc Include="qtmainwindow.h" />
+    <ClCompile Include="Commands.cpp" />
     <ClCompile Include="MyGraphicsView.cpp" />
+    <ClCompile Include="MyScene.cpp" />
     <ClCompile Include="OpenCVWrapper.cpp" />
     <ClCompile Include="qtmainwindow.cpp" />
     <ClCompile Include="main.cpp" />
     <None Include="QtMainWindow.ico" />
     <ResourceCompile Include="QtMainWindow.rc" />
     <QtMoc Include="MyGraphicsView.h" />
+    <QtMoc Include="MyScene.h" />
+    <ClInclude Include="Commands.h" />
     <ClInclude Include="OpenCVWrapper.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">

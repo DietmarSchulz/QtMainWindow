@@ -4,9 +4,10 @@
 #include "qtmainwindow.h"
 #include "stdafx.h"
 #include "OpenCVWrapper.h"
+#include "Commands.h"
 
 QtMainWindow::QtMainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent), undoStack(this), undoView(&undoStack), scene(this)
 {
     ui.setupUi(this);
     ui.graphicsView->setScene(&scene);
@@ -14,10 +15,21 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.graphicsView->contextMenu.addAction(ui.action_Picture);
 
     ui.graphicsView->pictureContextMenu.addAction(ui.action_Brightnesss);
+    undoView.setWindowTitle(tr("Kommando Liste"));
+    undoView.show();
+    undoView.setAttribute(Qt::WA_QuitOnClose, false);
+
+    connect(&scene, &MyScene::itemMoved,
+        this, &QtMainWindow::itemMoved);
 }
 
 void QtMainWindow::on_action_New_triggered()
 {
+}
+
+void QtMainWindow::itemMoved(QGraphicsItem* movedItem, const QPointF& moveStartPosition)
+{
+    undoStack.push(new MoveCommand(movedItem, moveStartPosition));
 }
 
 void QtMainWindow::on_action_Open_triggered()
@@ -73,12 +85,22 @@ void QtMainWindow::on_action_Picture_triggered()
     return;
 }
 
-void QtMainWindow::on_actionZoomIn_triggered()
+void QtMainWindow::on_action_ZoomIn_triggered()
 {
     ui.graphicsView->zoomIn();
 }
 
-void QtMainWindow::on_actionZoomOut_triggered()
+void QtMainWindow::on_action_ZoomOut_triggered()
 {
     ui.graphicsView->zoomOut();
+}
+
+void QtMainWindow::on_action_Undo_triggered()
+{
+    undoStack.undo();
+}
+
+void QtMainWindow::on_action_Redo_triggered()
+{
+    undoStack.redo();
 }

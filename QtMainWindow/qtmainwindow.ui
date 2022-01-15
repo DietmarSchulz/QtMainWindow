@@ -72,6 +72,8 @@
     <addaction name="action_Copy"/>
     <addaction name="action_Cut"/>
     <addaction name="action_Paste"/>
+    <addaction name="action_Undo"/>
+    <addaction name="action_Redo"/>
    </widget>
    <widget class="QMenu" name="menuEinf_gen">
     <property name="title">
@@ -84,8 +86,8 @@
     <property name="title">
      <string>Zoom</string>
     </property>
-    <addaction name="actionZoomIn"/>
-    <addaction name="actionZoomOut"/>
+    <addaction name="action_ZoomIn"/>
+    <addaction name="action_ZoomOut"/>
    </widget>
    <widget class="QMenu" name="menuAusf_hren">
     <property name="title">
@@ -118,6 +120,8 @@
    <addaction name="action_Copy"/>
    <addaction name="action_Cut"/>
    <addaction name="action_Paste"/>
+   <addaction name="action_Undo"/>
+   <addaction name="action_Redo"/>
    <addaction name="action_Rect"/>
    <addaction name="action_Picture"/>
   </widget>
@@ -154,8 +158,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionZoomIn"/>
-   <addaction name="actionZoomOut"/>
+   <addaction name="action_ZoomIn"/>
+   <addaction name="action_ZoomOut"/>
   </widget>
   <widget class="QToolBar" name="toolBar_2">
    <property name="windowTitle">
@@ -216,6 +220,9 @@
    <property name="statusTip">
     <string>Kopieren</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
   </action>
   <action name="action_Save">
    <property name="icon">
@@ -228,6 +235,9 @@
    <property name="statusTip">
     <string>In Dokument speichern</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="action_Cut">
    <property name="icon">
@@ -239,6 +249,9 @@
    </property>
    <property name="statusTip">
     <string>Auschneiden und Kopieren</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
    </property>
   </action>
   <action name="action_Paste">
@@ -277,7 +290,7 @@
     <string>&amp;Bild</string>
    </property>
   </action>
-  <action name="actionZoomIn">
+  <action name="action_ZoomIn">
    <property name="icon">
     <iconset resource="qtmainwindow.qrc">
      <normaloff>:/QtMainWindow/images/ico_layer_add.png</normaloff>:/QtMainWindow/images/ico_layer_add.png</iconset>
@@ -289,7 +302,7 @@
     <string>Vergrößern der Ansicht</string>
    </property>
   </action>
-  <action name="actionZoomOut">
+  <action name="action_ZoomOut">
    <property name="icon">
     <iconset resource="qtmainwindow.qrc">
      <normaloff>:/QtMainWindow/images/ico_layer_erase.png</normaloff>:/QtMainWindow/images/ico_layer_erase.png</iconset>
@@ -311,6 +324,36 @@
    </property>
    <property name="statusTip">
     <string>Helligkeit des selektiertem Bildes</string>
+   </property>
+  </action>
+  <action name="action_Undo">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/undo.png</normaloff>:/QtMainWindow/images/undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Rückgängig</string>
+   </property>
+   <property name="statusTip">
+    <string>Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Backspace</string>
+   </property>
+  </action>
+  <action name="action_Redo">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/redo.png</normaloff>:/QtMainWindow/images/redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Wiederholen</string>
+   </property>
+   <property name="statusTip">
+    <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
    </property>
   </action>
  </widget>

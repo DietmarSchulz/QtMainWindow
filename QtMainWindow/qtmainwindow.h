@@ -3,6 +3,9 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_qtmainwindow.h"
 #include "MyGraphicsView.h"
+#include "MyScene.h"
+#include <QUndoStack>
+#include <QUndoView>
 
 class QtMainWindow : public QMainWindow
 {
@@ -13,8 +16,13 @@ public:
 
 private:
     Ui::QtMainWindowClass ui;
-    QGraphicsScene scene;
+    MyScene scene;
     QString currdir{ "D:/sorted_pics" };
+
+    QUndoStack undoStack;
+    QUndoView undoView;
+public slots:
+    void itemMoved(QGraphicsItem* movedDiagram, const QPointF& moveStartPosition); 
 private slots:
     void on_action_New_triggered();
     void on_action_Open_triggered();
@@ -27,6 +35,9 @@ private slots:
     void on_action_Rect_triggered();
     void on_action_Picture_triggered();
 
-    void on_actionZoomIn_triggered();
-    void on_actionZoomOut_triggered();
+    void on_action_ZoomIn_triggered();
+    void on_action_ZoomOut_triggered();
+ 
+    void on_action_Undo_triggered();
+    void on_action_Redo_triggered();
 };
