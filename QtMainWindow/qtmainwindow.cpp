@@ -21,6 +21,11 @@ QtMainWindow::QtMainWindow(QWidget *parent)
 
     connect(&scene, &MyScene::itemMoved,
         this, &QtMainWindow::itemMoved);
+
+    connect(ui.menuEdit, &QMenu::aboutToShow,
+        this, &QtMainWindow::itemMenuAboutToShow);
+    connect(ui.menuEdit, &QMenu::aboutToHide,
+        this, &QtMainWindow::itemMenuAboutToHide);
 }
 
 void QtMainWindow::on_action_New_triggered()
@@ -60,21 +65,25 @@ void QtMainWindow::on_action_Rect_triggered()
     QPen outlinePen(Qt::black);
     outlinePen.setWidth(2);
 
-    QGraphicsRectItem* rectangle = scene.addRect(100, 0, 80, 100, outlinePen, blueBrush);
-    QGraphicsRectItem* rect = scene.addRect(QRectF(0, 0, 100, 100), outlinePen);
-    QGraphicsTextItem* text = scene.addText("bogotobogo.com", QFont("Arial", 20));
-    // movable text
-    text->setFlag(QGraphicsItem::ItemIsMovable);
-    rect->setFlag(QGraphicsItem::ItemIsMovable);
+    QGraphicsRectItem* rectangle = new QGraphicsRectItem(100, 0, 80, 100);
+    rectangle->setBrush(greenBrush);
+    rectangle->setPen(outlinePen);
     rectangle->setFlag(QGraphicsItem::ItemIsMovable);
-    text->setFlag(QGraphicsItem::ItemIsSelectable);
-    rect->setFlag(QGraphicsItem::ItemIsSelectable);
     rectangle->setFlag(QGraphicsItem::ItemIsSelectable);
+    undoStack.push(new AddBoxCommand(rectangle, &scene));
 
-    connect(ui.menuEdit, &QMenu::aboutToShow,
-        this, &QtMainWindow::itemMenuAboutToShow);
-    connect(ui.menuEdit, &QMenu::aboutToHide,
-        this, &QtMainWindow::itemMenuAboutToHide);
+    QGraphicsRectItem* rect = new QGraphicsRectItem(0, 0, 100, 100);
+    rect->setBrush(blueBrush);
+    rect->setPen(outlinePen);
+    rect->setFlag(QGraphicsItem::ItemIsMovable);
+    rect->setFlag(QGraphicsItem::ItemIsSelectable);
+    undoStack.push(new AddBoxCommand(rect, &scene));
+
+    QGraphicsTextItem* text = new QGraphicsTextItem("bogotobogo.com");
+    text->setFont(QFont("Arial", 20));
+    text->setFlag(QGraphicsItem::ItemIsMovable);
+    text->setFlag(QGraphicsItem::ItemIsSelectable);
+    undoStack.push(new AddBoxCommand(text, &scene));
 }
 
 void QtMainWindow::on_action_Picture_triggered()

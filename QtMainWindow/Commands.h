@@ -34,3 +34,28 @@ private:
     QGraphicsItem* myItem;
     QGraphicsScene* myGraphicsScene;
 };
+
+class AddCommand : public QUndoCommand
+{
+protected:
+    AddCommand(QGraphicsScene* graphicsScene,
+        QUndoCommand* parent = nullptr);
+public:
+    ~AddCommand();
+
+    void undo() override;
+    void redo() override;
+
+protected:
+    inline static int itemCount{0};
+    QGraphicsItem* myItem;
+    QGraphicsScene* myGraphicsScene;
+    QPointF initialPosition;
+};
+
+class AddBoxCommand : public AddCommand
+{
+public:
+    AddBoxCommand(QGraphicsItem* box, QGraphicsScene* graphicsScene,
+        QUndoCommand* parent = nullptr);
+};

@@ -3,7 +3,9 @@
 
 MyScene::MyScene(QObject* parent)
     : QGraphicsScene(parent)
-{}
+{
+    setSceneRect(0, 0, 200, 200);
+}
 
 void MyScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {

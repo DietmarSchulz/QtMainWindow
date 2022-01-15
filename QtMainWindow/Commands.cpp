@@ -66,3 +66,39 @@ void DeleteCommand::redo()
 {
     myGraphicsScene->removeItem(myItem);
 }
+
+AddCommand::AddCommand(QGraphicsScene* scene, QUndoCommand* parent)
+    : QUndoCommand(parent), myGraphicsScene(scene)
+{
+}
+
+AddCommand::~AddCommand()
+{
+    if (!myItem->scene())
+        delete myItem;
+}
+
+void AddCommand::undo()
+{
+    myGraphicsScene->removeItem(myItem);
+    myGraphicsScene->update();
+}
+
+void AddCommand::redo()
+{
+    myGraphicsScene->addItem(myItem);
+    myItem->setPos(initialPosition);
+    myGraphicsScene->clearSelection();
+    myGraphicsScene->update();
+}
+
+AddBoxCommand::AddBoxCommand(QGraphicsItem* box, QGraphicsScene* graphicsScene, QUndoCommand* parent) : AddCommand(graphicsScene, parent)
+{
+    myItem = box;
+    setText(QObject::tr("Add %1")
+        .arg(createCommandString(myItem, initialPosition)));
+    initialPosition = QPointF((itemCount * 15) % int(graphicsScene->width()),
+        (itemCount * 15) % int(graphicsScene->height()));
+    ++itemCount;
+    myGraphicsScene->update();
+}
