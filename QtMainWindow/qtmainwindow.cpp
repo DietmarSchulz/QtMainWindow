@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "OpenCVWrapper.h"
 #include "Commands.h"
+#include "MyPicture.h"
 
 QtMainWindow::QtMainWindow(QWidget *parent)
     : QMainWindow(parent), undoStack(this), undoView(&undoStack), scene(this)
@@ -93,13 +94,7 @@ void QtMainWindow::on_action_Picture_triggered()
         return;
     std::filesystem::path p = filename.toStdString();
     currdir = QString::fromStdString(p.parent_path().string());
-    cv::Mat picture = cv::imread(p.generic_string());
-    QImage qim = OpenCVWrapper::Mat2QImage(picture);
-    auto* qimage = scene.addPixmap(QPixmap::fromImage(qim));
-    qimage->setFlag(QGraphicsItem::ItemIsMovable);
-    qimage->setFlag(QGraphicsItem::ItemIsSelectable);
-    qimage->setScale(0.25);
-    return;
+    undoStack.push(new AddPictureCommand(p.generic_string(), &scene));
 }
 
 void QtMainWindow::on_action_ZoomIn_triggered()

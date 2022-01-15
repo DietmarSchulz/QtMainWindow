@@ -110,6 +110,7 @@
     <QtMoc Include="qtmainwindow.h" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="MyGraphicsView.cpp" />
+    <ClCompile Include="MyPicture.cpp" />
     <ClCompile Include="MyScene.cpp" />
     <ClCompile Include="OpenCVWrapper.cpp" />
     <ClCompile Include="qtmainwindow.cpp" />
@@ -119,6 +120,7 @@
     <QtMoc Include="MyGraphicsView.h" />
     <QtMoc Include="MyScene.h" />
     <ClInclude Include="Commands.h" />
+    <ClInclude Include="MyPicture.h" />
     <ClInclude Include="OpenCVWrapper.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">

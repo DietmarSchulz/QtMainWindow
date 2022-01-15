@@ -59,3 +59,10 @@ public:
     AddBoxCommand(QGraphicsItem* box, QGraphicsScene* graphicsScene,
         QUndoCommand* parent = nullptr);
 };
+
+class AddPictureCommand : public AddCommand
+{
+public:
+    AddPictureCommand(std::string path, QGraphicsScene* graphicsScene,
+        QUndoCommand* parent = nullptr);
+};

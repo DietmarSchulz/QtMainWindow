@@ -1,6 +1,9 @@
 #include "Commands.h"
 
 #include <qgraphicsscene.h>
+#include <opencv2/opencv.hpp>
+#include "OpenCVWrapper.h"
+#include "MyPicture.h"
 
 QString createCommandString(QGraphicsItem* item, const QPointF& pos)
 {
@@ -101,4 +104,15 @@ AddBoxCommand::AddBoxCommand(QGraphicsItem* box, QGraphicsScene* graphicsScene, 
         (itemCount * 15) % int(graphicsScene->height()));
     ++itemCount;
     myGraphicsScene->update();
+}
+
+AddPictureCommand::AddPictureCommand(std::string path, QGraphicsScene* graphicsScene, QUndoCommand* parent) : AddCommand(graphicsScene, parent)
+{
+    cv::Mat picture = cv::imread(path);
+    QImage qim = OpenCVWrapper::Mat2QImage(picture);
+    auto* qimage = new MyPicture(path, QPixmap::fromImage(qim));
+    qimage->setFlag(QGraphicsItem::ItemIsMovable);
+    qimage->setFlag(QGraphicsItem::ItemIsSelectable);
+    qimage->setScale(0.25);
+    myItem = qimage;
 }
