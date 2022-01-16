@@ -43,6 +43,8 @@ void MyScene::read(const QJsonObject& json)
 void MyScene::write(QJsonObject& json) const
 {
     QJsonArray jPictures;
+    QJsonArray jTexts;
+    QJsonArray jRects;
 
     for (const auto* it : items()) {
         QJsonObject jItem;
@@ -51,9 +53,19 @@ void MyScene::write(QJsonObject& json) const
                 (static_cast<const MyPicture*>(it))->write(jItem);
                 jPictures.append(jItem);
                 break;
+            case QGraphicsTextItem::Type:
+                write(static_cast<const QGraphicsTextItem*>(it), jItem);
+                jTexts.append(jItem);
+                break;
+            case QGraphicsRectItem::Type:
+                write(static_cast<const QGraphicsRectItem*>(it), jItem);
+                jPictures.append(jRects);
+                break;
         }
     }
     json["Pictures"] = jPictures;
+    json["Texts"] = jTexts;
+    json["Rects"] = jRects;
 }
 
 void MyScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
@@ -79,4 +91,32 @@ void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         movingItem = nullptr;
     }
     QGraphicsScene::mouseReleaseEvent(event);
+}
+
+void MyScene::write(const QGraphicsRectItem* rectItem, QJsonObject& jObject) const
+{
+    jObject["positionX"] = rectItem->pos().x();
+    jObject["positionY"] = rectItem->pos().y();
+    jObject["width"] = rectItem->rect().width();
+    jObject["height"] = rectItem->rect().height();
+    jObject["penColor"] = (int) rectItem->pen().color().rgba();
+    jObject["penWidth"] = rectItem->pen().width();
+    jObject["brushColor"] = (int) rectItem->brush().color().rgba();
+    jObject["scale"] = rectItem->scale();
+}
+
+void MyScene::write(const QGraphicsTextItem* textItem, QJsonObject& jObject) const
+{
+    jObject["text"] = textItem->toPlainText();
+    jObject["positionX"] = textItem->pos().x();
+    jObject["positionY"] = textItem->pos().y();
+    jObject["scale"] = textItem->scale();
+}
+
+void MyScene::read(QGraphicsRectItem* rectItem, const QJsonObject& jObject)
+{
+}
+
+void MyScene::read(QGraphicsTextItem* rectItem, const QJsonObject& jObject)
+{
 }
