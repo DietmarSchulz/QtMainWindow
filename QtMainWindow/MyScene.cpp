@@ -59,7 +59,7 @@ void MyScene::write(QJsonObject& json) const
                 break;
             case QGraphicsRectItem::Type:
                 write(static_cast<const QGraphicsRectItem*>(it), jItem);
-                jPictures.append(jRects);
+                jRects.append(jItem);
                 break;
         }
     }
