@@ -27,6 +27,7 @@ private slots:
     void on_action_New_triggered();
     void on_action_Open_triggered();
     void on_action_Save_triggered();
+    void on_action_SaveAs_triggered();
 
     void on_action_Copy_triggered();
     void on_action_Cut_triggered();

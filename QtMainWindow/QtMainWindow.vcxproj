@@ -120,7 +120,7 @@
     <QtMoc Include="MyGraphicsView.h" />
     <QtMoc Include="MyScene.h" />
     <ClInclude Include="Commands.h" />
-    <ClInclude Include="MyPicture.h" />
+    <QtMoc Include="MyPicture.h" />
     <ClInclude Include="OpenCVWrapper.h" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">

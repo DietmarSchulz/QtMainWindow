@@ -45,6 +45,15 @@ void QtMainWindow::on_action_Open_triggered()
 
 void QtMainWindow::on_action_Save_triggered()
 {
+    if (!scene.save()) {
+        on_action_SaveAs_triggered();
+    }
+}
+
+void QtMainWindow::on_action_SaveAs_triggered()
+{
+    QString filename = QFileDialog::getSaveFileName(this, "Hole Bild", currdir, "Json File (*.json)");
+    scene.save(filename);
 }
 
 void QtMainWindow::on_action_Copy_triggered()

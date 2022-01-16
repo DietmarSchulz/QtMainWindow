@@ -2,7 +2,7 @@
 
 #include <QObject>
 #include <QGraphicsScene>
-#include <qgraphicsitem.h>
+#include "MyPicture.h"
 
 class MyScene : public QGraphicsScene
 {
@@ -10,7 +10,12 @@ class MyScene : public QGraphicsScene
 
 public:
     MyScene(QObject* parent = nullptr);
+    void load(QString& loadPath);
+    bool save();
+    bool save(QString& savePath);
 
+    void read(const QJsonObject& json);
+    void write(QJsonObject& json) const;
 signals:
     void itemMoved(QGraphicsItem* movedItem, const QPointF& movedFromPosition);
 
@@ -21,5 +26,6 @@ protected:
 private:
     QGraphicsItem* movingItem = nullptr;
     QPointF oldPos;
+    QString filePath;
 };
 

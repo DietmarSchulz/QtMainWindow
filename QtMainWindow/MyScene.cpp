@@ -1,10 +1,59 @@
 #include "MyScene.h"
 #include <QGraphicsSceneMouseEvent>
+#include <QJsonArray>
+#include <QtCore/qfile.h>
+#include <qjsondocument.h>
 
 MyScene::MyScene(QObject* parent)
     : QGraphicsScene(parent)
 {
     setSceneRect(0, 0, 200, 200);
+}
+
+void MyScene::load(QString& loadPath)
+{
+}
+
+bool MyScene::save()
+{
+    if (filePath.isEmpty()) {
+        return false;
+    }
+    return save(filePath);
+}
+
+bool MyScene::save(QString& savePath)
+{
+    filePath = savePath;
+    QFile saveFile(savePath);
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+        qWarning("Couldn't open save file.");
+        return false;
+    }
+    QJsonObject sceneObject;
+    write(sceneObject);
+    saveFile.write(QJsonDocument(sceneObject).toJson());
+    return true;
+}
+
+void MyScene::read(const QJsonObject& json)
+{
+}
+
+void MyScene::write(QJsonObject& json) const
+{
+    QJsonArray jPictures;
+
+    for (const auto* it : items()) {
+        QJsonObject jItem;
+        switch (it->type()) {
+            case QGraphicsPixmapItem::Type:
+                (static_cast<const MyPicture*>(it))->write(jItem);
+                jPictures.append(jItem);
+                break;
+        }
+    }
+    json["Pictures"] = jPictures;
 }
 
 void MyScene::mousePressEvent(QGraphicsSceneMouseEvent* event)

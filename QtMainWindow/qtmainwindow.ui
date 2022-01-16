@@ -64,6 +64,7 @@
     <addaction name="action_New"/>
     <addaction name="action_Open"/>
     <addaction name="action_Save"/>
+    <addaction name="action_SaveAs"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -119,6 +120,7 @@
    <addaction name="action_New"/>
    <addaction name="action_Open"/>
    <addaction name="action_Save"/>
+   <addaction name="action_SaveAs"/>
    <addaction name="action_Copy"/>
    <addaction name="action_Cut"/>
    <addaction name="action_Paste"/>
@@ -372,6 +374,21 @@
    </property>
    <property name="shortcut">
     <string>Del</string>
+   </property>
+  </action>
+  <action name="action_SaveAs">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/save_as.png</normaloff>:/QtMainWindow/images/save_as.png</iconset>
+   </property>
+   <property name="text">
+    <string>S&amp;peichern unter ...</string>
+   </property>
+   <property name="statusTip">
+    <string>Speichern unter anderem Pfad</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
  </widget>
