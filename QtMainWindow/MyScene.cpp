@@ -162,15 +162,14 @@ void MyScene::read(QGraphicsRectItem* rectItem, const QJsonObject& jObject)
     }
     if (jObject.contains("penColor") && jObject["penColor"].isDouble() &&
         jObject.contains("penWidth") && jObject["penWidth"].isDouble()) {
-        QPen pen;
         
         int argb = jObject["penColor"].toInt();
-        pen.setColor(QColor(QRgb((QRgb)argb)));
+        QColor color(qRed(argb), qGreen(argb), qBlue(argb), qAlpha(argb));
+        QPen pen(color);
         pen.setWidth(jObject["penWidth"].toInt());
         rectItem->setPen(pen);
     }
     if (jObject.contains("brushColor") && jObject["brushColor"].isDouble()) {
-
         int argb = jObject["brushColor"].toInt();
         QColor color(qRed(argb), qGreen(argb), qBlue(argb), qAlpha(argb));
         QBrush brush(color);
