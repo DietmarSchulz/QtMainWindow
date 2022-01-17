@@ -8,6 +8,7 @@ class MyPicture : public QGraphicsPixmapItem
 {
 	Q_GADGET;
 public:
+	MyPicture(QGraphicsItem* parent = nullptr) : QGraphicsPixmapItem(parent){}
 	MyPicture(std::string path, QPixmap pixmap, QGraphicsItem* parent = nullptr) : QGraphicsPixmapItem(pixmap, parent), currPath(path) {}
 
 	void read(const QJsonObject& json);

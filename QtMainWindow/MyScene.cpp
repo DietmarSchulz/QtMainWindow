@@ -38,6 +38,30 @@ bool MyScene::save(QString& savePath)
 
 void MyScene::read(const QJsonObject& json)
 {
+    if (json.contains("Pictures") && json["Pictures"].isArray()) {
+        QJsonArray pictureArray = json["Pictures"].toArray();
+        for (auto jObjRef : pictureArray) {
+            auto* pPicture = new MyPicture();
+            pPicture->read(jObjRef.toObject());
+            addItem(pPicture);
+        }
+    }
+    if (json.contains("Texts") && json["Texts"].isArray()) {
+        QJsonArray textArray = json["Texts"].toArray();
+        for (auto jObjRef : textArray) {
+            auto* pText = new QGraphicsTextItem();
+            read(pText, jObjRef.toObject());
+            addItem(pText);
+        }
+    }
+    if (json.contains("Rects") && json["Rects"].isArray()) {
+        QJsonArray rectArray = json["Rects"].toArray();
+        for (auto jObjRef : rectArray) {
+            auto* pRect = new QGraphicsRectItem();
+            read(pRect, jObjRef.toObject());
+            addItem(pRect);
+        }
+    }
 }
 
 void MyScene::write(QJsonObject& json) const
@@ -108,6 +132,8 @@ void MyScene::write(const QGraphicsRectItem* rectItem, QJsonObject& jObject) con
 void MyScene::write(const QGraphicsTextItem* textItem, QJsonObject& jObject) const
 {
     jObject["text"] = textItem->toPlainText();
+    jObject["fontName"] = textItem->font().family();
+    jObject["fontSize"] = textItem->font().pointSize();
     jObject["positionX"] = textItem->pos().x();
     jObject["positionY"] = textItem->pos().y();
     jObject["scale"] = textItem->scale();
@@ -115,8 +141,53 @@ void MyScene::write(const QGraphicsTextItem* textItem, QJsonObject& jObject) con
 
 void MyScene::read(QGraphicsRectItem* rectItem, const QJsonObject& jObject)
 {
+    if (jObject.contains("positionX") && jObject["positionX"].isDouble() &&
+        jObject.contains("positionY") && jObject["positionY"].isDouble()) {
+        rectItem->setPos(jObject["positionX"].toDouble(), jObject["positionY"].toDouble());
+    }
+    if (jObject.contains("width") && jObject["width"].isDouble() &&
+        jObject.contains("height") && jObject["height"].isDouble()) {
+        rectItem->setRect(0, 0, jObject["width"].toDouble(), jObject["height"].toDouble());
+    }
+    if (jObject.contains("penColor") && jObject["penColor"].isDouble() &&
+        jObject.contains("penWidth") && jObject["penWidth"].isDouble()) {
+        QPen pen;
+        
+        int argb = jObject["penColor"].toInt();
+        pen.setColor(QColor(QRgb((QRgb)argb)));
+        pen.setWidth(jObject["penWidth"].toInt());
+        rectItem->setPen(pen);
+    }
+    if (jObject.contains("penColor") && jObject["penColor"].isDouble()) {
+        QBrush brush;
+
+        int argb = jObject["brushColor"].toInt();
+        brush.setColor(QColor(QRgb((QRgb)argb)));
+        rectItem->setBrush(brush);
+    }
+    if (jObject.contains("scale") && jObject["scale"].isDouble()) {
+        rectItem->setScale(jObject["scale"].toDouble());
+    }
+    rectItem->setFlag(QGraphicsItem::ItemIsMovable);
+    rectItem->setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
-void MyScene::read(QGraphicsTextItem* rectItem, const QJsonObject& jObject)
+void MyScene::read(QGraphicsTextItem* textItem, const QJsonObject& jObject)
 {
+    if (jObject.contains("text") && jObject["text"].isString()) {
+        textItem->setPlainText(jObject["text"].toString());
+    }
+    if (jObject.contains("fontName") && jObject["fontName"].isString() &&
+        jObject.contains("fontSize") && jObject["fontSize"].isDouble()) {
+        textItem->setFont(QFont(jObject["fontName"].toString(), jObject["fontSize"].toInt()));
+    }
+    if (jObject.contains("positionX") && jObject["positionX"].isDouble() &&
+        jObject.contains("positionY") && jObject["positionY"].isDouble()) {
+        textItem->setPos(jObject["positionX"].toDouble(), jObject["positionY"].toDouble());
+    }
+    if (jObject.contains("scale") && jObject["scale"].isDouble()) {
+        textItem->setScale(jObject["scale"].toDouble());
+    }
+    textItem->setFlag(QGraphicsItem::ItemIsMovable);
+    textItem->setFlag(QGraphicsItem::ItemIsSelectable);
 }

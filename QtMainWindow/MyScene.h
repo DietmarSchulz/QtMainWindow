@@ -29,7 +29,7 @@ private:
     QString filePath;
 
     void write(const QGraphicsRectItem* rectItem, QJsonObject& jObject) const;
-    void write(const QGraphicsTextItem* rectItem, QJsonObject& jObject) const;
+    void write(const QGraphicsTextItem* textItem, QJsonObject& jObject) const;
     void read(QGraphicsRectItem* rectItem, const QJsonObject& jObject);
     void read(QGraphicsTextItem* textItem, const QJsonObject& jObject);
 };
