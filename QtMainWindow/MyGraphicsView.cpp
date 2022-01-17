@@ -42,28 +42,61 @@ void MyGraphicsView::mouseReleaseEvent(QMouseEvent* event)
 
 void MyGraphicsView::wheelEvent(QWheelEvent* event)
 {
-    if (event->modifiers() & Qt::ShiftModifier)
-    {
-        // Rotate
-        if (event->delta() > 0) {
-            rotateLeft();
+    MyScene* myScene = static_cast<MyScene*>(scene());
+    if (myScene->selectedItems().empty()) {
+        if (event->modifiers() & Qt::ShiftModifier)
+        {
+            // Rotate
+            if (event->delta() > 0) {
+                rotateLeft();
+            }
+            else {
+                rotateRight();
+            }
         }
-        else {
-            rotateRight();
+        else if (event->modifiers() & Qt::ControlModifier)
+        {
+            // Zoom
+            if (event->delta() > 0) {
+                zoomIn();
+            }
+            else {
+                zoomOut();
+            }
+        }
+        else
+        {
+            QGraphicsView::wheelEvent(event);
         }
     }
-    else if (event->modifiers() & Qt::ControlModifier)
-    {
-        // Zoom
-        if (event->delta() > 0) {
-            zoomIn();
+    else {
+        auto* sceneItem = myScene->selectedItems().first();
+        myScene->SetModified(true);
+        if (event->modifiers() & Qt::ShiftModifier)
+        {
+            // Rotate
+            auto currRot = sceneItem->rotation();
+            if (event->delta() > 0) {
+                sceneItem->setRotation(currRot - 10);
+            }
+            else {
+                sceneItem->setRotation(currRot + 10);
+            }
         }
-        else {
-            zoomOut();
+        else if (event->modifiers() & Qt::ControlModifier)
+        {
+            // Zoom
+            auto currScale = sceneItem->scale();
+            if (event->delta() > 0) {
+                sceneItem->setScale(currScale * 1.2);
+            }
+            else {
+                sceneItem->setScale(currScale / 1.2);
+            }
         }
-    }
-    else
-    {
-        QGraphicsView::wheelEvent(event);
+        else
+        {
+            QGraphicsView::wheelEvent(event);
+        }
     }
 }

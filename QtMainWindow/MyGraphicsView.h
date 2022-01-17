@@ -4,6 +4,8 @@
 #include <qt5/QtGui/QWheelEvent>
 #include <qt5/QtWidgets/qmenu.h>
 
+#include "MyScene.h"
+
 class MyGraphicsView : public QGraphicsView
 {
 Q_OBJECT
