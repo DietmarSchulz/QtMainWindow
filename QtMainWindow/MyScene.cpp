@@ -5,7 +5,7 @@
 #include <qjsondocument.h>
 
 MyScene::MyScene(QObject* parent)
-    : QGraphicsScene(parent)
+    : QGraphicsScene(parent), modified(false)
 {
     setSceneRect(0, 0, 200, 200);
 }
@@ -23,6 +23,14 @@ void MyScene::load(QString& loadPath)
 
     read(loadDoc.object());
     filePath = loadPath;
+    modified = false;
+}
+
+void MyScene::New()
+{
+    clear();
+    filePath.clear();
+    modified = false;
 }
 
 bool MyScene::save()
@@ -30,6 +38,7 @@ bool MyScene::save()
     if (filePath.isEmpty()) {
         return false;
     }
+    modified = false;
     return save(filePath);
 }
 
@@ -44,6 +53,7 @@ bool MyScene::save(QString& savePath)
     QJsonObject sceneObject;
     write(sceneObject);
     saveFile.write(QJsonDocument(sceneObject).toJson());
+    modified = false;
     return true;
 }
 
@@ -103,6 +113,16 @@ void MyScene::write(QJsonObject& json) const
     json["Rects"] = jRects;
 }
 
+bool MyScene::isModified()
+{
+    return modified;
+}
+
+void MyScene::SetModified(bool val)
+{
+    modified = val;
+}
+
 void MyScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     QPointF mousePos(event->buttonDownScenePos(Qt::LeftButton).x(),
@@ -110,8 +130,10 @@ void MyScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
     const QList<QGraphicsItem*> itemList = items(mousePos);
     movingItem = itemList.isEmpty() ? nullptr : itemList.first();
 
-    if (movingItem != nullptr && event->button() == Qt::LeftButton)
+    if (movingItem != nullptr && event->button() == Qt::LeftButton) {
         oldPos = movingItem->pos();
+        modified = true;
+    }
 
     clearSelection();
     QGraphicsScene::mousePressEvent(event);

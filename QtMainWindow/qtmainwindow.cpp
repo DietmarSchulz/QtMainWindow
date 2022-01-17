@@ -31,6 +31,10 @@ QtMainWindow::QtMainWindow(QWidget *parent)
 
 void QtMainWindow::on_action_New_triggered()
 {
+    if (maybeSave()) {
+        scene.New();
+        undoStack.clear();
+    }
 }
 
 void QtMainWindow::itemMoved(QGraphicsItem* movedItem, const QPointF& moveStartPosition)
@@ -38,12 +42,48 @@ void QtMainWindow::itemMoved(QGraphicsItem* movedItem, const QPointF& moveStartP
     undoStack.push(new MoveCommand(movedItem, moveStartPosition));
 }
 
+void QtMainWindow::closeEvent(QCloseEvent* event)
+{
+    if (maybeSave()) {
+        event->accept();
+    }
+    else {
+        event->ignore();
+    }
+}
+
+bool QtMainWindow::maybeSave()
+{
+    if (!scene.isModified()) {
+        return true;
+    }
+    const QMessageBox::StandardButton ret
+        = QMessageBox::warning(this, "Applikation",
+            "Die Szene wurde modifiziert.\n"
+                "Sollen die Anpassungen gespeichert werden?",
+            QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    switch (ret) {
+    case QMessageBox::Save:
+        on_action_Save_triggered();
+        return false;
+    case QMessageBox::Cancel:
+        return false;
+    default:
+        break;
+    }
+    return true;
+}
+
 void QtMainWindow::on_action_Open_triggered()
 {
-    QString filename = QFileDialog::getOpenFileName(this, "Lade Szene", currdir, "Json File (*.json)");
-    if (filename.isEmpty())
-        return;
-    scene.load(filename);
+    if (maybeSave()) {
+        scene.New();
+        undoStack.clear();
+        QString filename = QFileDialog::getOpenFileName(this, "Lade Szene", currdir, "Json File (*.json)");
+        if (filename.isEmpty())
+            return;
+        scene.load(filename);
+    }
 }
 
 void QtMainWindow::on_action_Save_triggered()
@@ -67,10 +107,12 @@ void QtMainWindow::on_action_Copy_triggered()
 
 void QtMainWindow::on_action_Cut_triggered()
 {
+    scene.SetModified(true);
 }
 
 void QtMainWindow::on_action_Paste_triggered()
 {
+    scene.SetModified(true);
 }
 
 void QtMainWindow::on_action_Rect_triggered()
@@ -99,6 +141,7 @@ void QtMainWindow::on_action_Rect_triggered()
     text->setFlag(QGraphicsItem::ItemIsMovable);
     text->setFlag(QGraphicsItem::ItemIsSelectable);
     undoStack.push(new AddBoxCommand(text, &scene));
+    scene.SetModified(true);
 }
 
 void QtMainWindow::on_action_Picture_triggered()
@@ -109,6 +152,7 @@ void QtMainWindow::on_action_Picture_triggered()
     std::filesystem::path p = filename.toStdString();
     currdir = QString::fromStdString(p.parent_path().string());
     undoStack.push(new AddPictureCommand(p.generic_string(), &scene));
+    scene.SetModified(true);
 }
 
 void QtMainWindow::on_action_ZoomIn_triggered()

@@ -11,11 +11,14 @@ class MyScene : public QGraphicsScene
 public:
     MyScene(QObject* parent = nullptr);
     void load(QString& loadPath);
+    void New();
     bool save();
     bool save(QString& savePath);
 
     void read(const QJsonObject& json);
     void write(QJsonObject& json) const;
+    bool isModified();
+    void SetModified(bool val);
 signals:
     void itemMoved(QGraphicsItem* movedItem, const QPointF& movedFromPosition);
 
@@ -27,6 +30,7 @@ private:
     QGraphicsItem* movingItem = nullptr;
     QPointF oldPos;
     QString filePath;
+    bool modified;
 
     void write(const QGraphicsRectItem* rectItem, QJsonObject& jObject) const;
     void write(const QGraphicsTextItem* textItem, QJsonObject& jObject) const;

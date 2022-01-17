@@ -14,6 +14,9 @@ class QtMainWindow : public QMainWindow
 public:
     QtMainWindow(QWidget *parent = Q_NULLPTR);
 
+protected:
+    void closeEvent(QCloseEvent* event) override;
+
 private:
     Ui::QtMainWindowClass ui;
     MyScene scene;
@@ -21,6 +24,7 @@ private:
 
     QUndoStack undoStack;
     QUndoView undoView;
+    bool maybeSave();
 public slots:
     void itemMoved(QGraphicsItem* movedDiagram, const QPointF& moveStartPosition); 
 private slots:
