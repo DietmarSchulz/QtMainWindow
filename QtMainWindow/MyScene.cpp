@@ -12,6 +12,17 @@ MyScene::MyScene(QObject* parent)
 
 void MyScene::load(QString& loadPath)
 {
+    QFile loadFile(loadPath);
+    if (!loadFile.open(QIODevice::ReadOnly)) {
+        qWarning("Couldn't open save file.");
+        return;
+    }
+    QByteArray saveData = loadFile.readAll();
+
+    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+
+    read(loadDoc.object());
+    filePath = loadPath;
 }
 
 bool MyScene::save()
@@ -158,11 +169,11 @@ void MyScene::read(QGraphicsRectItem* rectItem, const QJsonObject& jObject)
         pen.setWidth(jObject["penWidth"].toInt());
         rectItem->setPen(pen);
     }
-    if (jObject.contains("penColor") && jObject["penColor"].isDouble()) {
-        QBrush brush;
+    if (jObject.contains("brushColor") && jObject["brushColor"].isDouble()) {
 
         int argb = jObject["brushColor"].toInt();
-        brush.setColor(QColor(QRgb((QRgb)argb)));
+        QColor color(qRed(argb), qGreen(argb), qBlue(argb), qAlpha(argb));
+        QBrush brush(color);
         rectItem->setBrush(brush);
     }
     if (jObject.contains("scale") && jObject["scale"].isDouble()) {

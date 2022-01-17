@@ -40,7 +40,10 @@ void QtMainWindow::itemMoved(QGraphicsItem* movedItem, const QPointF& moveStartP
 
 void QtMainWindow::on_action_Open_triggered()
 {
-    return;
+    QString filename = QFileDialog::getOpenFileName(this, "Lade Szene", currdir, "Json File (*.json)");
+    if (filename.isEmpty())
+        return;
+    scene.load(filename);
 }
 
 void QtMainWindow::on_action_Save_triggered()
