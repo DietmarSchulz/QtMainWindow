@@ -82,6 +82,8 @@ void QtMainWindow::on_action_Open_triggered()
         QString filename = QFileDialog::getOpenFileName(this, "Lade Szene", currdir, "Json File (*.json)");
         if (filename.isEmpty())
             return;
+        std::filesystem::path p = filename.toStdString();
+        currdir = QString::fromStdString(p.parent_path().string());
         scene.load(filename);
     }
 }
@@ -98,6 +100,8 @@ void QtMainWindow::on_action_SaveAs_triggered()
     QString filename = QFileDialog::getSaveFileName(this, "Hole Bild", currdir, "Json File (*.json)");
     if (filename.isEmpty())
         return;
+    std::filesystem::path p = filename.toStdString();
+    currdir = QString::fromStdString(p.parent_path().string());
     scene.save(filename);
 }
 

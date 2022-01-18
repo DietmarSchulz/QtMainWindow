@@ -44,6 +44,9 @@
         </color>
        </brush>
       </property>
+      <property name="transformationAnchor">
+       <enum>QGraphicsView::AnchorUnderMouse</enum>
+      </property>
      </widget>
     </item>
    </layout>

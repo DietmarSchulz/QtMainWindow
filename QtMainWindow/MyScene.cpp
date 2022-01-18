@@ -7,7 +7,7 @@
 MyScene::MyScene(QObject* parent)
     : QGraphicsScene(parent), modified(false)
 {
-    setSceneRect(0, 0, 200, 200);
+    setSceneRect(-800, -800, 2000, 2000);
 }
 
 void MyScene::load(QString& loadPath)
@@ -160,6 +160,7 @@ void MyScene::write(const QGraphicsRectItem* rectItem, QJsonObject& jObject) con
     jObject["penWidth"] = rectItem->pen().width();
     jObject["brushColor"] = (int) rectItem->brush().color().rgba();
     jObject["scale"] = rectItem->scale();
+    jObject["rotation"] = rectItem->rotation();
 }
 
 void MyScene::write(const QGraphicsTextItem* textItem, QJsonObject& jObject) const
@@ -170,6 +171,7 @@ void MyScene::write(const QGraphicsTextItem* textItem, QJsonObject& jObject) con
     jObject["positionX"] = textItem->pos().x();
     jObject["positionY"] = textItem->pos().y();
     jObject["scale"] = textItem->scale();
+    jObject["rotation"] = textItem->rotation();
 }
 
 void MyScene::read(QGraphicsRectItem* rectItem, const QJsonObject& jObject)
@@ -200,6 +202,9 @@ void MyScene::read(QGraphicsRectItem* rectItem, const QJsonObject& jObject)
     if (jObject.contains("scale") && jObject["scale"].isDouble()) {
         rectItem->setScale(jObject["scale"].toDouble());
     }
+    if (jObject.contains("rotation") && jObject["rotation"].isDouble()) {
+        rectItem->setRotation(jObject["rotation"].toDouble());
+    }
     rectItem->setFlag(QGraphicsItem::ItemIsMovable);
     rectItem->setFlag(QGraphicsItem::ItemIsSelectable);
 }
@@ -219,6 +224,9 @@ void MyScene::read(QGraphicsTextItem* textItem, const QJsonObject& jObject)
     }
     if (jObject.contains("scale") && jObject["scale"].isDouble()) {
         textItem->setScale(jObject["scale"].toDouble());
+    }
+    if (jObject.contains("rotation") && jObject["rotation"].isDouble()) {
+        textItem->setRotation(jObject["rotation"].toDouble());
     }
     textItem->setFlag(QGraphicsItem::ItemIsMovable);
     textItem->setFlag(QGraphicsItem::ItemIsSelectable);

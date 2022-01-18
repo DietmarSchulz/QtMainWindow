@@ -18,6 +18,9 @@ void MyPicture::read(const QJsonObject& json)
 	if (json.contains("scale") && json["scale"].isDouble()) {
 		setScale(json["scale"].toDouble());
 	}
+	if (json.contains("rotation") && json["rotation"].isDouble()) {
+		setRotation(json["rotation"].toDouble());
+	}
 }
 
 void MyPicture::write(QJsonObject& json) const
@@ -26,4 +29,5 @@ void MyPicture::write(QJsonObject& json) const
 	json["positionX"] = pos().x();
 	json["positionY"] = pos().y();
 	json["scale"] = scale();
+	json["rotation"] = rotation();
 }
