@@ -27,13 +27,14 @@ QtMainWindow::QtMainWindow(QWidget *parent)
         this, &QtMainWindow::itemMenuAboutToShow);
     connect(ui.menuEdit, &QMenu::aboutToHide,
         this, &QtMainWindow::itemMenuAboutToHide);
+    clipboard = QApplication::clipboard();
 }
 
 void QtMainWindow::on_action_New_triggered()
 {
     if (maybeSave()) {
-        scene.New();
         undoStack.clear();
+        scene.New();
     }
 }
 
@@ -107,6 +108,11 @@ void QtMainWindow::on_action_SaveAs_triggered()
 
 void QtMainWindow::on_action_Copy_triggered()
 {
+    if (!scene.selectedItems().empty()) {
+        QJsonObject jsonSelection = scene.toJson(scene.selectedItems());
+
+        clipboard->setText(QJsonDocument(jsonSelection).toJson().data());
+    }
 }
 
 void QtMainWindow::on_action_Cut_triggered()

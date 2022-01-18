@@ -87,30 +87,7 @@ void MyScene::read(const QJsonObject& json)
 
 void MyScene::write(QJsonObject& json) const
 {
-    QJsonArray jPictures;
-    QJsonArray jTexts;
-    QJsonArray jRects;
-
-    for (const auto* it : items()) {
-        QJsonObject jItem;
-        switch (it->type()) {
-            case QGraphicsPixmapItem::Type:
-                (static_cast<const MyPicture*>(it))->write(jItem);
-                jPictures.append(jItem);
-                break;
-            case QGraphicsTextItem::Type:
-                write(static_cast<const QGraphicsTextItem*>(it), jItem);
-                jTexts.append(jItem);
-                break;
-            case QGraphicsRectItem::Type:
-                write(static_cast<const QGraphicsRectItem*>(it), jItem);
-                jRects.append(jItem);
-                break;
-        }
-    }
-    json["Pictures"] = jPictures;
-    json["Texts"] = jTexts;
-    json["Rects"] = jRects;
+    json = toJson(items());
 }
 
 bool MyScene::isModified()
@@ -150,7 +127,7 @@ void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     QGraphicsScene::mouseReleaseEvent(event);
 }
 
-void MyScene::write(const QGraphicsRectItem* rectItem, QJsonObject& jObject) const
+void MyScene::write(const QGraphicsRectItem* rectItem, QJsonObject& jObject)
 {
     jObject["positionX"] = rectItem->pos().x();
     jObject["positionY"] = rectItem->pos().y();
@@ -163,7 +140,7 @@ void MyScene::write(const QGraphicsRectItem* rectItem, QJsonObject& jObject) con
     jObject["rotation"] = rectItem->rotation();
 }
 
-void MyScene::write(const QGraphicsTextItem* textItem, QJsonObject& jObject) const
+void MyScene::write(const QGraphicsTextItem* textItem, QJsonObject& jObject)
 {
     jObject["text"] = textItem->toPlainText();
     jObject["fontName"] = textItem->font().family();
@@ -230,4 +207,33 @@ void MyScene::read(QGraphicsTextItem* textItem, const QJsonObject& jObject)
     }
     textItem->setFlag(QGraphicsItem::ItemIsMovable);
     textItem->setFlag(QGraphicsItem::ItemIsSelectable);
+}
+
+QJsonObject MyScene::toJson(const QList<QGraphicsItem*>& selectedItems)
+{
+    QJsonObject jsonSelection;
+    QJsonArray jPictures;
+    QJsonArray jTexts;
+    QJsonArray jRects;
+    for (const auto* it : selectedItems) {
+        QJsonObject jItem;
+        switch (it->type()) {
+        case QGraphicsPixmapItem::Type:
+            (static_cast<const MyPicture*>(it))->write(jItem);
+            jPictures.append(jItem);
+            break;
+        case QGraphicsTextItem::Type:
+            write(static_cast<const QGraphicsTextItem*>(it), jItem);
+            jTexts.append(jItem);
+            break;
+        case QGraphicsRectItem::Type:
+            write(static_cast<const QGraphicsRectItem*>(it), jItem);
+            jRects.append(jItem);
+            break;
+        }
+    }
+    jsonSelection["Pictures"] = jPictures;
+    jsonSelection["Texts"] = jTexts;
+    jsonSelection["Rects"] = jRects;
+    return jsonSelection;
 }

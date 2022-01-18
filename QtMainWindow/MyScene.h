@@ -19,6 +19,7 @@ public:
     void write(QJsonObject& json) const;
     bool isModified();
     void SetModified(bool val);
+    static QJsonObject toJson(const QList<QGraphicsItem*>& selectedItems);
 signals:
     void itemMoved(QGraphicsItem* movedItem, const QPointF& movedFromPosition);
 
@@ -32,9 +33,9 @@ private:
     QString filePath;
     bool modified;
 
-    void write(const QGraphicsRectItem* rectItem, QJsonObject& jObject) const;
-    void write(const QGraphicsTextItem* textItem, QJsonObject& jObject) const;
-    void read(QGraphicsRectItem* rectItem, const QJsonObject& jObject);
-    void read(QGraphicsTextItem* textItem, const QJsonObject& jObject);
+    static void write(const QGraphicsRectItem* rectItem, QJsonObject& jObject);
+    static void write(const QGraphicsTextItem* textItem, QJsonObject& jObject);
+    static void read(QGraphicsRectItem* rectItem, const QJsonObject& jObject);
+    static void read(QGraphicsTextItem* textItem, const QJsonObject& jObject);
 };
 

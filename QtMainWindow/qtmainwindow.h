@@ -24,6 +24,7 @@ private:
 
     QUndoStack undoStack;
     QUndoView undoView;
+    QClipboard* clipboard;
     bool maybeSave();
 public slots:
     void itemMoved(QGraphicsItem* movedDiagram, const QPointF& moveStartPosition); 
