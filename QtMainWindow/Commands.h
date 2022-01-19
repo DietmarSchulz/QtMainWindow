@@ -38,7 +38,7 @@ protected:
     AddCommand(QGraphicsScene* graphicsScene,
         QUndoCommand* parent = nullptr);
 public:
-    ~AddCommand();
+    virtual ~AddCommand();
 
     void undo() override;
     void redo() override;
@@ -62,4 +62,16 @@ class AddPictureCommand : public AddCommand
 public:
     AddPictureCommand(std::string path, QGraphicsScene* graphicsScene,
         QUndoCommand* parent = nullptr);
+};
+
+class AddPasteCommand : public AddCommand
+{
+    std::vector<QGraphicsItem*> clipItems;
+    QString clipJson;
+public:
+    AddPasteCommand(QString clipboardContent, QGraphicsScene* graphicsScene,
+        QUndoCommand* parent = nullptr);
+    ~AddPasteCommand() override;
+    void undo() override;
+    void redo() override;
 };

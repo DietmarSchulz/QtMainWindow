@@ -115,4 +115,22 @@ AddPictureCommand::AddPictureCommand(std::string path, QGraphicsScene* graphicsS
     qimage->setFlag(QGraphicsItem::ItemIsSelectable);
     qimage->setScale(0.25);
     myItem = qimage;
+    setText(QObject::tr("Add %1")
+        .arg(createCommandString(myItem, initialPosition)));
+}
+
+AddPasteCommand::AddPasteCommand(QString clipboardContent, QGraphicsScene* graphicsScene, QUndoCommand* parent) : AddCommand(graphicsScene, parent), clipJson(clipboardContent)
+{
+}
+
+AddPasteCommand::~AddPasteCommand()
+{
+}
+
+void AddPasteCommand::undo()
+{
+}
+
+void AddPasteCommand::redo()
+{
 }
