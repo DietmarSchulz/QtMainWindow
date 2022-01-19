@@ -59,29 +59,9 @@ bool MyScene::save(QString& savePath)
 
 void MyScene::read(const QJsonObject& json)
 {
-    if (json.contains("Pictures") && json["Pictures"].isArray()) {
-        QJsonArray pictureArray = json["Pictures"].toArray();
-        for (auto jObjRef : pictureArray) {
-            auto* pPicture = new MyPicture();
-            pPicture->read(jObjRef.toObject());
-            addItem(pPicture);
-        }
-    }
-    if (json.contains("Texts") && json["Texts"].isArray()) {
-        QJsonArray textArray = json["Texts"].toArray();
-        for (auto jObjRef : textArray) {
-            auto* pText = new QGraphicsTextItem();
-            read(pText, jObjRef.toObject());
-            addItem(pText);
-        }
-    }
-    if (json.contains("Rects") && json["Rects"].isArray()) {
-        QJsonArray rectArray = json["Rects"].toArray();
-        for (auto jObjRef : rectArray) {
-            auto* pRect = new QGraphicsRectItem();
-            read(pRect, jObjRef.toObject());
-            addItem(pRect);
-        }
+    auto currItems = fromJson(json);
+    for (auto* it : currItems) {
+        addItem(it);
     }
 }
 
@@ -98,6 +78,35 @@ bool MyScene::isModified()
 void MyScene::SetModified(bool val)
 {
     modified = val;
+}
+
+QList<QGraphicsItem*> MyScene::fromJson(const QJsonObject& json)
+{
+    QList<QGraphicsItem*> selectedJson;
+    if (json.contains("Pictures") && json["Pictures"].isArray()) {
+        QJsonArray pictureArray = json["Pictures"].toArray();
+        for (auto jObjRef : pictureArray) {
+            auto* pPicture = new MyPicture();
+            pPicture->read(jObjRef.toObject());
+            selectedJson.append(pPicture);
+        }
+    }
+    if (json.contains("Texts") && json["Texts"].isArray()) {
+        QJsonArray textArray = json["Texts"].toArray();
+        for (auto jObjRef : textArray) {
+            auto* pText = new QGraphicsTextItem();
+            read(pText, jObjRef.toObject());
+            selectedJson.append(pText);
+        }
+    }
+    if (json.contains("Rects") && json["Rects"].isArray()) {
+        QJsonArray rectArray = json["Rects"].toArray();
+        for (auto jObjRef : rectArray) {
+            auto* pRect = new QGraphicsRectItem();
+            read(pRect, jObjRef.toObject());
+            selectedJson.append(pRect);
+        }
+    }    return selectedJson;
 }
 
 void MyScene::mousePressEvent(QGraphicsSceneMouseEvent* event)

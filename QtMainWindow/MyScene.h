@@ -19,6 +19,7 @@ public:
     void write(QJsonObject& json) const;
     bool isModified();
     void SetModified(bool val);
+    static QList<QGraphicsItem*> fromJson(const QJsonObject& json);
     static QJsonObject toJson(const QList<QGraphicsItem*>& selectedItems);
 signals:
     void itemMoved(QGraphicsItem* movedItem, const QPointF& movedFromPosition);

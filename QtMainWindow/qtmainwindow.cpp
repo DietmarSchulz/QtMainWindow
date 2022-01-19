@@ -123,6 +123,10 @@ void QtMainWindow::on_action_Cut_triggered()
 void QtMainWindow::on_action_Paste_triggered()
 {
     scene.SetModified(true);
+    QString originalText = clipboard->text();
+    if (!originalText.isEmpty()) {
+        scene.read(QJsonDocument::fromJson(static_cast<const QByteArray> (originalText.toStdString().c_str())).object());
+    }
 }
 
 void QtMainWindow::on_action_Rect_triggered()
