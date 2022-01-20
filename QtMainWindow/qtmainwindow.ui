@@ -274,7 +274,7 @@
     <string>Aus Zwischenspeicher einfügen</string>
    </property>
    <property name="shortcut">
-    <string>Esc</string>
+    <string>Ctrl+V</string>
    </property>
   </action>
   <action name="action_Rect">

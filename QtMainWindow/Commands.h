@@ -2,6 +2,7 @@
 
 #include <QUndoCommand>
 #include <qgraphicsitem.h>
+#include "MyScene.h"
 
 class MoveCommand : public QUndoCommand
 {
@@ -45,7 +46,7 @@ public:
 
 protected:
     inline static int itemCount{0};
-    QGraphicsItem* myItem;
+    QList<QGraphicsItem*> myItems;
     QGraphicsScene* myGraphicsScene;
     QPointF initialPosition;
 };
@@ -66,12 +67,8 @@ public:
 
 class AddPasteCommand : public AddCommand
 {
-    std::vector<QGraphicsItem*> clipItems;
     QString clipJson;
 public:
-    AddPasteCommand(QString clipboardContent, QGraphicsScene* graphicsScene,
+    AddPasteCommand(QString clipboardContent, MyScene* graphicsScene,
         QUndoCommand* parent = nullptr);
-    ~AddPasteCommand() override;
-    void undo() override;
-    void redo() override;
 };

@@ -1,7 +1,7 @@
 #include "Commands.h"
 
-#include <qgraphicsscene.h>
 #include <opencv2/opencv.hpp>
+#include <qjsondocument.h>
 #include "OpenCVWrapper.h"
 #include "MyPicture.h"
 
@@ -77,27 +77,34 @@ AddCommand::AddCommand(QGraphicsScene* scene, QUndoCommand* parent)
 
 AddCommand::~AddCommand()
 {
-    if (!myItem->scene())
-        delete myItem;
+    for (auto* myItem : myItems) {
+        if (!myItem->scene())
+            delete myItem;
+    }
 }
 
 void AddCommand::undo()
 {
-    myGraphicsScene->removeItem(myItem);
+    for (auto* myItem : myItems) {
+        myGraphicsScene->removeItem(myItem);
+    }
     myGraphicsScene->update();
 }
 
 void AddCommand::redo()
 {
-    myGraphicsScene->addItem(myItem);
-    myItem->setPos(initialPosition);
+    for (auto* myItem : myItems) {
+        myGraphicsScene->addItem(myItem);
+        myItem->setPos(initialPosition);
+    }
     myGraphicsScene->clearSelection();
     myGraphicsScene->update();
 }
 
 AddBoxCommand::AddBoxCommand(QGraphicsItem* box, QGraphicsScene* graphicsScene, QUndoCommand* parent) : AddCommand(graphicsScene, parent)
 {
-    myItem = box;
+    auto* myItem = box;
+    myItems.append(myItem);
     setText(QObject::tr("Add %1")
         .arg(createCommandString(myItem, initialPosition)));
     initialPosition = QPointF((itemCount * 15) % int(graphicsScene->width()),
@@ -114,23 +121,15 @@ AddPictureCommand::AddPictureCommand(std::string path, QGraphicsScene* graphicsS
     qimage->setFlag(QGraphicsItem::ItemIsMovable);
     qimage->setFlag(QGraphicsItem::ItemIsSelectable);
     qimage->setScale(0.25);
-    myItem = qimage;
+    auto* myItem = qimage;
+    myItems.append(myItem);
     setText(QObject::tr("Add %1")
         .arg(createCommandString(myItem, initialPosition)));
 }
 
-AddPasteCommand::AddPasteCommand(QString clipboardContent, QGraphicsScene* graphicsScene, QUndoCommand* parent) : AddCommand(graphicsScene, parent), clipJson(clipboardContent)
+AddPasteCommand::AddPasteCommand(QString clipboardContent, MyScene* graphicsScene, QUndoCommand* parent) : AddCommand(graphicsScene, parent), clipJson(clipboardContent)
 {
+    myItems = graphicsScene->fromJson(QJsonDocument::fromJson(static_cast<const QByteArray> (clipboardContent.toStdString().c_str())).object());
+    setText("Paste clipboard");
 }
 
-AddPasteCommand::~AddPasteCommand()
-{
-}
-
-void AddPasteCommand::undo()
-{
-}
-
-void AddPasteCommand::redo()
-{
-}
