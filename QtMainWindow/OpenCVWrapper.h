@@ -23,5 +23,16 @@ public:
         cvtColor(tmp, result, cv::COLOR_BGR2RGB);
         return result;
     }
+
+    static cv::Mat GammaBrightness(cv::Mat& imageSource, double gamma)
+    {
+        cv::Mat imageDestination;
+        cv::Mat lookUpTable(1, 256, CV_8U);
+        uchar* p = lookUpTable.ptr();
+        for (int i = 0; i < 256; ++i)
+            p[i] = cv::saturate_cast<uchar>(pow(i / 255.0, gamma) * 255.0);
+        cv::LUT(imageSource, lookUpTable, imageDestination);
+        return imageDestination;
+    }
 };
 

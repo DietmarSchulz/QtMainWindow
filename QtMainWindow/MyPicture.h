@@ -8,12 +8,13 @@ class MyPicture : public QGraphicsPixmapItem
 {
 	Q_GADGET;
 public:
-	MyPicture(QGraphicsItem* parent = nullptr) : QGraphicsPixmapItem(parent){}
+	MyPicture(QGraphicsItem* parent = nullptr) : QGraphicsPixmapItem(parent), gamma(1.0) {}
 	MyPicture(std::string path, QPixmap pixmap, QGraphicsItem* parent = nullptr) : QGraphicsPixmapItem(pixmap, parent), currPath(path) {}
 
 	void read(const QJsonObject& json);
 	void write(QJsonObject& json) const;
 private:
 	std::string currPath;
+	double gamma;
 };
 

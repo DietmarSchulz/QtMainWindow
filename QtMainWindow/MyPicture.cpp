@@ -6,6 +6,10 @@ void MyPicture::read(const QJsonObject& json)
 	if (json.contains("path") && json["path"].isString()) {
 		currPath = json["path"].toString().toStdString();
 		cv::Mat picture = cv::imread(currPath);
+		if (json.contains("gamma") && json["gamma"].isDouble()) {
+			gamma = json["gamma"].toDouble();
+			picture = OpenCVWrapper::GammaBrightness(picture, gamma);
+		}
 		QImage qim = OpenCVWrapper::Mat2QImage(picture);
 		setPixmap(QPixmap::fromImage(qim));
 		setFlag(QGraphicsItem::ItemIsMovable);
@@ -30,4 +34,5 @@ void MyPicture::write(QJsonObject& json) const
 	json["positionY"] = pos().y();
 	json["scale"] = scale();
 	json["rotation"] = rotation();
+	json["gamma"] = gamma;
 }
