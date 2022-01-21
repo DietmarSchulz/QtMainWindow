@@ -202,6 +202,10 @@ void QtMainWindow::on_action_Delete_triggered()
     undoStack.push(deleteCommand);
 }
 
+void QtMainWindow::on_action_Brightnesss_triggered()
+{
+}
+
 void QtMainWindow::itemMenuAboutToShow()
 {
     ui.action_Delete->setEnabled(!scene.selectedItems().isEmpty());

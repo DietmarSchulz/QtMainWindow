@@ -49,6 +49,8 @@ private slots:
 
     void on_action_Delete_triggered();
 
+    void on_action_Brightnesss_triggered();
+
     void itemMenuAboutToShow();
     void itemMenuAboutToHide();
 };
