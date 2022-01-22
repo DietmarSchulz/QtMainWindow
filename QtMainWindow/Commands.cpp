@@ -133,3 +133,68 @@ AddPasteCommand::AddPasteCommand(QString clipboardContent, MyScene* graphicsScen
     setText("Paste clipboard");
 }
 
+ModifyBrightnessCommand::ModifyBrightnessCommand(MyPicture* qPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent) : QUndoCommand(parent), myPicture(qPicture), myGraphicsScene(graphicsScene)
+{
+    using VoidAction = std::function<void()>;
+
+    cv::TrackbarCallback callbackForTrackBar = [](int pos, void* userdata)
+    {
+        (*(VoidAction*)userdata)();
+    };
+
+    std::string windowNameGamma = "Helligkeit";
+    // Gamma brightness:
+    int gammaI = myPicture->getGamma() * 100.0;
+    double gamma = gammaI / 100.0;
+    cv::Mat lookUpTable(1, 256, CV_8U);
+    uchar* p = lookUpTable.ptr();
+    for (int i = 0; i < 256; ++i)
+        p[i] = cv::saturate_cast<uchar>(pow(i / 255.0, gamma) * 255.0);
+
+    cv::Mat picture = cv::imread(myPicture->getCurrPath());
+    cv::Mat imageDestination;
+    cv::LUT(picture, lookUpTable, imageDestination);
+    VoidAction doGammaLUT = [&]() {
+        gamma = gammaI / 100.0;
+        for (int i = 0; i < 256; ++i)
+            p[i] = cv::saturate_cast<uchar>(pow(i / 255.0, gamma) * 255.0);
+        cv::LUT(picture, lookUpTable, imageDestination);
+        imshow(windowNameGamma, imageDestination);
+    };
+
+    cv::namedWindow(windowNameGamma, cv::WINDOW_NORMAL);
+    cv::createTrackbar("Gamma Helligkeit", windowNameGamma, &gammaI, 200, callbackForTrackBar, (void*)&doGammaLUT);
+    oldGamma = myPicture->getGamma();
+    auto wait_time = 1000;
+    cv::imshow(windowNameGamma, imageDestination);
+    myPicture->setGamma(1.0);
+    while (cv::getWindowProperty(windowNameGamma, cv::WND_PROP_VISIBLE) >= 1) {
+        auto keyCode = cv::waitKey(wait_time);
+        if (keyCode == 27) { // Wait for ESC key stroke
+            cv::destroyAllWindows();
+            break;
+        }
+    }
+    myPicture->setGamma(gamma);
+    cv::destroyAllWindows();
+}
+
+void ModifyBrightnessCommand::undo()
+{
+    cv::Mat picture = cv::imread(myPicture->getCurrPath());
+    double gamma = oldGamma;
+    picture = OpenCVWrapper::GammaBrightness(picture, gamma);
+    QImage qim = OpenCVWrapper::Mat2QImage(picture);
+    myPicture->setPixmap(QPixmap::fromImage(qim));
+    myGraphicsScene->update();
+}
+
+void ModifyBrightnessCommand::redo()
+{
+    cv::Mat picture = cv::imread(myPicture->getCurrPath());
+    double gamma = myPicture->getGamma();
+    picture = OpenCVWrapper::GammaBrightness(picture, gamma);
+    QImage qim = OpenCVWrapper::Mat2QImage(picture);
+    myPicture->setPixmap(QPixmap::fromImage(qim));
+    myGraphicsScene->update();
+}

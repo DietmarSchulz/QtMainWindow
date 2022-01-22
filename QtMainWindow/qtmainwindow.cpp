@@ -204,6 +204,13 @@ void QtMainWindow::on_action_Delete_triggered()
 
 void QtMainWindow::on_action_Brightnesss_triggered()
 {
+    if (scene.selectedItems().isEmpty())
+        return;
+    QGraphicsItem* item = scene.selectedItems().first();
+    if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
+        ModifyBrightnessCommand* modCommand = new ModifyBrightnessCommand(static_cast<MyPicture*>(item), &scene);
+        undoStack.push(modCommand);
+    }
 }
 
 void QtMainWindow::itemMenuAboutToShow()

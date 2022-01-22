@@ -13,6 +13,18 @@ public:
 
 	void read(const QJsonObject& json);
 	void write(QJsonObject& json) const;
+	double getGamma()
+	{
+		return gamma;
+	}
+	void setGamma(double val)
+	{
+		gamma = val;
+	}
+	std::string getCurrPath()
+	{
+		return currPath;
+	}
 private:
 	std::string currPath;
 	double gamma;

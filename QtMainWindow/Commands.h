@@ -72,3 +72,16 @@ public:
     AddPasteCommand(QString clipboardContent, MyScene* graphicsScene,
         QUndoCommand* parent = nullptr);
 };
+
+class ModifyBrightnessCommand : public QUndoCommand
+{
+public:
+    ModifyBrightnessCommand(MyPicture* qPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent = nullptr);
+    void undo() override;
+    void redo() override;
+
+private:
+    QGraphicsScene* myGraphicsScene;
+    MyPicture* myPicture;
+    double oldGamma;
+};
