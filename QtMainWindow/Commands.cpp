@@ -176,6 +176,7 @@ ModifyBrightnessCommand::ModifyBrightnessCommand(MyPicture* qPicture, QGraphicsS
         }
     }
     myPicture->setGamma(gamma);
+    setText("Helligkeit anpassen");
     cv::destroyAllWindows();
 }
 
