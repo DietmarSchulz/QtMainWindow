@@ -28,6 +28,67 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     connect(ui.menuEdit, &QMenu::aboutToHide,
         this, &QtMainWindow::itemMenuAboutToHide);
     clipboard = QApplication::clipboard();
+
+    // MRU
+    separatorAct = ui.menuDatei->addSeparator();
+    for (int i = 0; i < maxrecentfile; ++i) {
+        recentFiles[i] = new QAction(this);
+        recentFiles[i]->setVisible(false);
+        connect(recentFiles[i], SIGNAL(triggered()), this, SLOT(OpenRecentFile()));
+        ui.menuDatei->addAction(recentFiles[i]);
+    }
+    UpdateRecentFileActions();
+}
+
+void QtMainWindow::UpdateRecentFileActions()
+{
+    QSettings settings("DsQt", "PictureManager");
+    QStringList files = settings.value("recentFileList").toStringList();
+    int numRecentFiles = qMin(files.size(), maxrecentfile);
+
+    for (int i = 0; i < numRecentFiles; ++i) {
+        QString text = tr("&%1 %2").arg(i + 1).arg(files[i].trimmed());
+        recentFiles[i]->setText(text);
+        recentFiles[i]->setData(files[i]);
+        recentFiles[i]->setVisible(true);
+    }
+    for (int j = numRecentFiles; j < maxrecentfile; ++j) {
+        recentFiles[j]->setVisible(false);
+    }
+    separatorAct->setVisible(numRecentFiles > 0);
+}
+
+void QtMainWindow::OpenRecentFile()
+{
+    QAction* action = qobject_cast<QAction*>(sender());
+    if (action) {
+        if (maybeSave()) {
+            scene.New();
+            undoStack.clear();
+            QString filename = action->data().toString();
+            if (filename.isEmpty())
+                return;
+            std::filesystem::path p = filename.toStdString();
+            currdir = QString::fromStdString(p.parent_path().string());
+            scene.load(filename);
+        }
+    }
+}
+
+void QtMainWindow::setCurrentFile(const QString& fileName)
+{
+    setWindowFilePath(fileName);
+
+    QSettings settings("DsQt", "PictureManager");
+    QStringList files = settings.value("recentFileList").toStringList();
+    files.removeAll(fileName);
+    files.prepend(fileName);
+    while (files.size() > maxrecentfile)
+        files.removeLast();
+
+    settings.setValue("recentFileList", files);
+
+    UpdateRecentFileActions();
 }
 
 void QtMainWindow::on_action_New_triggered()
@@ -86,6 +147,7 @@ void QtMainWindow::on_action_Open_triggered()
         std::filesystem::path p = filename.toStdString();
         currdir = QString::fromStdString(p.parent_path().string());
         scene.load(filename);
+        setCurrentFile(filename);
     }
 }
 
@@ -104,6 +166,7 @@ void QtMainWindow::on_action_SaveAs_triggered()
     std::filesystem::path p = filename.toStdString();
     currdir = QString::fromStdString(p.parent_path().string());
     scene.save(filename);
+    setCurrentFile(filename);
 }
 
 void QtMainWindow::on_action_Copy_triggered()

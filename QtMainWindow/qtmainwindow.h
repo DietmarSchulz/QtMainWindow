@@ -18,6 +18,9 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private:
+    void UpdateRecentFileActions();
+    void setCurrentFile(const QString& fileName);
+
     Ui::QtMainWindowClass ui;
     MyScene scene;
     QString currdir{ "D:/sorted_pics" };
@@ -26,9 +29,13 @@ private:
     QUndoView undoView;
     QClipboard* clipboard;
     bool maybeSave();
+    static const int maxrecentfile = 10;
+    QAction* recentFiles[maxrecentfile];
+    QAction* separatorAct;
 public slots:
     void itemMoved(QGraphicsItem* movedDiagram, const QPointF& moveStartPosition); 
 private slots:
+    void OpenRecentFile();
     void on_action_New_triggered();
     void on_action_Open_triggered();
     void on_action_Save_triggered();
