@@ -217,10 +217,11 @@ void QtMainWindow::on_action_Rect_triggered()
     rect->setFlag(QGraphicsItem::ItemIsSelectable);
     undoStack.push(new AddBoxCommand(rect, &scene));
 
-    QGraphicsTextItem* text = new QGraphicsTextItem("bogotobogo.com");
+    QGraphicsTextItem* text = new QGraphicsTextItem("Ersetzen");
     text->setFont(QFont("Arial", 20));
     text->setFlag(QGraphicsItem::ItemIsMovable);
     text->setFlag(QGraphicsItem::ItemIsSelectable);
+    text->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditable);
     undoStack.push(new AddBoxCommand(text, &scene));
     scene.SetModified(true);
 }
