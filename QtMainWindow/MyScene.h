@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include <QGraphicsScene>
+#include <qundostack.h>
 #include "MyPicture.h"
 
 class MyScene : public QGraphicsScene
@@ -9,7 +10,7 @@ class MyScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    MyScene(QObject* parent = nullptr);
+    MyScene(QUndoStack& undoSt, QObject* parent = nullptr);
     void load(QString& loadPath);
     void New();
     bool save();
@@ -23,7 +24,7 @@ public:
     static QJsonObject toJson(const QList<QGraphicsItem*>& selectedItems);
 signals:
     void itemMoved(QGraphicsItem* movedItem, const QPointF& movedFromPosition);
-
+    void message(QString);                                  // Text message signal
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
@@ -33,6 +34,7 @@ private:
     QPointF oldPos;
     QString filePath;
     bool modified;
+    QUndoStack& undoStack;
 
     static void write(const QGraphicsRectItem* rectItem, QJsonObject& jObject);
     static void write(const QGraphicsTextItem* textItem, QJsonObject& jObject);

@@ -8,7 +8,7 @@
 #include "MyPicture.h"
 
 QtMainWindow::QtMainWindow(QWidget *parent)
-    : QMainWindow(parent), undoStack(this), undoView(&undoStack), scene(this)
+    : QMainWindow(parent), undoStack(this), undoView(&undoStack), scene(undoStack, this)
 {
     ui.setupUi(this);
     ui.graphicsView->setScene(&scene);
@@ -20,6 +20,26 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     undoView.show();
     undoView.setAttribute(Qt::WA_QuitOnClose, false);
 
+    QAction* undoAction = undoStack.createUndoAction(this);
+    QAction* redoAction = undoStack.createRedoAction(this);
+    auto seqs = QList< QKeySequence>{ QKeySequence::Undo, Qt::ALT + Qt::Key_Backspace};
+    undoAction->setShortcuts(seqs); //Ctrl+Z, Alt+Backspace:setShortcuts() function for shortcut keys
+    redoAction->setShortcut(QKeySequence::Redo); //QKeySequence of Ctrl+Y, Shift+Ctrl+Z:Qt defines many built-in shortcut keys for us
+    undoAction->setText(tr("&Zur\303\274ck"));
+    redoAction->setText(tr("&Wiederholen"));
+    undoAction->setToolTip("Mache letzte Aktion weg");
+    redoAction->setToolTip("Mache letzte Aktion wieder hin");
+    QIcon icon11;
+    icon11.addFile(QString::fromUtf8(":/QtMainWindow/images/undo.png"), QSize(), QIcon::Normal, QIcon::Off);
+    undoAction->setIcon(icon11);
+    QIcon icon12;
+    icon12.addFile(QString::fromUtf8(":/QtMainWindow/images/redo.png"), QSize(), QIcon::Normal, QIcon::Off);
+    redoAction->setIcon(icon12);
+    ui.mainToolBar->addAction(undoAction);
+    ui.mainToolBar->addAction(redoAction);
+    ui.menuEdit->addAction(undoAction);
+    ui.menuEdit->addAction(redoAction);  //Add two actions to edit
+
     connect(&scene, &MyScene::itemMoved,
         this, &QtMainWindow::itemMoved);
 
@@ -27,6 +47,9 @@ QtMainWindow::QtMainWindow(QWidget *parent)
         this, &QtMainWindow::itemMenuAboutToShow);
     connect(ui.menuEdit, &QMenu::aboutToHide,
         this, &QtMainWindow::itemMenuAboutToHide);
+    
+    //Associate signal with slot: when m_scene transmits message signal, MainWindow receives signal and executes showMessage slot function
+    connect(&scene, SIGNAL(message(QString)), this, SLOT(showMessage(QString)));
     clipboard = QApplication::clipboard();
 
     // MRU
@@ -38,6 +61,11 @@ QtMainWindow::QtMainWindow(QWidget *parent)
         ui.menuDatei->addAction(recentFiles[i]);
     }
     UpdateRecentFileActions();
+}
+
+void QtMainWindow::showMessage(QString msg)
+{
+    statusBar()->showMessage(msg);  // Display messages on the main window status bar
 }
 
 void QtMainWindow::UpdateRecentFileActions()
@@ -245,16 +273,6 @@ void QtMainWindow::on_action_ZoomIn_triggered()
 void QtMainWindow::on_action_ZoomOut_triggered()
 {
     ui.graphicsView->zoomOut();
-}
-
-void QtMainWindow::on_action_Undo_triggered()
-{
-    undoStack.undo();
-}
-
-void QtMainWindow::on_action_Redo_triggered()
-{
-    undoStack.redo();
 }
 
 void QtMainWindow::on_action_Delete_triggered()

@@ -4,8 +4,8 @@
 #include <QtCore/qfile.h>
 #include <qjsondocument.h>
 
-MyScene::MyScene(QObject* parent)
-    : QGraphicsScene(parent), modified(false)
+MyScene::MyScene(QUndoStack& undoSt, QObject* parent)
+    : QGraphicsScene(parent), modified(false), undoStack(undoSt)
 {
     setSceneRect(-800, -800, 2000, 2000);
 }
@@ -132,6 +132,7 @@ void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
             emit itemMoved(movingItem,
                 oldPos);
         movingItem = nullptr;
+        emit message("Item moved");
     }
     QGraphicsScene::mouseReleaseEvent(event);
 }

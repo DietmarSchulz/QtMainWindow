@@ -34,6 +34,7 @@ private:
     QAction* separatorAct;
 public slots:
     void itemMoved(QGraphicsItem* movedDiagram, const QPointF& moveStartPosition); 
+    void showMessage(QString);        // Show messages on the status bar
 private slots:
     void OpenRecentFile();
     void on_action_New_triggered();
@@ -51,9 +52,6 @@ private slots:
     void on_action_ZoomIn_triggered();
     void on_action_ZoomOut_triggered();
  
-    void on_action_Undo_triggered();
-    void on_action_Redo_triggered();
-
     void on_action_Delete_triggered();
 
     void on_action_Brightnesss_triggered();

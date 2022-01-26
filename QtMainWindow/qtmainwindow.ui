@@ -76,8 +76,6 @@
     <addaction name="action_Copy"/>
     <addaction name="action_Cut"/>
     <addaction name="action_Paste"/>
-    <addaction name="action_Undo"/>
-    <addaction name="action_Redo"/>
     <addaction name="separator"/>
     <addaction name="action_Delete"/>
    </widget>
@@ -127,8 +125,6 @@
    <addaction name="action_Copy"/>
    <addaction name="action_Cut"/>
    <addaction name="action_Paste"/>
-   <addaction name="action_Undo"/>
-   <addaction name="action_Redo"/>
    <addaction name="action_Delete"/>
    <addaction name="action_Rect"/>
    <addaction name="action_Picture"/>
@@ -332,36 +328,6 @@
    </property>
    <property name="statusTip">
     <string>Helligkeit des selektiertem Bildes</string>
-   </property>
-  </action>
-  <action name="action_Undo">
-   <property name="icon">
-    <iconset resource="qtmainwindow.qrc">
-     <normaloff>:/QtMainWindow/images/undo.png</normaloff>:/QtMainWindow/images/undo.png</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Rückgängig</string>
-   </property>
-   <property name="statusTip">
-    <string>Undo</string>
-   </property>
-   <property name="shortcut">
-    <string>Alt+Backspace</string>
-   </property>
-  </action>
-  <action name="action_Redo">
-   <property name="icon">
-    <iconset resource="qtmainwindow.qrc">
-     <normaloff>:/QtMainWindow/images/redo.png</normaloff>:/QtMainWindow/images/redo.png</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Wiederholen</string>
-   </property>
-   <property name="statusTip">
-    <string>Redo</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Y</string>
    </property>
   </action>
   <action name="action_Delete">
