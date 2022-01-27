@@ -39,6 +39,8 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.mainToolBar->addAction(redoAction);
     ui.menuEdit->addAction(undoAction);
     ui.menuEdit->addAction(redoAction);  //Add two actions to edit
+    connect(undoAction, SIGNAL(triggered(bool)), this, SLOT(undone(bool)));
+    connect(redoAction, SIGNAL(triggered(bool)), this, SLOT(redone(bool)));
 
     connect(&scene, &MyScene::itemMoved,
         this, &QtMainWindow::itemMoved);
@@ -303,4 +305,12 @@ void QtMainWindow::itemMenuAboutToShow()
 void QtMainWindow::itemMenuAboutToHide()
 {
     ui.action_Delete->setEnabled(true);
+}
+
+void QtMainWindow::undone(bool checked)
+{
+}
+
+void QtMainWindow::redone(bool checked)
+{
 }

@@ -58,4 +58,7 @@ private slots:
 
     void itemMenuAboutToShow();
     void itemMenuAboutToHide();
+
+    void undone(bool checked);
+    void redone(bool checked);
 };
