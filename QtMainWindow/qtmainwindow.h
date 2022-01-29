@@ -13,6 +13,7 @@ class QtMainWindow : public QMainWindow
 
 public:
     QtMainWindow(QWidget *parent = Q_NULLPTR);
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
 protected:
     void closeEvent(QCloseEvent* event) override;

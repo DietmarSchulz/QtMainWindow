@@ -63,6 +63,9 @@ QtMainWindow::QtMainWindow(QWidget *parent)
         ui.menuDatei->addAction(recentFiles[i]);
     }
     UpdateRecentFileActions();
+
+    // Keyboard events
+    scene.installEventFilter(this);
 }
 
 void QtMainWindow::showMessage(QString msg)
@@ -132,6 +135,33 @@ void QtMainWindow::on_action_New_triggered()
 void QtMainWindow::itemMoved(QGraphicsItem* movedItem, const QPointF& moveStartPosition)
 {
     undoStack.push(new MoveCommand(movedItem, moveStartPosition));
+}
+
+bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)
+{
+    auto* focusItem = scene.focusItem();
+    if (focusItem == nullptr || focusItem->type() != QGraphicsTextItem::Type)
+        return false;
+    auto* doc = static_cast<QGraphicsTextItem*>(focusItem)->document();
+
+    if (event->type() != QEvent::KeyPress)
+        return false;
+    QKeyEvent* key_event = dynamic_cast<QKeyEvent*>(event);
+    QKeySequence key_sequence{ static_cast<int>(key_event->modifiers()) + key_event->key() };
+
+    if (key_sequence == QKeySequence::Undo)
+    {
+        undoStack.undo(); // nothing in the stack
+        qDebug() << "undo";
+        return true;
+    }
+    else if (key_sequence == QKeySequence::Redo)
+    {
+        undoStack.redo(); // nothing in the stack
+        qDebug() << "redo";
+        return true;
+    }
+    return false;
 }
 
 void QtMainWindow::closeEvent(QCloseEvent* event)

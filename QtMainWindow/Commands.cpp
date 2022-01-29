@@ -201,7 +201,7 @@ void ModifyBrightnessCommand::redo()
     myGraphicsScene->update();
 }
 
-ChangeTextCommand::ChangeTextCommand(QGraphicsTextItem* newItem, QUndoCommand* parent) : firstTime(false), myItem(newItem)
+ChangeTextCommand::ChangeTextCommand(QGraphicsTextItem* newItem, QUndoCommand* parent) : firstTime(true), myItem(newItem)
 {
     setText(reinterpret_cast<const char*>(u8"Textänderung"));
 }
