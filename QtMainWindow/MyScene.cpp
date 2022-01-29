@@ -217,7 +217,7 @@ void MyScene::read(QGraphicsTextItem* textItem, const QJsonObject& jObject)
     }
     textItem->setFlag(QGraphicsItem::ItemIsMovable);
     textItem->setFlag(QGraphicsItem::ItemIsSelectable);
-    textItem->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditable);
+    textItem->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditorInteraction);
 }
 
 QJsonObject MyScene::toJson(const QList<QGraphicsItem*>& selectedItems)

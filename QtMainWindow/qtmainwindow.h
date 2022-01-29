@@ -49,6 +49,7 @@ private slots:
 
     void on_action_Rect_triggered();
     void on_action_Picture_triggered();
+    void on_action_Textfield_triggered();
 
     void on_action_ZoomIn_triggered();
     void on_action_ZoomOut_triggered();

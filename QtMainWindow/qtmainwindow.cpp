@@ -14,6 +14,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.graphicsView->setScene(&scene);
     ui.graphicsView->contextMenu.addAction(ui.action_Rect);
     ui.graphicsView->contextMenu.addAction(ui.action_Picture);
+    ui.graphicsView->contextMenu.addAction(ui.action_Textfield);
 
     ui.graphicsView->pictureContextMenu.addAction(ui.action_Brightnesss);
     undoView.setWindowTitle(tr("Kommando Liste"));
@@ -276,16 +277,6 @@ void QtMainWindow::on_action_Rect_triggered()
     rect->setFlag(QGraphicsItem::ItemIsMovable);
     rect->setFlag(QGraphicsItem::ItemIsSelectable);
     undoStack.push(new AddBoxCommand(rect, &scene));
-
-    QGraphicsTextItem* text = new QGraphicsTextItem("Ersetzen");
-    auto* doc = text->document();
-    connect(doc, SIGNAL(undoCommandAdded()), this, SLOT(textChange()));
-    text->setFont(QFont("Arial", 20));
-    text->setFlag(QGraphicsItem::ItemIsMovable);
-    text->setFlag(QGraphicsItem::ItemIsSelectable);
-    text->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditorInteraction);
-    undoStack.push(new AddBoxCommand(text, &scene));
-    scene.SetModified(true);
 }
 
 void QtMainWindow::on_action_Picture_triggered()
@@ -296,6 +287,19 @@ void QtMainWindow::on_action_Picture_triggered()
     std::filesystem::path p = filename.toStdString();
     currdir = QString::fromStdString(p.parent_path().string());
     undoStack.push(new AddPictureCommand(p.generic_string(), &scene));
+    scene.SetModified(true);
+}
+
+void QtMainWindow::on_action_Textfield_triggered()
+{
+    QGraphicsTextItem* text = new QGraphicsTextItem("Ersetzen");
+    auto* doc = text->document();
+    connect(doc, SIGNAL(undoCommandAdded()), this, SLOT(textChange()));
+    text->setFont(QFont("Arial", 20));
+    text->setFlag(QGraphicsItem::ItemIsMovable);
+    text->setFlag(QGraphicsItem::ItemIsSelectable);
+    text->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditorInteraction);
+    undoStack.push(new AddBoxCommand(text, &scene));
     scene.SetModified(true);
 }
 

@@ -85,6 +85,7 @@
     </property>
     <addaction name="action_Rect"/>
     <addaction name="action_Picture"/>
+    <addaction name="action_Textfield"/>
    </widget>
    <widget class="QMenu" name="menuZoom">
     <property name="title">
@@ -127,6 +128,7 @@
    <addaction name="action_Paste"/>
    <addaction name="action_Delete"/>
    <addaction name="action_Rect"/>
+   <addaction name="action_Textfield"/>
    <addaction name="action_Picture"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
@@ -358,6 +360,24 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="action_Textfield">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/TextElement.png</normaloff>:/QtMainWindow/images/TextElement.png</iconset>
+   </property>
+   <property name="text">
+    <string>Textfeld</string>
+   </property>
+   <property name="toolTip">
+    <string>Textfeld einfügen</string>
+   </property>
+   <property name="statusTip">
+    <string>Textfeld</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
    </property>
   </action>
  </widget>
