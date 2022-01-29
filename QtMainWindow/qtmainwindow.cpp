@@ -283,7 +283,7 @@ void QtMainWindow::on_action_Rect_triggered()
     text->setFont(QFont("Arial", 20));
     text->setFlag(QGraphicsItem::ItemIsMovable);
     text->setFlag(QGraphicsItem::ItemIsSelectable);
-    text->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditable);
+    text->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditorInteraction);
     undoStack.push(new AddBoxCommand(text, &scene));
     scene.SetModified(true);
 }
