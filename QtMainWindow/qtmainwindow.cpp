@@ -248,6 +248,8 @@ void QtMainWindow::on_action_Rect_triggered()
     undoStack.push(new AddBoxCommand(rect, &scene));
 
     QGraphicsTextItem* text = new QGraphicsTextItem("Ersetzen");
+    auto* doc = text->document();
+    connect(doc, SIGNAL(undoCommandAdded()), this, SLOT(textChange()));
     text->setFont(QFont("Arial", 20));
     text->setFlag(QGraphicsItem::ItemIsMovable);
     text->setFlag(QGraphicsItem::ItemIsSelectable);
@@ -313,4 +315,14 @@ void QtMainWindow::undone(bool checked)
 
 void QtMainWindow::redone(bool checked)
 {
+}
+
+void QtMainWindow::textChange()
+{
+    auto* focused = scene.focusItem();
+    if (focused->type() == QGraphicsTextItem::Type) {
+        auto* myText = static_cast<QGraphicsTextItem*>(focused);
+        auto cmd = std::make_unique<ChangeTextCommand>(myText);
+        undoStack.push(cmd.release());
+    }
 }

@@ -85,3 +85,17 @@ private:
     MyPicture* myPicture;
     double oldGamma;
 };
+
+class ChangeTextCommand : public QUndoCommand
+{
+public:
+    ChangeTextCommand(QGraphicsTextItem* newItem,
+        QUndoCommand* parent = nullptr);
+
+    void undo() override;
+    void redo() override;
+
+private:
+    QGraphicsTextItem* myItem;
+    bool firstTime;
+};

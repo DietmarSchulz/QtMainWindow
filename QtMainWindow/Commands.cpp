@@ -2,6 +2,7 @@
 
 #include <opencv2/opencv.hpp>
 #include <qjsondocument.h>
+#include <qtextdocument.h>
 #include "OpenCVWrapper.h"
 #include "MyPicture.h"
 
@@ -198,4 +199,25 @@ void ModifyBrightnessCommand::redo()
     QImage qim = OpenCVWrapper::Mat2QImage(picture);
     myPicture->setPixmap(QPixmap::fromImage(qim));
     myGraphicsScene->update();
+}
+
+ChangeTextCommand::ChangeTextCommand(QGraphicsTextItem* newItem, QUndoCommand* parent) : firstTime(false), myItem(newItem)
+{
+    setText(reinterpret_cast<const char*>(u8"Textänderung"));
+}
+
+void ChangeTextCommand::undo()
+{
+    auto* doc = myItem->document();
+    doc->undo();
+}
+
+void ChangeTextCommand::redo()
+{
+    if (firstTime) {
+        firstTime = false;
+        return;
+    }
+    auto* doc = myItem->document();
+    doc->redo();
 }

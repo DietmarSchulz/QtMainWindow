@@ -61,4 +61,6 @@ private slots:
 
     void undone(bool checked);
     void redone(bool checked);
+
+    void textChange();
 };
