@@ -103,6 +103,7 @@
       <string>Bild</string>
      </property>
      <addaction name="action_Brightnesss"/>
+     <addaction name="action_RGB_scale"/>
     </widget>
     <addaction name="menuBild"/>
    </widget>
@@ -178,6 +179,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_Brightnesss"/>
+   <addaction name="action_RGB_scale"/>
   </widget>
   <action name="action_New">
    <property name="icon">
@@ -378,6 +380,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="action_RGB_scale">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/ColorDialog.png</normaloff>:/QtMainWindow/images/ColorDialog.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rot/Grün/Blau Sklaierung</string>
+   </property>
+   <property name="statusTip">
+    <string>Helligkeit von rot, grün und blau</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
    </property>
   </action>
  </widget>

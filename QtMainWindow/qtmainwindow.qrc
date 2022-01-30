@@ -17,5 +17,6 @@
         <file>images/ico_layer_add.png</file>
         <file>images/ico_layer_erase.png</file>
         <file>images/TextElement.png</file>
+        <file>images/ColorDialog.png</file>
     </qresource>
 </RCC>

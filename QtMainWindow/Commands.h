@@ -84,6 +84,7 @@ private:
     QGraphicsScene* myGraphicsScene;
     MyPicture* myPicture;
     double oldGamma;
+    double newGamma;
 };
 
 class ChangeTextCommand : public QUndoCommand

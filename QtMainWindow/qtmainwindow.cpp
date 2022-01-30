@@ -17,6 +17,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.graphicsView->contextMenu.addAction(ui.action_Textfield);
 
     ui.graphicsView->pictureContextMenu.addAction(ui.action_Brightnesss);
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_RGB_scale);
     undoView.setWindowTitle(tr("Kommando Liste"));
     undoView.show();
     undoView.setAttribute(Qt::WA_QuitOnClose, false);
@@ -331,6 +332,10 @@ void QtMainWindow::on_action_Brightnesss_triggered()
         ModifyBrightnessCommand* modCommand = new ModifyBrightnessCommand(static_cast<MyPicture*>(item), &scene);
         undoStack.push(modCommand);
     }
+}
+
+void QtMainWindow::on_action_RGB_scale_triggered()
+{
 }
 
 void QtMainWindow::itemMenuAboutToShow()

@@ -177,6 +177,7 @@ ModifyBrightnessCommand::ModifyBrightnessCommand(MyPicture* qPicture, QGraphicsS
         }
     }
     myPicture->setGamma(gamma);
+    newGamma = gamma;
     setText("Helligkeit anpassen");
     cv::destroyAllWindows();
 }
@@ -185,6 +186,7 @@ void ModifyBrightnessCommand::undo()
 {
     cv::Mat picture = cv::imread(myPicture->getCurrPath());
     double gamma = oldGamma;
+    myPicture->setGamma(gamma);
     picture = OpenCVWrapper::GammaBrightness(picture, gamma);
     QImage qim = OpenCVWrapper::Mat2QImage(picture);
     myPicture->setPixmap(QPixmap::fromImage(qim));
@@ -194,7 +196,8 @@ void ModifyBrightnessCommand::undo()
 void ModifyBrightnessCommand::redo()
 {
     cv::Mat picture = cv::imread(myPicture->getCurrPath());
-    double gamma = myPicture->getGamma();
+    double gamma = newGamma;
+    myPicture->setGamma(gamma);
     picture = OpenCVWrapper::GammaBrightness(picture, gamma);
     QImage qim = OpenCVWrapper::Mat2QImage(picture);
     myPicture->setPixmap(QPixmap::fromImage(qim));
