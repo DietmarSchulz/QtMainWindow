@@ -8,7 +8,19 @@ void MyPicture::read(const QJsonObject& json)
 		cv::Mat picture = cv::imread(currPath);
 		if (json.contains("gamma") && json["gamma"].isDouble()) {
 			gamma = json["gamma"].toDouble();
-			picture = OpenCVWrapper::GammaBrightness(picture, gamma);
+			if (gamma != 1.0) {
+				picture = OpenCVWrapper::GammaBrightness(picture, gamma);
+			}
+		}
+		if (json.contains("gammaRed") && json["gammaRed"].isDouble() &&
+			json.contains("gammaGreen") && json["gammaGreen"].isDouble() &&
+			json.contains("gammaBlue") && json["gammaBlue"].isDouble()) {
+			gammaRed = json["gammaRed"].toDouble();
+			gammaGreen = json["gammaGreen"].toDouble();
+			gammaBlue = json["gammaBlue"].toDouble();
+			if (gammaRed != 1.0 || gammaGreen != 1.0 || gammaBlue != 1.0) {
+				picture = OpenCVWrapper::ScaleRGB(picture, gammaRed, gammaGreen, gammaBlue);
+			}
 		}
 		QImage qim = OpenCVWrapper::Mat2QImage(picture);
 		setPixmap(QPixmap::fromImage(qim));
@@ -35,4 +47,7 @@ void MyPicture::write(QJsonObject& json) const
 	json["scale"] = scale();
 	json["rotation"] = rotation();
 	json["gamma"] = gamma;
+	json["gammaRed"] = gammaRed;
+	json["gammaGreen"] = gammaGreen;
+	json["gammaBlue"] = gammaBlue;
 }

@@ -336,6 +336,13 @@ void QtMainWindow::on_action_Brightnesss_triggered()
 
 void QtMainWindow::on_action_RGB_scale_triggered()
 {
+    if (scene.selectedItems().isEmpty())
+        return;
+    QGraphicsItem* item = scene.selectedItems().first();
+    if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
+        ModifyRGBScaleCommand* modCommand = new ModifyRGBScaleCommand(static_cast<MyPicture*>(item), &scene);
+        undoStack.push(modCommand);
+    }
 }
 
 void QtMainWindow::itemMenuAboutToShow()

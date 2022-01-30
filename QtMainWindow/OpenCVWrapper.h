@@ -34,5 +34,29 @@ public:
         cv::LUT(imageSource, lookUpTable, imageDestination);
         return imageDestination;
     }
+
+    static cv::Mat ScaleRGB(cv::Mat& imageSource, double gammaRed, double gammaGreen, double gammaBlue)
+    {
+        std::vector<cv::Mat> bgr;
+        cv::split(imageSource, bgr);
+        cv::Mat imageDestination;
+        cv::Mat redlookUpTable(1, 256, CV_8U);
+        uchar* redp = redlookUpTable.ptr();
+        cv::Mat greenlookUpTable(1, 256, CV_8U);
+        uchar* greenp = greenlookUpTable.ptr();
+        cv::Mat bluelookUpTable(1, 256, CV_8U);
+        uchar* bluep = bluelookUpTable.ptr();        
+        for (int i = 0; i < 256; ++i)
+            bluep[i] = cv::saturate_cast<uchar>(pow(i / 255.0, gammaBlue) * 255.0);
+        LUT(bgr[0], bluelookUpTable, bgr[0]);
+        for (int i = 0; i < 256; ++i)
+            greenp[i] = cv::saturate_cast<uchar>(pow(i / 255.0, gammaGreen) * 255.0);
+        LUT(bgr[1], greenlookUpTable, bgr[1]);
+        for (int i = 0; i < 256; ++i)
+            redp[i] = cv::saturate_cast<uchar>(pow(i / 255.0, gammaRed) * 255.0);
+        LUT(bgr[2], redlookUpTable, bgr[2]);
+        merge(bgr, imageDestination);
+        return imageDestination;
+    }
 };
 

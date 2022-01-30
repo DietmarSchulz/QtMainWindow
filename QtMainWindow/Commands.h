@@ -100,3 +100,21 @@ private:
     QGraphicsTextItem* myItem;
     bool firstTime;
 };
+
+class ModifyRGBScaleCommand : public QUndoCommand
+{
+public:
+    ModifyRGBScaleCommand(MyPicture* qPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent = nullptr);
+    void undo() override;
+    void redo() override;
+
+private:
+    QGraphicsScene* myGraphicsScene;
+    MyPicture* myPicture;
+    double oldGammaRed;
+    double oldGammaGreen;
+    double oldGammaBlue;
+    double newGammaRed;
+    double newGammaGreen;
+    double newGammaBlue;
+};
