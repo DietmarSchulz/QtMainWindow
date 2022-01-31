@@ -153,6 +153,12 @@ ModifyBrightnessCommand::ModifyBrightnessCommand(MyPicture* qPicture, QGraphicsS
         p[i] = cv::saturate_cast<uchar>(pow(i / 255.0, gamma) * 255.0);
 
     cv::Mat picture = cv::imread(myPicture->getCurrPath());
+    auto oldGammaRed = myPicture->getGammaRed();
+    auto oldGammaGreen = myPicture->getGammaGreen();
+    auto oldGammaBlue = myPicture->getGammaBlue();
+    if (oldGammaRed != 1.0 || oldGammaGreen != 1.0 || oldGammaBlue != 1.0) {
+        picture = OpenCVWrapper::ScaleRGB(picture, oldGammaRed, oldGammaGreen, oldGammaBlue);
+    }
     cv::Mat imageDestination;
     cv::LUT(picture, lookUpTable, imageDestination);
     VoidAction doGammaLUT = [&]() {
@@ -188,6 +194,12 @@ void ModifyBrightnessCommand::undo()
     double gamma = oldGamma;
     myPicture->setGamma(gamma);
     picture = OpenCVWrapper::GammaBrightness(picture, gamma);
+    auto oldGammaRed = myPicture->getGammaRed();
+    auto oldGammaGreen = myPicture->getGammaGreen();
+    auto oldGammaBlue = myPicture->getGammaBlue();
+    if (oldGammaRed != 1.0 || oldGammaGreen != 1.0 || oldGammaBlue != 1.0) {
+        picture = OpenCVWrapper::ScaleRGB(picture, oldGammaRed, oldGammaGreen, oldGammaBlue);
+    }
     QImage qim = OpenCVWrapper::Mat2QImage(picture);
     myPicture->setPixmap(QPixmap::fromImage(qim));
     myGraphicsScene->update();
@@ -199,6 +211,12 @@ void ModifyBrightnessCommand::redo()
     double gamma = newGamma;
     myPicture->setGamma(gamma);
     picture = OpenCVWrapper::GammaBrightness(picture, gamma);
+    auto oldGammaRed = myPicture->getGammaRed();
+    auto oldGammaGreen = myPicture->getGammaGreen();
+    auto oldGammaBlue = myPicture->getGammaBlue();
+    if (oldGammaRed != 1.0 || oldGammaGreen != 1.0 || oldGammaBlue != 1.0) {
+        picture = OpenCVWrapper::ScaleRGB(picture, oldGammaRed, oldGammaGreen, oldGammaBlue);
+    }
     QImage qim = OpenCVWrapper::Mat2QImage(picture);
     myPicture->setPixmap(QPixmap::fromImage(qim));
     myGraphicsScene->update();
@@ -239,6 +257,10 @@ ModifyRGBScaleCommand::ModifyRGBScaleCommand(MyPicture* qPicture, QGraphicsScene
 
     cv::Mat orgImg = cv::imread(myPicture->getCurrPath());
     std::vector<cv::Mat> bgr;
+
+    // using brightness gamma as predecessor
+    auto brightnessGamma = myPicture->getGamma();
+    orgImg = OpenCVWrapper::GammaBrightness(orgImg, brightnessGamma);
     split(orgImg, bgr);
 
     cv::Mat blueDummy;
@@ -324,12 +346,17 @@ ModifyRGBScaleCommand::ModifyRGBScaleCommand(MyPicture* qPicture, QGraphicsScene
         }
     }
 
+    setText("RGB anpassen");
     cv::destroyAllWindows(); //destroy all open windows
 }
 
 void ModifyRGBScaleCommand::undo()
 {
     cv::Mat picture = cv::imread(myPicture->getCurrPath());
+
+    // using brightness gamma as predecessor
+    auto brightnessGamma = myPicture->getGamma();
+    picture = OpenCVWrapper::GammaBrightness(picture, brightnessGamma);
     myPicture->setGammaRed(oldGammaRed);
     myPicture->setGammaGreen(oldGammaGreen);
     myPicture->setGammaBlue(oldGammaBlue);
@@ -342,6 +369,10 @@ void ModifyRGBScaleCommand::undo()
 void ModifyRGBScaleCommand::redo()
 {
     cv::Mat picture = cv::imread(myPicture->getCurrPath());
+
+    // using brightness gamma as predecessor
+    auto brightnessGamma = myPicture->getGamma();
+    picture = OpenCVWrapper::GammaBrightness(picture, brightnessGamma);
     myPicture->setGammaRed(newGammaRed);
     myPicture->setGammaGreen(newGammaGreen);
     myPicture->setGammaBlue(newGammaBlue);
