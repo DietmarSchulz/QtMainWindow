@@ -139,9 +139,9 @@ void QtMainWindow::on_action_New_triggered()
     }
 }
 
-void QtMainWindow::itemMoved(QGraphicsItem* movedItem, const QPointF& moveStartPosition)
+void QtMainWindow::itemMoved(QList<QGraphicsItem*>& movedItems, std::vector<QPointF>& moveStartPositions)
 {
-    undoStack.push(new MoveCommand(movedItem, moveStartPosition));
+    undoStack.push(new MoveCommand(movedItems, moveStartPositions));
 }
 
 bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)

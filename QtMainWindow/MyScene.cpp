@@ -121,18 +121,23 @@ void MyScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         modified = true;
     }
 
-    clearSelection();
     QGraphicsScene::mousePressEvent(event);
 }
 
 void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     if (movingItem != nullptr && event->button() == Qt::LeftButton) {
-        if (oldPos != movingItem->pos())
-            emit itemMoved(movingItem,
-                oldPos);
+        if (oldPos != movingItem->pos()) {
+            auto sel = selectedItems();
+            std::vector<QPointF> oldPositions;
+            for (auto& s : sel) {
+                oldPositions.push_back(s->pos());
+            }
+            emit itemMoved(sel,
+                oldPositions);
+        }
         movingItem = nullptr;
-        emit message("Item moved");
+        emit message("Items moved");
     }
     QGraphicsScene::mouseReleaseEvent(event);
 }

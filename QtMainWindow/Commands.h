@@ -7,7 +7,7 @@
 class MoveCommand : public QUndoCommand
 {
 public:
-    MoveCommand(QGraphicsItem* diagramItem, const QPointF& oldPos,
+    MoveCommand(QList<QGraphicsItem*>& items, std::vector<QPointF>& oldPositions,
         QUndoCommand* parent = nullptr);
 
     void undo() override;
@@ -15,9 +15,9 @@ public:
     bool mergeWith(const QUndoCommand* command) override;
 
 private:
-    QGraphicsItem* myItem;
-    QPointF myOldPos;
-    QPointF newPos;
+    QList<QGraphicsItem*> myItem;
+    std::vector<QPointF> myOldPos;
+    std::vector<QPointF> newPos;
 };
 
 class DeleteCommand : public QUndoCommand

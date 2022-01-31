@@ -23,7 +23,7 @@ public:
     static QList<QGraphicsItem*> fromJson(const QJsonObject& json);
     static QJsonObject toJson(const QList<QGraphicsItem*>& selectedItems);
 signals:
-    void itemMoved(QGraphicsItem* movedItem, const QPointF& movedFromPosition);
+    void itemMoved(QList<QGraphicsItem*>& movedItem, std::vector<QPointF>& movedFromPosition);
     void message(QString);                                  // Text message signal
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;

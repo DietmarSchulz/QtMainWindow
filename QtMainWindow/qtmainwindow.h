@@ -34,7 +34,7 @@ private:
     QAction* recentFiles[maxrecentfile];
     QAction* separatorAct;
 public slots:
-    void itemMoved(QGraphicsItem* movedDiagram, const QPointF& moveStartPosition); 
+    void itemMoved(QList<QGraphicsItem*>& movedItems, std::vector<QPointF>& moveStartPositions); 
     void showMessage(QString);        // Show messages on the status bar
 private slots:
     void OpenRecentFile();

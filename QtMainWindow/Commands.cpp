@@ -13,41 +13,52 @@ QString createCommandString(QGraphicsItem* item, const QPointF& pos)
         .arg(pos.x()).arg(pos.y());
 }
 
-MoveCommand::MoveCommand(QGraphicsItem* QGraphicsItem, const QPointF& oldPos,
+MoveCommand::MoveCommand(QList<QGraphicsItem*>& items, std::vector<QPointF>& oldPositions,
     QUndoCommand* parent)
-    : QUndoCommand(parent), myItem(QGraphicsItem)
-    , myOldPos(oldPos), newPos(QGraphicsItem->pos())
+    : QUndoCommand(parent), myItem(items), myOldPos(oldPositions)
 {
+    for (auto gr : items) {
+        newPos.push_back(gr->pos());
+    }
 }
 
 bool MoveCommand::mergeWith(const QUndoCommand* command)
 {
     const MoveCommand* moveCommand = static_cast<const MoveCommand*>(command);
-    QGraphicsItem* item = moveCommand->myItem;
+    auto& items = moveCommand->myItem;
 
-    if (myItem != item)
+    if (myItem != items)
         return false;
 
-    newPos = item->pos();
+    for (auto i = 0;  auto s : items) {
+        newPos[i] = s->pos();
+        i++;
+    }
     setText(QObject::tr("Bewege %1")
-        .arg(createCommandString(myItem, newPos)));
+        .arg(createCommandString(myItem[0], newPos[0])));
 
     return true;
 }
 
 void MoveCommand::undo()
 {
-    myItem->setPos(myOldPos);
-    myItem->scene()->update();
+    for (auto i = 0; auto* it : myItem) {
+        it->setPos(myOldPos[i]);
+        it->scene()->update();
+        i++;
+    }
     setText(QObject::tr("Bewege %1")
-        .arg(createCommandString(myItem, newPos)));
+        .arg(createCommandString(myItem[0], newPos[0])));
 }
 
 void MoveCommand::redo()
 {
-    myItem->setPos(newPos);
+    for (auto i = 0; auto * it : myItem) {
+        it->setPos(newPos[i]);
+        i++;
+    }
     setText(QObject::tr("Move %1")
-        .arg(createCommandString(myItem, newPos)));
+        .arg(createCommandString(myItem[0], newPos[0])));
 }
 
 DeleteCommand::DeleteCommand(QGraphicsScene* scene, QUndoCommand* parent)
