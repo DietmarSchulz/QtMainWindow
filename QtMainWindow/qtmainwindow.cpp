@@ -20,7 +20,12 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.graphicsView->pictureContextMenu.addAction(ui.action_RGB_scale);
     undoView.setWindowTitle(tr("Kommando Liste"));
     undoView.show();
+    undoView.move(0, 0);
+    move(undoView.size().width(), 0);
     undoView.setAttribute(Qt::WA_QuitOnClose, false);
+    QIcon icon;
+    icon.addFile(QString::fromUtf8(":/QtMainWindow/images/ok.png"), QSize(), QIcon::Normal, QIcon::Off);
+    undoView.setWindowIcon(icon);
 
     QAction* undoAction = undoStack.createUndoAction(this);
     QAction* redoAction = undoStack.createRedoAction(this);

@@ -10,8 +10,15 @@
     <height>693</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
   <property name="windowTitle">
-   <string>QtMainWindow</string>
+   <string>Bildeditor</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="qtmainwindow.qrc">
+    <normaloff>:/QtMainWindow/images/ok.png</normaloff>:/QtMainWindow/images/ok.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
