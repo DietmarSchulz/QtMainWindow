@@ -7,12 +7,15 @@
 class MoveCommand : public QUndoCommand
 {
 public:
+    enum { Id = 1234 };
+
     MoveCommand(QList<QGraphicsItem*>& items, std::vector<QPointF>& oldPositions,
         QUndoCommand* parent = nullptr);
 
     void undo() override;
     void redo() override;
     bool mergeWith(const QUndoCommand* command) override;
+    int id() const override { return Id; }
 
 private:
     QList<QGraphicsItem*> myItem;
