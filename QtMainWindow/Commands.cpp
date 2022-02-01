@@ -57,8 +57,41 @@ void MoveCommand::redo()
         it->setPos(newPos[i]);
         i++;
     }
-    setText(QObject::tr("Move %1")
+    setText(QObject::tr("Bewege %1")
         .arg(createCommandString(myItem[0], newPos[0])));
+}
+
+ScaleCommand::ScaleCommand(QGraphicsItem* item, double oldScale, QUndoCommand* parent)
+    : QUndoCommand(parent), myItem(item), myOldScale(oldScale)
+{
+    newScale = myItem->scale();
+}
+
+void ScaleCommand::undo()
+{
+    myItem->setScale(myOldScale);
+    myItem->scene()->update();
+    setText(QObject::tr("Skaliere %1 (%2)").arg(myItem->type()).arg(myOldScale));
+}
+
+void ScaleCommand::redo()
+{
+    myItem->setScale(newScale);
+    myItem->scene()->update();
+    setText(QObject::tr("Skaliere %1 (%2)").arg(myItem->type()).arg(newScale));
+}
+
+bool ScaleCommand::mergeWith(const QUndoCommand* command)
+{
+    const ScaleCommand* scaleCommand = static_cast<const ScaleCommand*>(command);
+    auto& item = scaleCommand->myItem;
+
+    if (myItem != item)
+        return false;
+
+    newScale = item->scale();
+    setText(QObject::tr("Skaliere %1 (%2)").arg(myItem->type()).arg(newScale));
+    return true;
 }
 
 DeleteCommand::DeleteCommand(QGraphicsScene* scene, QUndoCommand* parent)
@@ -392,3 +425,4 @@ void ModifyRGBScaleCommand::redo()
     myPicture->setPixmap(QPixmap::fromImage(qim));
     myGraphicsScene->update();
 }
+

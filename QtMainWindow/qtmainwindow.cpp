@@ -51,6 +51,9 @@ QtMainWindow::QtMainWindow(QWidget *parent)
 
     connect(&scene, &MyScene::itemMoved,
         this, &QtMainWindow::itemMoved);
+    connect(ui.graphicsView, &MyGraphicsView::itemScaled,
+        this, &QtMainWindow::itemScaled);
+
 
     connect(ui.menuEdit, &QMenu::aboutToShow,
         this, &QtMainWindow::itemMenuAboutToShow);
@@ -155,6 +158,11 @@ void QtMainWindow::on_action_New_triggered()
 void QtMainWindow::itemMoved(QList<QGraphicsItem*>& movedItems, std::vector<QPointF>& moveStartPositions)
 {
     undoStack.push(new MoveCommand(movedItems, moveStartPositions));
+}
+
+void QtMainWindow::itemScaled(QGraphicsItem* item, double oldScale)
+{
+    undoStack.push(new ScaleCommand(item, oldScale));
 }
 
 bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)

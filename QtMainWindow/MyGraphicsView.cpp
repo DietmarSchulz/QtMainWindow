@@ -93,6 +93,7 @@ void MyGraphicsView::wheelEvent(QWheelEvent* event)
             else {
                 sceneItem->setScale(currScale / 1.2);
             }
+            emit itemScaled(sceneItem, currScale);
         }
         else
         {

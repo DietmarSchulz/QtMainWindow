@@ -23,6 +23,25 @@ private:
     std::vector<QPointF> newPos;
 };
 
+class ScaleCommand : public QUndoCommand
+{
+public:
+    enum { Id = 5678 };
+
+    ScaleCommand(QGraphicsItem* item, double oldScale,
+        QUndoCommand* parent = nullptr);
+
+    void undo() override;
+    void redo() override;
+    bool mergeWith(const QUndoCommand* command) override;
+    int id() const override { return Id; }
+
+private:
+    QGraphicsItem* myItem;
+    double myOldScale;
+    double newScale;
+};
+
 class DeleteCommand : public QUndoCommand
 {
 public:
