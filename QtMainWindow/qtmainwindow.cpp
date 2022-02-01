@@ -53,6 +53,8 @@ QtMainWindow::QtMainWindow(QWidget *parent)
         this, &QtMainWindow::itemMoved);
     connect(ui.graphicsView, &MyGraphicsView::itemScaled,
         this, &QtMainWindow::itemScaled);
+    connect(ui.graphicsView, &MyGraphicsView::itemRotated,
+        this, &QtMainWindow::itemRotated);
 
 
     connect(ui.menuEdit, &QMenu::aboutToShow,
@@ -163,6 +165,11 @@ void QtMainWindow::itemMoved(QList<QGraphicsItem*>& movedItems, std::vector<QPoi
 void QtMainWindow::itemScaled(QGraphicsItem* item, double oldScale)
 {
     undoStack.push(new ScaleCommand(item, oldScale));
+}
+
+void QtMainWindow::itemRotated(QGraphicsItem* item, double oldRotation)
+{
+    undoStack.push(new RotateCommand(item, oldRotation));
 }
 
 bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)

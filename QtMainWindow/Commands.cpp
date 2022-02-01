@@ -55,6 +55,7 @@ void MoveCommand::redo()
 {
     for (auto i = 0; auto * it : myItem) {
         it->setPos(newPos[i]);
+        it->scene()->update();
         i++;
     }
     setText(QObject::tr("Bewege %1")
@@ -91,6 +92,39 @@ bool ScaleCommand::mergeWith(const QUndoCommand* command)
 
     newScale = item->scale();
     setText(QObject::tr("Skaliere %1 (%2)").arg(myItem->type()).arg(newScale));
+    return true;
+}
+
+RotateCommand::RotateCommand(QGraphicsItem* item, double oldRotation, QUndoCommand* parent)
+    : QUndoCommand(parent), myItem(item), myOldRotation(oldRotation)
+{
+    newRotation = item->rotation();
+}
+
+void RotateCommand::undo()
+{
+    myItem->setRotation(myOldRotation);
+    myItem->scene()->update();
+    setText(QObject::tr("Rotiere %1 (%2)").arg(myItem->type()).arg(myOldRotation));
+}
+
+void RotateCommand::redo()
+{
+    myItem->setRotation(newRotation);
+    myItem->scene()->update();
+    setText(QObject::tr("Rotiere %1 (%2)").arg(myItem->type()).arg(newRotation));
+}
+
+bool RotateCommand::mergeWith(const QUndoCommand* command)
+{
+    const RotateCommand* rotationCommand = static_cast<const RotateCommand*>(command);
+    auto& item = rotationCommand->myItem;
+
+    if (myItem != item)
+        return false;
+
+    newRotation = item->rotation();
+    setText(QObject::tr("Rotiere %1 (%2)").arg(myItem->type()).arg(newRotation));
     return true;
 }
 
@@ -425,4 +459,3 @@ void ModifyRGBScaleCommand::redo()
     myPicture->setPixmap(QPixmap::fromImage(qim));
     myGraphicsScene->update();
 }
-

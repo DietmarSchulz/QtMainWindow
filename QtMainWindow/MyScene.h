@@ -32,6 +32,7 @@ protected:
 private:
     QGraphicsItem* movingItem = nullptr;
     QPointF oldPos;
+    std::vector<QPointF> oldPositions;
     QString filePath;
     bool modified;
     QUndoStack& undoStack;

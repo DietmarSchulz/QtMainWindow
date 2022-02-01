@@ -42,6 +42,25 @@ private:
     double newScale;
 };
 
+class RotateCommand : public QUndoCommand
+{
+public:
+    enum { Id = 5678 };
+
+    RotateCommand(QGraphicsItem* item, double oldRotation,
+        QUndoCommand* parent = nullptr);
+
+    void undo() override;
+    void redo() override;
+    bool mergeWith(const QUndoCommand* command) override;
+    int id() const override { return Id; }
+
+private:
+    QGraphicsItem* myItem;
+    double myOldRotation;
+    double newRotation;
+};
+
 class DeleteCommand : public QUndoCommand
 {
 public:

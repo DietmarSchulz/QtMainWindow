@@ -37,6 +37,7 @@ public slots:
     void itemMoved(QList<QGraphicsItem*>& movedItems, std::vector<QPointF>& moveStartPositions); 
     void showMessage(QString);        // Show messages on the status bar
     void itemScaled(QGraphicsItem* item, double oldScale);
+    void itemRotated(QGraphicsItem* item, double oldRotation);
 private:
     bool checkSelection(int num);
 private slots:

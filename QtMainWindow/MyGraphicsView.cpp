@@ -82,6 +82,7 @@ void MyGraphicsView::wheelEvent(QWheelEvent* event)
             else {
                 sceneItem->setRotation(currRot + 10);
             }
+            emit itemRotated(sceneItem, currRot);
         }
         else if (event->modifiers() & Qt::ControlModifier)
         {

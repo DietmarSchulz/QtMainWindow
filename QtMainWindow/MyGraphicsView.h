@@ -20,6 +20,7 @@ public slots:
     void rotateRight() { rotate(10); }
 signals:
     void itemScaled(QGraphicsItem* item, double oldScale);
+    void itemRotated(QGraphicsItem* item, double oldRotation);
 protected:
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
