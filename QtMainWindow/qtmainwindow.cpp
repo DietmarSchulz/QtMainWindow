@@ -80,6 +80,19 @@ void QtMainWindow::showMessage(QString msg)
     statusBar()->showMessage(msg);  // Display messages on the main window status bar
 }
 
+bool QtMainWindow::checkSelection(int num)
+{
+    if (scene.selectedItems().isEmpty())
+        return false;
+    if (scene.selectedItems().count() != num) {
+        QMessageBox::warning(this, "Applikation",
+            "Die Anzahl selektierter Elemente passt nicht",
+            QMessageBox::Discard);
+        return false;
+    }
+    return true;
+}
+
 void QtMainWindow::UpdateRecentFileActions()
 {
     QSettings settings("DsQt", "PictureManager");
@@ -330,7 +343,7 @@ void QtMainWindow::on_action_Delete_triggered()
 
 void QtMainWindow::on_action_Brightnesss_triggered()
 {
-    if (scene.selectedItems().isEmpty())
+    if (!checkSelection(1))
         return;
     QGraphicsItem* item = scene.selectedItems().first();
     if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
@@ -341,7 +354,7 @@ void QtMainWindow::on_action_Brightnesss_triggered()
 
 void QtMainWindow::on_action_RGB_scale_triggered()
 {
-    if (scene.selectedItems().isEmpty())
+    if (!checkSelection(1))
         return;
     QGraphicsItem* item = scene.selectedItems().first();
     if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {

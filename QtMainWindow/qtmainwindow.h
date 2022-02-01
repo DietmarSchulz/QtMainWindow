@@ -36,6 +36,8 @@ private:
 public slots:
     void itemMoved(QList<QGraphicsItem*>& movedItems, std::vector<QPointF>& moveStartPositions); 
     void showMessage(QString);        // Show messages on the status bar
+private:
+    bool checkSelection(int num);
 private slots:
     void OpenRecentFile();
     void on_action_New_triggered();
