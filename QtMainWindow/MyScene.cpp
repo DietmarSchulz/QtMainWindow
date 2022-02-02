@@ -121,7 +121,7 @@ void MyScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         auto sel = selectedItems();
 
         oldPositions.clear();
-        if (!sel.isEmpty()) {
+        if (!sel.isEmpty() && sel.contains(movingItem)) {
             for (auto& s : sel) {
                 oldPositions.push_back(s->pos());
             }
@@ -142,6 +142,7 @@ void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
             auto sel = selectedItems();
             emit itemMoved(sel,
                 oldPositions);
+            clearSelection();
         }
         movingItem = nullptr;
         emit message("Items moved");

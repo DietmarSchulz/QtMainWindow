@@ -134,7 +134,7 @@ DeleteCommand::DeleteCommand(QGraphicsScene* scene, QUndoCommand* parent)
     QList<QGraphicsItem*> list = myGraphicsScene->selectedItems();
     list.first()->setSelected(false);
     myItem = list.first();
-    setText(QObject::tr("Lösche %1")
+    setText(QObject::tr("L\303\266sche %1")
         .arg(createCommandString(myItem, myItem->pos())));
 }
 
