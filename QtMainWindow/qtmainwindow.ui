@@ -111,6 +111,7 @@
      </property>
      <addaction name="action_Brightnesss"/>
      <addaction name="action_RGB_scale"/>
+     <addaction name="action_AddImage"/>
     </widget>
     <addaction name="menuBild"/>
    </widget>
@@ -187,6 +188,7 @@
    </attribute>
    <addaction name="action_Brightnesss"/>
    <addaction name="action_RGB_scale"/>
+   <addaction name="action_AddImage"/>
   </widget>
   <action name="action_New">
    <property name="icon">
@@ -402,6 +404,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="action_AddImage">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/AddImage.png</normaloff>:/QtMainWindow/images/AddImage.png</iconset>
+   </property>
+   <property name="text">
+    <string>Addiere 2 Bilder</string>
+   </property>
+   <property name="toolTip">
+    <string>Addiere 2 Bilder gewichtet</string>
+   </property>
+   <property name="statusTip">
+    <string>Zwei Bilder weden gewichtet überlagert</string>
    </property>
   </action>
  </widget>

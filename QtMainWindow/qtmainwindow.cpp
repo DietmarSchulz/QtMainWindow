@@ -18,6 +18,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
 
     ui.graphicsView->pictureContextMenu.addAction(ui.action_Brightnesss);
     ui.graphicsView->pictureContextMenu.addAction(ui.action_RGB_scale);
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_AddImage);
     undoView.setWindowTitle(tr("Kommando Liste"));
     undoView.show();
     undoView.move(0, 0);
@@ -376,6 +377,10 @@ void QtMainWindow::on_action_RGB_scale_triggered()
         ModifyRGBScaleCommand* modCommand = new ModifyRGBScaleCommand(static_cast<MyPicture*>(item), &scene);
         undoStack.push(modCommand);
     }
+}
+
+void QtMainWindow::on_action_AddImage_triggered()
+{
 }
 
 void QtMainWindow::itemMenuAboutToShow()
