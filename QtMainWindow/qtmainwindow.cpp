@@ -381,6 +381,22 @@ void QtMainWindow::on_action_RGB_scale_triggered()
 
 void QtMainWindow::on_action_AddImage_triggered()
 {
+    if (scene.selectedItems().count() != 2 ||
+        scene.selectedItems().count() == 2 && (scene.selectedItems()[0]->type() != QGraphicsPixmapItem::Type || scene.selectedItems()[1]->type() != QGraphicsPixmapItem::Type)) {
+        QMessageBox::warning(this, "Applikation",
+            reinterpret_cast<const char*>(u8"Es sollten zwei Bilder ausgewählt sein!"),
+            QMessageBox::Discard);
+        return;
+    }
+    auto* img1 = static_cast<QGraphicsPixmapItem*>(scene.selectedItems()[0]);
+    auto* img2 = static_cast<QGraphicsPixmapItem*>(scene.selectedItems()[1]);
+
+    if (img1->boundingRect().width() / img1->boundingRect().height() != img2->boundingRect().width() / img2->boundingRect().height()) {
+        QMessageBox::warning(this, "Applikation",
+            reinterpret_cast<const char*>(u8"Es sollten zwei Bilder mit gleichem Seitenverhältnis sein!"),
+            QMessageBox::Discard);
+        return;
+    }
 }
 
 void QtMainWindow::itemMenuAboutToShow()
