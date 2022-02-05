@@ -22,6 +22,18 @@ void MyPicture::read(const QJsonObject& json)
 				picture = OpenCVWrapper::ScaleRGB(picture, gammaRed, gammaGreen, gammaBlue);
 			}
 		}
+		if (json.contains("secondPath") && json["secondPath"].isString()) {
+			secondPath = json["secondPath"].toString().toStdString();
+			if (json.contains("alphaAdd") && json["alphaAdd"].isDouble()) {
+				alphaAdd = json["alphaAdd"].toDouble();
+				cv::Mat secondPicture = cv::imread(secondPath);
+
+				// using brightness gamma and rgb gammas as predecessor
+				secondPicture = OpenCVWrapper::GammaBrightness(secondPicture, gammaSecond);
+				secondPicture = OpenCVWrapper::ScaleRGB(secondPicture, gammaRedSecond, gammaGreenSecond, gammaBlueSecond);
+				picture = OpenCVWrapper::Add(picture, secondPicture, alphaAdd);
+			}
+		}
 		QImage qim = OpenCVWrapper::Mat2QImage(picture);
 		setPixmap(QPixmap::fromImage(qim));
 		setFlag(QGraphicsItem::ItemIsMovable);
@@ -50,4 +62,8 @@ void MyPicture::write(QJsonObject& json) const
 	json["gammaRed"] = gammaRed;
 	json["gammaGreen"] = gammaGreen;
 	json["gammaBlue"] = gammaBlue;
+	if (!secondPath.empty()) {
+		json["secondPath"] = QString::fromStdString(secondPath);
+		json["alphaAdd"] = alphaAdd;
+	}
 }

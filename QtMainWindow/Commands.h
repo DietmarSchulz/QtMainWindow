@@ -159,3 +159,19 @@ private:
     double newGammaGreen;
     double newGammaBlue;
 };
+
+class AddPicturesCommand : public QUndoCommand
+{
+public:
+    AddPicturesCommand(MyPicture* qPicture, MyPicture* secondPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent = nullptr);
+    void undo() override;
+    void redo() override;
+
+private:
+    QGraphicsScene* myGraphicsScene;
+    MyPicture* myPicture;
+    double oldAlphaAdd;
+    double newAlphaAdd;
+    std::string oldSecondPath;
+    std::string newSecondPath;
+};

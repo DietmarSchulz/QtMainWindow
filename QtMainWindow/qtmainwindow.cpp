@@ -388,8 +388,8 @@ void QtMainWindow::on_action_AddImage_triggered()
             QMessageBox::Discard);
         return;
     }
-    auto* img1 = static_cast<QGraphicsPixmapItem*>(scene.selectedItems()[0]);
-    auto* img2 = static_cast<QGraphicsPixmapItem*>(scene.selectedItems()[1]);
+    auto* img1 = static_cast<MyPicture*>(scene.selectedItems()[0]);
+    auto* img2 = static_cast<MyPicture*>(scene.selectedItems()[1]);
 
     if (img1->boundingRect().width() / img1->boundingRect().height() != img2->boundingRect().width() / img2->boundingRect().height()) {
         QMessageBox::warning(this, "Applikation",
@@ -397,6 +397,7 @@ void QtMainWindow::on_action_AddImage_triggered()
             QMessageBox::Discard);
         return;
     }
+    undoStack.push(new AddPicturesCommand(img1, img2, &scene));
 }
 
 void QtMainWindow::itemMenuAboutToShow()

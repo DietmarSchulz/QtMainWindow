@@ -459,3 +459,123 @@ void ModifyRGBScaleCommand::redo()
     myPicture->setPixmap(QPixmap::fromImage(qim));
     myGraphicsScene->update();
 }
+
+AddPicturesCommand::AddPicturesCommand(MyPicture* qPicture, MyPicture* secondPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent) : QUndoCommand(parent), myPicture(qPicture), myGraphicsScene(graphicsScene)
+{
+    oldAlphaAdd = myPicture->getAlphaAdd();
+    newAlphaAdd = oldAlphaAdd;
+    oldSecondPath = myPicture->getSecondPath();
+
+    // store 2nd pics info:
+    myPicture->setGammaSecond(secondPicture->getGamma());
+    myPicture->setGammaRedSecond(secondPicture->getGammaRed());
+    myPicture->setGammaGreenSecond(secondPicture->getGammaGreen());
+    myPicture->setGammaBlueSecond(secondPicture->getGammaBlue());
+    myPicture->setSecondPath(secondPicture->getCurrPath());
+
+    // Some windows to control alphaAdd
+    cv:: Mat firstImg = cv::imread(myPicture->getCurrPath());
+    cv::Mat secondImg = cv::imread(secondPicture->getCurrPath());
+    std::string firstOriginalWindowName{ "First original" };
+    std::string secondOriginalWindowName{ "Second original" };
+    cv::namedWindow(firstOriginalWindowName, cv::WINDOW_NORMAL);
+    cv::moveWindow(firstOriginalWindowName, 0, 0);
+    cv::namedWindow(secondOriginalWindowName, cv::WINDOW_NORMAL);
+    cv::moveWindow(secondOriginalWindowName, 0, 320);
+    imshow(firstOriginalWindowName, firstImg);
+    imshow(secondOriginalWindowName, secondImg);
+    if (firstImg.size() != secondImg.size()) {
+        if (firstImg.size().width < secondImg.size().width && firstImg.size().height < secondImg.size().height) {
+            resize(firstImg, firstImg, secondImg.size());
+        }
+        else if (firstImg.size().width > secondImg.size().width && firstImg.size().height > secondImg.size().height) {
+            resize(secondImg, secondImg, firstImg.size());
+        }
+        else {
+            resize(firstImg, firstImg, secondImg.size());
+        }
+    }
+
+    double alpha = oldAlphaAdd; double beta;
+    using VoidAction = std::function<void()>;
+    std::string firstAndSecondAdded{ "First and second picture added" };
+
+    //Create trackbar to change blend
+    int iSliderValue1 = 0;
+    cv::namedWindow(firstAndSecondAdded, cv::WINDOW_NORMAL);
+    cv::moveWindow(firstAndSecondAdded, 400, 0);
+
+    VoidAction doBlending = [&] {
+        //Change the brightness and contrast of the image (For more infomation http://opencv-srf.blogspot.com/2013/07/change-contrast-of-image-or-video.html)
+        cv::Mat dst;
+        alpha = (double)iSliderValue1 / 100;
+
+        beta = (1.0 - alpha);
+        addWeighted(firstImg, alpha, secondImg, beta, 0.0, dst);
+
+        //show the brightness and contrast adjusted image
+        imshow(firstAndSecondAdded, dst);
+    };
+
+    cv::TrackbarCallback callbackForTrackBar = [](int pos, void* userdata)
+    {
+        (*(VoidAction*)userdata)();
+    };
+    cv::createTrackbar("Blend", firstAndSecondAdded, &iSliderValue1, 100, callbackForTrackBar, (void*)&doBlending);
+
+    int iDummy{ 0 };
+    callbackForTrackBar(iDummy, (void*)&doBlending);
+
+    auto wait_time = 1000;
+    while (cv::getWindowProperty(firstAndSecondAdded, cv::WND_PROP_VISIBLE) >= 1) {
+        auto keyCode = cv::waitKey(wait_time);
+        if (keyCode == 27) { // Wait for ESC key stroke
+            cv::destroyAllWindows();
+            break;
+        }
+    }
+
+    cv::destroyAllWindows(); //destroy all open windows
+    setText("Addiere Bilder");
+    newAlphaAdd = alpha;
+}
+
+void AddPicturesCommand::undo()
+{
+    myPicture->setSecondPath(oldSecondPath);
+    myPicture->setAlphaAdd(oldAlphaAdd);
+    cv::Mat img1 = cv::imread(myPicture->getCurrPath());
+    cv::Mat img2 = cv::imread(myPicture->getSecondPath());
+    cv::Mat dst;
+    if (img2.empty()){
+        dst = img1;
+    }
+    else {
+        dst = OpenCVWrapper::Add(img1, img2, newAlphaAdd);
+    }
+    QImage qim = OpenCVWrapper::Mat2QImage(dst);
+    myPicture->setPixmap(QPixmap::fromImage(qim));
+    myPicture->setAlphaAdd(newAlphaAdd);
+    myGraphicsScene->update();
+}
+
+void AddPicturesCommand::redo()
+{
+    cv::Mat img1 = cv::imread(myPicture->getCurrPath());
+
+    // using brightness gamma and rgb gammas as predecessor
+    img1 = OpenCVWrapper::GammaBrightness(img1, myPicture->getGamma());
+    img1 = OpenCVWrapper::ScaleRGB(img1, myPicture->getGammaRed(), myPicture->getGammaGreen(), myPicture->getGammaBlue());
+
+    cv::Mat img2 = cv::imread(myPicture->getSecondPath());
+
+    // using brightness gamma and rgb gammas as predecessor
+    img2 = OpenCVWrapper::GammaBrightness(img2, myPicture->getGamma());
+    img2 = OpenCVWrapper::ScaleRGB(img2, myPicture->getGammaRed(), myPicture->getGammaGreen(), myPicture->getGammaBlue());
+
+    cv::Mat dst =  OpenCVWrapper::Add(img1, img2, newAlphaAdd);
+    QImage qim = OpenCVWrapper::Mat2QImage(dst);
+    myPicture->setPixmap(QPixmap::fromImage(qim));
+    myPicture->setAlphaAdd(newAlphaAdd);
+    myGraphicsScene->update();
+}

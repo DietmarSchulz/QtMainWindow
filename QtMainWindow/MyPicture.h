@@ -11,7 +11,7 @@ public:
 	MyPicture(QGraphicsItem* parent = nullptr) : QGraphicsPixmapItem(parent), gamma(1.0),
 											gammaRed(1.0), gammaGreen(1.0), gammaBlue(1.0) {}
 	MyPicture(std::string path, QPixmap pixmap, QGraphicsItem* parent = nullptr) : QGraphicsPixmapItem(pixmap, parent), currPath(path), gamma(1.0),
-																		gammaRed(1.0), gammaGreen(1.0), gammaBlue(1.0) {}
+																		gammaRed(1.0), gammaGreen(1.0), gammaBlue(1.0), alphaAdd(0.5) {}
 
 	void read(const QJsonObject& json);
 	void write(QJsonObject& json) const;
@@ -51,11 +51,65 @@ public:
 	{
 		return currPath;
 	}
+	std::string getSecondPath()
+	{
+		return secondPath;
+	}
+	void setSecondPath(std::string value)
+	{
+		secondPath = value;
+	}
+	double getAlphaAdd()
+	{
+		return alphaAdd;
+	}
+	void setAlphaAdd(double val)
+	{
+		alphaAdd = val;
+	}
+	double getGammaSecond()
+	{
+		return gammaSecond;
+	}
+	void setGammaSecond(double val)
+	{
+		gamma = val;
+	}
+	double getGammaRedSecond()
+	{
+		return gammaRedSecond;
+	}
+	void setGammaRedSecond(double val)
+	{
+		gammaRed = val;
+	}
+	double getGammaGreenSecond()
+	{
+		return gammaGreenSecond;
+	}
+	void setGammaGreenSecond(double val)
+	{
+		gammaGreen = val;
+	}
+	double getGammaBlueSecond()
+	{
+		return gammaBlueSecond;
+	}
+	void setGammaBlueSecond(double val)
+	{
+		gammaBlue = val;
+	}
 private:
 	std::string currPath;
+	std::string secondPath;
+	double alphaAdd;
 	double gamma;
 	double gammaRed;
 	double gammaGreen;
 	double gammaBlue;
+	double gammaSecond;
+	double gammaRedSecond;
+	double gammaGreenSecond;
+	double gammaBlueSecond;
 };
 
