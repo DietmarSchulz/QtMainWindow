@@ -1,5 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include <filesystem>
+#include <qt5/QtPrintSupport/qprinter.h>
+#include <qt5/QtPrintSupport/qprintdialog.h>
 
 #include "qtmainwindow.h"
 #include "stdafx.h"
@@ -398,6 +400,31 @@ void QtMainWindow::on_action_AddImage_triggered()
         return;
     }
     undoStack.push(new AddPicturesCommand(img1, img2, &scene));
+}
+
+void QtMainWindow::on_action_Print_triggered()
+{
+    QPrinter printer(QPrinter::HighResolution);
+
+    QPrintDialog dialog(&printer, this);
+    dialog.setWindowTitle(tr("Print Document"));
+    if (dialog.exec() != QDialog::Accepted) {
+        return;
+    }
+    printer.setOutputFileName("print.pdf");
+    QPainter painter;
+    painter.begin(&printer);
+
+    double xscale = printer.pageRect().width() / double(ui.graphicsView->width());
+    double yscale = printer.pageRect().height() / double(ui.graphicsView->height());
+    double scale = qMin(xscale, yscale);
+    //painter.translate(printer.paperRect().x() + printer.pageRect().width() / 2,
+    //    printer.paperRect().y() + printer.pageRect().height() / 2);
+    //painter.scale(scale, scale);
+    //painter.translate(-width() / 2, -height() / 2);
+
+    scene.render(&painter);
+    painter.end();
 }
 
 void QtMainWindow::itemMenuAboutToShow()

@@ -75,6 +75,7 @@
     <addaction name="action_Open"/>
     <addaction name="action_Save"/>
     <addaction name="action_SaveAs"/>
+    <addaction name="action_Print"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -136,6 +137,7 @@
    <addaction name="action_Cut"/>
    <addaction name="action_Paste"/>
    <addaction name="action_Delete"/>
+   <addaction name="action_Print"/>
    <addaction name="action_Rect"/>
    <addaction name="action_Textfield"/>
    <addaction name="action_Picture"/>
@@ -419,6 +421,18 @@
    </property>
    <property name="statusTip">
     <string>Zwei Bilder weden gewichtet überlagert</string>
+   </property>
+  </action>
+  <action name="action_Print">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/Print.png</normaloff>:/QtMainWindow/images/Print.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Drucken</string>
+   </property>
+   <property name="statusTip">
+    <string>Ansicht ausdrucken</string>
    </property>
   </action>
  </widget>

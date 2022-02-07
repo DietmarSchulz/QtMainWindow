@@ -63,6 +63,7 @@ private slots:
     void on_action_Brightnesss_triggered();
     void on_action_RGB_scale_triggered();
     void on_action_AddImage_triggered();
+    void on_action_Print_triggered();
 
     void itemMenuAboutToShow();
     void itemMenuAboutToHide();
