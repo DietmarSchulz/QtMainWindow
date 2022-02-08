@@ -1,7 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include <filesystem>
-#include <qt5/QtPrintSupport/qprinter.h>
 #include <qt5/QtPrintSupport/qprintdialog.h>
+#include <qt5/QtPrintSupport/qprintpreviewdialog.h>
 
 #include "qtmainwindow.h"
 #include "stdafx.h"
@@ -405,26 +405,30 @@ void QtMainWindow::on_action_AddImage_triggered()
 void QtMainWindow::on_action_Print_triggered()
 {
     QPrinter printer(QPrinter::HighResolution);
-
     QPrintDialog dialog(&printer, this);
     dialog.setWindowTitle(tr("Print Document"));
     if (dialog.exec() != QDialog::Accepted) {
         return;
     }
-    printer.setOutputFileName("print.pdf");
-    QPainter painter;
-    painter.begin(&printer);
+    if (dialog.options().testFlag(QAbstractPrintDialog::PrintToFile)) {
+        QString filename = QFileDialog::getSaveFileName(this, "Drucke Szene in Datei:", currdir, "Pdf File (*.pdf)");
+        printer.setOutputFileName(filename);
+    }
+    print(&printer);
+}
 
-    double xscale = printer.pageRect().width() / double(ui.graphicsView->width());
-    double yscale = printer.pageRect().height() / double(ui.graphicsView->height());
-    double scale = qMin(xscale, yscale);
-    //painter.translate(printer.paperRect().x() + printer.pageRect().width() / 2,
-    //    printer.paperRect().y() + printer.pageRect().height() / 2);
-    //painter.scale(scale, scale);
-    //painter.translate(-width() / 2, -height() / 2);
+void QtMainWindow::on_action_Print_Preview_triggered()
+{
+    QPrinter printerPrev(QPrinter::HighResolution);
+    QPrintPreviewDialog printPreview(&printerPrev, this);
+    connect(&printPreview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)));
+    printPreview.exec();
+}
 
+void QtMainWindow::print(QPrinter* printer)
+{
+    QPainter painter(printer);
     scene.render(&painter);
-    painter.end();
 }
 
 void QtMainWindow::itemMenuAboutToShow()

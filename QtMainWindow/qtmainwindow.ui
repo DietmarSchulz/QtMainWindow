@@ -76,6 +76,7 @@
     <addaction name="action_Save"/>
     <addaction name="action_SaveAs"/>
     <addaction name="action_Print"/>
+    <addaction name="action_Print_Preview"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -138,6 +139,7 @@
    <addaction name="action_Paste"/>
    <addaction name="action_Delete"/>
    <addaction name="action_Print"/>
+   <addaction name="action_Print_Preview"/>
    <addaction name="action_Rect"/>
    <addaction name="action_Textfield"/>
    <addaction name="action_Picture"/>
@@ -433,6 +435,21 @@
    </property>
    <property name="statusTip">
     <string>Ansicht ausdrucken</string>
+   </property>
+  </action>
+  <action name="action_Print_Preview">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/PrintPreviewDialog.png</normaloff>:/QtMainWindow/images/PrintPreviewDialog.png</iconset>
+   </property>
+   <property name="text">
+    <string>Druck&amp;vorschau</string>
+   </property>
+   <property name="toolTip">
+    <string>Druckvorschau im Dialog</string>
+   </property>
+   <property name="statusTip">
+    <string>Anzeige Druckvorschau</string>
    </property>
   </action>
  </widget>

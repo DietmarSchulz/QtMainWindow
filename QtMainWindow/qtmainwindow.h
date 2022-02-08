@@ -6,6 +6,7 @@
 #include "MyScene.h"
 #include <QUndoStack>
 #include <QUndoView>
+#include <qt5/QtPrintSupport/qprinter.h>
 
 class QtMainWindow : public QMainWindow
 {
@@ -38,6 +39,7 @@ public slots:
     void showMessage(QString);        // Show messages on the status bar
     void itemScaled(QGraphicsItem* item, double oldScale);
     void itemRotated(QGraphicsItem* item, double oldRotation);
+    void print(QPrinter* printer);
 private:
     bool checkSelection(int num);
 private slots:
@@ -64,6 +66,7 @@ private slots:
     void on_action_RGB_scale_triggered();
     void on_action_AddImage_triggered();
     void on_action_Print_triggered();
+    void on_action_Print_Preview_triggered();
 
     void itemMenuAboutToShow();
     void itemMenuAboutToHide();
