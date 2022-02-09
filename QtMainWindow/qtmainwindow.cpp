@@ -410,7 +410,8 @@ void QtMainWindow::on_action_Print_triggered()
     if (dialog.exec() != QDialog::Accepted) {
         return;
     }
-    if (dialog.options().testFlag(QAbstractPrintDialog::PrintToFile)) {
+    auto name = printer.printerName();
+    if (name.contains("PDF|PS")) {
         QString filename = QFileDialog::getSaveFileName(this, "Drucke Szene in Datei:", currdir, "Pdf File (*.pdf)");
         printer.setOutputFileName(filename);
     }
