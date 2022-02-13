@@ -21,6 +21,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.graphicsView->pictureContextMenu.addAction(ui.action_Brightnesss);
     ui.graphicsView->pictureContextMenu.addAction(ui.action_RGB_scale);
     ui.graphicsView->pictureContextMenu.addAction(ui.action_AddImage);
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_Sobel);
     undoView.setWindowTitle(tr("Kommando Liste"));
     undoView.show();
     undoView.move(0, 0);
@@ -400,6 +401,11 @@ void QtMainWindow::on_action_AddImage_triggered()
         return;
     }
     undoStack.push(new AddPicturesCommand(img1, img2, &scene));
+}
+
+void QtMainWindow::on_action_Sobel_triggered()
+{
+    OpenCVWrapper lSobel;
 }
 
 void QtMainWindow::on_action_Print_triggered()

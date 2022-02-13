@@ -114,6 +114,7 @@
      <addaction name="action_Brightnesss"/>
      <addaction name="action_RGB_scale"/>
      <addaction name="action_AddImage"/>
+     <addaction name="action_Sobel"/>
     </widget>
     <addaction name="menuBild"/>
    </widget>
@@ -193,6 +194,7 @@
    <addaction name="action_Brightnesss"/>
    <addaction name="action_RGB_scale"/>
    <addaction name="action_AddImage"/>
+   <addaction name="action_Sobel"/>
   </widget>
   <action name="action_New">
    <property name="icon">
@@ -450,6 +452,21 @@
    </property>
    <property name="statusTip">
     <string>Anzeige Druckvorschau</string>
+   </property>
+  </action>
+  <action name="action_Sobel">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/AnalyzeTrace.png</normaloff>:/QtMainWindow/images/AnalyzeTrace.png</iconset>
+   </property>
+   <property name="text">
+    <string>Sobel</string>
+   </property>
+   <property name="toolTip">
+    <string>Sobel Konturen</string>
+   </property>
+   <property name="statusTip">
+    <string>Finde Konturen mit Sobel</string>
    </property>
   </action>
  </widget>

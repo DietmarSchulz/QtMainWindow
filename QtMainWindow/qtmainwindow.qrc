@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/QtMainWindow">
+    <file>images/AnalyzeTrace.png</file>
     <file>images/Print.png</file>
     <file>images/PrintDialog.png</file>
     <file>images/PrintPreviewDialog.png</file>
@@ -22,5 +23,6 @@
     <file>images/ico_layer_erase.png</file>
     <file>images/TextElement.png</file>
     <file>images/ColorDialog.png</file>
+    <file>Models/model.yml</file>
   </qresource>
 </RCC>

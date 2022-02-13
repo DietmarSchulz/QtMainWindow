@@ -1,11 +1,16 @@
 #pragma once
 
 #include <opencv2/opencv.hpp>
+#include <opencv2/line_descriptor.hpp>
+#include <opencv2/xfeatures2d/nonfree.hpp>
+#include <opencv2/ximgproc.hpp>
 #include <qt5/QtGui/qimage.h>
 
 class OpenCVWrapper
 {
 public:
+    OpenCVWrapper();
+
     static QImage Mat2QImage(cv::Mat const& src)
     {
         cv::Mat temp; // make the same cv::Mat
@@ -66,5 +71,7 @@ public:
         addWeighted(img1, alpha, img2, beta, 0.0, dst);
         return dst;
     }
+private:
+    cv::Ptr<cv::ximgproc::StructuredEdgeDetection> pDollar;
 };
 
