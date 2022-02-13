@@ -364,8 +364,10 @@ void QtMainWindow::on_action_Brightnesss_triggered()
         return;
     QGraphicsItem* item = scene.selectedItems().first();
     if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
+        hide();
         ModifyBrightnessCommand* modCommand = new ModifyBrightnessCommand(static_cast<MyPicture*>(item), &scene);
         undoStack.push(modCommand);
+        show();
     }
 }
 
@@ -375,8 +377,10 @@ void QtMainWindow::on_action_RGB_scale_triggered()
         return;
     QGraphicsItem* item = scene.selectedItems().first();
     if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
+        hide();
         ModifyRGBScaleCommand* modCommand = new ModifyRGBScaleCommand(static_cast<MyPicture*>(item), &scene);
         undoStack.push(modCommand);
+        show();
     }
 }
 
@@ -398,7 +402,9 @@ void QtMainWindow::on_action_AddImage_triggered()
             QMessageBox::Discard);
         return;
     }
+    hide();
     undoStack.push(new AddPicturesCommand(img1, img2, &scene));
+    show();
 }
 
 void QtMainWindow::on_action_Sobel_triggered()
@@ -409,7 +415,9 @@ void QtMainWindow::on_action_Sobel_triggered()
     if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
         auto* mPic = static_cast<MyPicture*>(item);
         cv::Mat orgImg = cv::imread(mPic->getCurrPath());
+        hide();
         cv::Mat res = lSobel.Sobel(orgImg);
+        show();
     }
     else {
         QMessageBox::warning(this, "Applikation",
