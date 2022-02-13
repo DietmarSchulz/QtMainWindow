@@ -7,6 +7,7 @@
 #include <QUndoStack>
 #include <QUndoView>
 #include <qt5/QtPrintSupport/qprinter.h>
+#include "OpenCVWrapper.h"
 
 class QtMainWindow : public QMainWindow
 {
@@ -42,6 +43,7 @@ public slots:
     void print(QPrinter* printer);
 private:
     bool checkSelection(int num);
+    OpenCVWrapper lSobel;
 private slots:
     void OpenRecentFile();
     void on_action_New_triggered();

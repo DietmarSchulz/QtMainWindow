@@ -1,11 +1,9 @@
-#include <opencv2/opencv.hpp>
 #include <filesystem>
 #include <qt5/QtPrintSupport/qprintdialog.h>
 #include <qt5/QtPrintSupport/qprintpreviewdialog.h>
 
 #include "qtmainwindow.h"
 #include "stdafx.h"
-#include "OpenCVWrapper.h"
 #include "Commands.h"
 #include "MyPicture.h"
 
@@ -405,7 +403,19 @@ void QtMainWindow::on_action_AddImage_triggered()
 
 void QtMainWindow::on_action_Sobel_triggered()
 {
-    OpenCVWrapper lSobel;
+    if (!checkSelection(1))
+        return;
+    QGraphicsItem* item = scene.selectedItems().first();
+    if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
+        auto* mPic = static_cast<MyPicture*>(item);
+        cv::Mat orgImg = cv::imread(mPic->getCurrPath());
+        cv::Mat res = lSobel.Sobel(orgImg);
+    }
+    else {
+        QMessageBox::warning(this, "Applikation",
+            reinterpret_cast<const char*>(u8"Sobel geht nur auf einem Bild!"),
+            QMessageBox::Discard);
+    }
 }
 
 void QtMainWindow::on_action_Print_triggered()

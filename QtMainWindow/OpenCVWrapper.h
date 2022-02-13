@@ -71,6 +71,9 @@ public:
         addWeighted(img1, alpha, img2, beta, 0.0, dst);
         return dst;
     }
+
+    cv::Mat Sobel(cv::Mat orgImg);
+
 private:
     cv::Ptr<cv::ximgproc::StructuredEdgeDetection> pDollar;
 };
