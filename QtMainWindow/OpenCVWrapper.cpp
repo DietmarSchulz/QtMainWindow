@@ -46,8 +46,6 @@ cv::Mat OpenCVWrapper::Sobel(cv::Mat orgImg)
 
 	Mat edges(orgFloat.size(), orgFloat.type());
 
-	Ptr<StructuredEdgeDetection> pDollar =
-		createStructuredEdgeDetection("models/model.yml");
 	pDollar->detectEdges(orgFloat, edges);
 
 	// computes orientation from edge map
