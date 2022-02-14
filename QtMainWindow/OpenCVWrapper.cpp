@@ -84,5 +84,5 @@ cv::Mat OpenCVWrapper::Sobel(cv::Mat orgImg)
 		}
 	}
 	destroyAllWindows();
-	return res;
+	return edges;
 }
