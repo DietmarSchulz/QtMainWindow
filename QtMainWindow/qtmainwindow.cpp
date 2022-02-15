@@ -418,7 +418,7 @@ void QtMainWindow::on_action_Sobel_triggered()
         hide();
         cv::Mat res = lSobel.Sobel(orgImg);
         auto sobelPath = QString::fromStdString(mPic->getCurrPath()).replace(QRegExp(R"(\.(\w+))"), R"(_Sobel.\1)");
-        cvtColor(res, res, cv::COLOR_GRAY2BGR);
+        res.convertTo(res, CV_8UC4, 255.0);
         cv::imwrite(sobelPath.toStdString(), res);
         undoStack.push(new AddPictureCommand(sobelPath.toStdString(), &scene));
         show();
