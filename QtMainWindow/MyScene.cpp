@@ -7,7 +7,7 @@
 MyScene::MyScene(QUndoStack& undoSt, QObject* parent)
     : QGraphicsScene(parent), modified(false), undoStack(undoSt)
 {
-    setSceneRect(-800, -800, 2000, 2000);
+    setSceneRect(-800, -800, 2200, 3000);
 }
 
 void MyScene::load(QString& loadPath)
