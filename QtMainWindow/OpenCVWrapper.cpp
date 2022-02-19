@@ -26,6 +26,11 @@ OpenCVWrapper::OpenCVWrapper()
 
 }
 
+cv::Mat OpenCVWrapper::ColorHistEqualization(cv::Mat image)
+{
+	return cv::Mat();
+}
+
 cv::Mat OpenCVWrapper::Sobel(cv::Mat orgImg)
 {
 	string orgWindowName{ "Originabild" };

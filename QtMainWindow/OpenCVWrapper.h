@@ -72,6 +72,8 @@ public:
         return dst;
     }
 
+    static cv::Mat ColorHistEqualization(cv::Mat image);
+
     cv::Mat Sobel(cv::Mat orgImg);
 
 private:
