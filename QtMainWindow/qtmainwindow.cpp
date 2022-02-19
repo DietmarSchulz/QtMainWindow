@@ -20,6 +20,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.graphicsView->pictureContextMenu.addAction(ui.action_RGB_scale);
     ui.graphicsView->pictureContextMenu.addAction(ui.action_AddImage);
     ui.graphicsView->pictureContextMenu.addAction(ui.action_Sobel);
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_HistogramEqualize);
     undoView.setWindowTitle(tr("Kommando Liste"));
     undoView.show();
     undoView.move(0, 0);
@@ -426,6 +427,28 @@ void QtMainWindow::on_action_Sobel_triggered()
     else {
         QMessageBox::warning(this, "Applikation",
             reinterpret_cast<const char*>(u8"Sobel geht nur auf einem Bild!"),
+            QMessageBox::Discard);
+    }
+}
+
+void QtMainWindow::on_action_HistogramEqualize_triggered()
+{
+    if (!checkSelection(1))
+        return;
+    QGraphicsItem* item = scene.selectedItems().first();
+    if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
+        auto* mPic = static_cast<MyPicture*>(item);
+        cv::Mat orgImg = cv::imread(mPic->getCurrPath());
+        hide();
+        cv::Mat res = OpenCVWrapper::ColorHistEqualization(orgImg);
+        auto histPath = QString::fromStdString(mPic->getCurrPath()).replace(QRegExp(R"(\.(\w+))"), R"(_Hist.\1)");
+        cv::imwrite(histPath.toStdString(), res);
+        undoStack.push(new AddPictureCommand(histPath.toStdString(), &scene));
+        show();
+    }
+    else {
+        QMessageBox::warning(this, "Applikation",
+            reinterpret_cast<const char*>(u8"Histogramm Abgleich geht nur auf einem Bild!"),
             QMessageBox::Discard);
     }
 }

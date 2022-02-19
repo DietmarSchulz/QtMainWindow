@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/QtMainWindow">
+    <file>images/ChartFilter.png</file>
     <file>images/AnalyzeTrace.png</file>
     <file>images/Print.png</file>
     <file>images/PrintDialog.png</file>

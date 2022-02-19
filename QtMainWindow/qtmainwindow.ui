@@ -115,6 +115,7 @@
      <addaction name="action_RGB_scale"/>
      <addaction name="action_AddImage"/>
      <addaction name="action_Sobel"/>
+     <addaction name="action_HistogramEqualize"/>
     </widget>
     <addaction name="menuBild"/>
    </widget>
@@ -195,6 +196,7 @@
    <addaction name="action_RGB_scale"/>
    <addaction name="action_AddImage"/>
    <addaction name="action_Sobel"/>
+   <addaction name="action_HistogramEqualize"/>
   </widget>
   <action name="action_New">
    <property name="icon">
@@ -467,6 +469,21 @@
    </property>
    <property name="statusTip">
     <string>Finde Konturen mit Sobel</string>
+   </property>
+  </action>
+  <action name="action_HistogramEqualize">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/ChartFilter.png</normaloff>:/QtMainWindow/images/ChartFilter.png</iconset>
+   </property>
+   <property name="text">
+    <string>Histogramm Abgleich</string>
+   </property>
+   <property name="iconText">
+    <string>Histogramm Abgleich für rgb Kanäle</string>
+   </property>
+   <property name="statusTip">
+    <string>Bild wir mit gleichmässigem Histogrramm abgeglichen</string>
    </property>
   </action>
  </widget>
