@@ -14,13 +14,20 @@ public:
     QMenu pictureContextMenu;
     MyGraphicsView(QWidget* parent) : QGraphicsView(parent), contextMenu(this), pictureContextMenu(this) {};
 public slots:
-    void zoomIn() { scale(1.2, 1.2); }
-    void zoomOut() { scale(1 / 1.2, 1 / 1.2); }
+    void zoomIn() { 
+        scale(1.2, 1.2);             
+        emit zoomed();
+    }
+    void zoomOut() { 
+        scale(1 / 1.2, 1 / 1.2);             
+        emit zoomed();
+    }
     void rotateLeft() { rotate(-10); }
     void rotateRight() { rotate(10); }
 signals:
     void itemScaled(QGraphicsItem* item, double oldScale);
     void itemRotated(QGraphicsItem* item, double oldRotation);
+    void zoomed();
 protected:
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;

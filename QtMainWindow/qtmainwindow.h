@@ -82,5 +82,6 @@ private slots:
     void redone(bool checked);
 
     void zoomComboIndexChanged(int index);
+    void zoomed();
     void textChange();
 };
