@@ -6,6 +6,7 @@
 #include "MyScene.h"
 #include <QUndoStack>
 #include <QUndoView>
+#include <qcombobox>
 #include <qt5/QtPrintSupport/qprinter.h>
 #include "OpenCVWrapper.h"
 
@@ -30,6 +31,7 @@ private:
 
     QUndoStack undoStack;
     QUndoView undoView;
+    QComboBox myComboBox;
     QClipboard* clipboard;
     bool maybeSave();
     static const int maxrecentfile = 10;
@@ -79,5 +81,6 @@ private slots:
     void undone(bool checked);
     void redone(bool checked);
 
+    void zoomComboIndexChanged(int index);
     void textChange();
 };
