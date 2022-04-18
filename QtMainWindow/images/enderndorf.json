@@ -5,11 +5,11 @@
             "gammaBlue": 1,
             "gammaGreen": 1,
             "gammaRed": 1,
-            "path": "D:/Programming/myprojects/2022/Cpp/QtMainWindow/QtMainWindow/images/92b7f406-fac6-4249-b1f1-c08534b69c81_Hist.jpg",
-            "positionX": 573.3333333333335,
-            "positionY": -54.16666666666666,
-            "rotation": -20,
-            "scale": 0.36
+            "path": "D:/Programming/myprojects/2022/Cpp/QtMainWindow/QtMainWindow/images/92b7f406-fac6-4249-b1f1-c08534b69c81.jpg",
+            "positionX": -1145.5432170666666,
+            "positionY": -925.3697983999999,
+            "rotation": 0,
+            "scale": 1.0749542399999998
         },
         {
             "gamma": 1,
@@ -17,21 +17,21 @@
             "gammaGreen": 1,
             "gammaRed": 1,
             "path": "D:/Programming/myprojects/2022/Cpp/QtMainWindow/QtMainWindow/images/92b7f406-fac6-4249-b1f1-c08534b69c81_Sobel.jpg",
-            "positionX": 725,
-            "positionY": 280,
-            "rotation": 0,
-            "scale": 0.25
+            "positionX": -104.30739271111116,
+            "positionY": -46.998226844444446,
+            "rotation": -20,
+            "scale": 1.0749542399999998
         },
         {
             "gamma": 1,
             "gammaBlue": 1,
             "gammaGreen": 1,
             "gammaRed": 1,
-            "path": "D:/Programming/myprojects/2022/Cpp/QtMainWindow/QtMainWindow/images/92b7f406-fac6-4249-b1f1-c08534b69c81.jpg",
-            "positionX": 95.63333333333333,
-            "positionY": -56.099999999999994,
-            "rotation": 0,
-            "scale": 0.36
+            "path": "D:/Programming/myprojects/2022/Cpp/QtMainWindow/QtMainWindow/images/92b7f406-fac6-4249-b1f1-c08534b69c81_Hist.jpg",
+            "positionX": -315.2440917333331,
+            "positionY": 1244.4429429333313,
+            "rotation": -20,
+            "scale": 1.0749542399999998
         }
     ],
     "Rects": [
@@ -40,8 +40,8 @@
         {
             "fontName": "Arial",
             "fontSize": 20,
-            "positionX": 315.20000000000005,
-            "positionY": 332.0666666666665,
+            "positionX": -698.4423423999996,
+            "positionY": 865.275818666667,
             "rotation": 0,
             "scale": 1,
             "text": "Enderndorf"
