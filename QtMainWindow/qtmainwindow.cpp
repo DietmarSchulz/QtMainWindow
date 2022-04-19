@@ -64,6 +64,8 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     // make the connection between the combo box and a slot
     connect(&myComboBox, SIGNAL(currentIndexChanged(int)),
         SLOT(zoomComboIndexChanged(int)));
+    connect(&myComboBox, SIGNAL(editTextChanged(QString&)),
+        SLOT(zoomComboStringChanged(QString&)));
     connect(ui.graphicsView, &MyGraphicsView::zoomed,
         this, &QtMainWindow::zoomed);
 
@@ -519,7 +521,21 @@ void QtMainWindow::redone(bool checked)
 void QtMainWindow::zoomComboIndexChanged(int index)
 {
     auto sel = myComboBox.itemText(index);
-    double zoomFactor = std::stod(sel.toStdString());
+    zoomComboStringChanged(sel);
+}
+
+void QtMainWindow::zoomComboStringChanged(QString& sel)
+{
+    try {
+        double zoomFactor = std::stod(sel.toStdString());
+        ui.graphicsView->resetTransform();
+        ui.graphicsView->scale(zoomFactor, zoomFactor);
+    }
+    catch (...) {
+        QMessageBox::warning(this, "Applikation",
+            reinterpret_cast<const char*>(u8"Es sollte ein vernünftiger real Wert sein!"),
+            QMessageBox::Discard);
+    }
 }
 
 void QtMainWindow::zoomed()
