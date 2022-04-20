@@ -82,7 +82,7 @@ private slots:
     void redone(bool checked);
 
     void zoomComboIndexChanged(int index);
-    void zoomComboStringChanged(QString& newText);
+    void zoomComboStringChanged(const QString& newText);
     void zoomed();
     void textChange();
 };
