@@ -31,7 +31,7 @@ private:
 
     QUndoStack undoStack;
     QUndoView undoView;
-    QComboBox myComboBox;
+    QComboBox myZoomComboBox;
     QClipboard* clipboard;
     bool maybeSave();
     static const int maxrecentfile = 10;

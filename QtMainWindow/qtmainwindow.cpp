@@ -53,18 +53,18 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     connect(redoAction, SIGNAL(triggered(bool)), this, SLOT(redone(bool)));
 
     // Add values in the combo box for zoom
-    myComboBox.addItem("1.0");
-    myComboBox.addItem("0.5");
-    myComboBox.addItem("1.5");
-    myComboBox.setEditable(true);
-    myComboBox.setStatusTip("Set zoom factor for scene");
-    myComboBox.setToolTip("Zoom factor for scene");
-    myComboBox.setMinimumContentsLength(10);
-    ui.toolBar->addWidget(&myComboBox);
+    myZoomComboBox.addItem("1.0");
+    myZoomComboBox.addItem("0.5");
+    myZoomComboBox.addItem("1.5");
+    myZoomComboBox.setEditable(true);
+    myZoomComboBox.setStatusTip("Set zoom factor for scene");
+    myZoomComboBox.setToolTip("Zoom factor for scene");
+    myZoomComboBox.setMinimumContentsLength(10);
+    ui.toolBar->addWidget(&myZoomComboBox);
     // make the connection between the combo box and a slot
-    connect(&myComboBox, SIGNAL(currentIndexChanged(int)),
+    connect(&myZoomComboBox, SIGNAL(currentIndexChanged(int)),
         SLOT(zoomComboIndexChanged(int)));
-    connect(&myComboBox, SIGNAL(activated(const QString&)),
+    connect(&myZoomComboBox, SIGNAL(activated(const QString&)),
         SLOT(zoomComboStringChanged(const QString&)));
     connect(ui.graphicsView, &MyGraphicsView::zoomed,
         this, &QtMainWindow::zoomed);
@@ -520,7 +520,7 @@ void QtMainWindow::redone(bool checked)
 
 void QtMainWindow::zoomComboIndexChanged(int index)
 {
-    auto sel = myComboBox.itemText(index);
+    auto sel = myZoomComboBox.itemText(index);
     zoomComboStringChanged(sel);
 }
 
@@ -543,7 +543,7 @@ void QtMainWindow::zoomed()
     auto trf = ui.graphicsView->transform();
     double scale = sqrt(trf.m11() * trf.m11() + trf.m12() * trf.m12());
     std::string s = std::to_string(scale);
-    myComboBox.setCurrentText(QString::fromStdString(s));
+    myZoomComboBox.setCurrentText(QString::fromStdString(s));
 }
 
 void QtMainWindow::textChange()
