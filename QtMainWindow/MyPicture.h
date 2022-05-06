@@ -47,7 +47,7 @@ public:
 	{
 		gammaBlue = val;
 	}
-	std::string getCurrPath()
+	std::string getCurrPath() const
 	{
 		return currPath;
 	}

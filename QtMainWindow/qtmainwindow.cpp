@@ -558,6 +558,57 @@ void QtMainWindow::textChange()
     }
 }
 
+void QtMainWindow::setSelectedLabelText(const MyPicture* pic)
+{
+    ui.SelectedObject->setText(QString::fromStdString(pic->getCurrPath()));
+}
+
+void QtMainWindow::setSelectedLabelText(const QGraphicsTextItem* txt)
+{
+    ui.SelectedObject->setText(txt->toPlainText());
+}
+
+void QtMainWindow::setSelectedLabelText(const QGraphicsRectItem* rect)
+{
+    ui.SelectedObject->setText("Rectangular shape");
+}
+
+template <typename T>
+void QtMainWindow::fillProps(T sel)
+{
+    setSelectedLabelText(sel);
+}
+
 void QtMainWindow::sceneSelectionChanged()
 {
+    if (scene.selectedItems().count() != 1) {
+        ui.SelectedObject->setText("Non unique selection!");
+    }
+    else {
+        auto* sel = scene.selectedItems().first();
+        auto selType = sel->type();
+        switch (selType)
+        {
+        case QGraphicsRectItem::Type:
+            {
+                auto* rect = static_cast<QGraphicsRectItem*>(sel); 
+                fillProps(rect);
+        }
+            break;
+        case QGraphicsTextItem::Type:
+            {
+                auto* text = static_cast<QGraphicsTextItem*>(sel);
+                fillProps(text);
+            }
+            break;
+        case QGraphicsPixmapItem::Type:
+            {
+                auto* pic = static_cast<MyPicture*>(sel);
+                fillProps(pic);
+            }
+            break;
+        default:
+            break;
+        }
+    }
 }

@@ -46,6 +46,8 @@ public slots:
 private:
     bool checkSelection(int num);
     OpenCVWrapper lSobel;
+    template<typename T>
+    void fillProps(T sel);
 private slots:
     void OpenRecentFile();
     void on_action_New_triggered();
@@ -85,5 +87,8 @@ private slots:
     void zoomComboStringChanged(const QString& newText);
     void zoomed();
     void textChange();
-    void sceneSelectionChanged();
+    void setSelectedLabelText(const MyPicture* pic);
+    void setSelectedLabelText(const QGraphicsTextItem* txt);
+    void setSelectedLabelText(const QGraphicsRectItem* rect);
+    void sceneSelectionChanged();   
 };
