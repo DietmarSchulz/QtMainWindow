@@ -577,6 +577,7 @@ template <typename T>
 void QtMainWindow::fillProps(T sel)
 {
     setSelectedLabelText(sel);
+    ui.ScaleFactor->setValue(sel->scale());
 }
 
 void QtMainWindow::sceneSelectionChanged()

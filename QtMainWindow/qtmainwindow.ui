@@ -222,10 +222,16 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>8</y>
+       <y>-2</y>
        <width>231</width>
-       <height>31</height>
+       <height>51</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="toolTip">
       <string>Selected Object ID</string>
@@ -236,6 +242,28 @@
      <property name="wordWrap">
       <bool>true</bool>
      </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>65</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="ScaleLabel">
+        <property name="text">
+         <string>Scale Factor:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QDoubleSpinBox" name="ScaleFactor"/>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
