@@ -75,6 +75,8 @@ QtMainWindow::QtMainWindow(QWidget *parent)
         this, &QtMainWindow::itemScaled);
     connect(ui.graphicsView, &MyGraphicsView::itemRotated,
         this, &QtMainWindow::itemRotated);
+    connect(&scene, &MyScene::selectionChanged,
+        this, &QtMainWindow::sceneSelectionChanged);
 
 
     connect(ui.menuEdit, &QMenu::aboutToShow,
@@ -554,4 +556,8 @@ void QtMainWindow::textChange()
         auto cmd = std::make_unique<ChangeTextCommand>(myText);
         undoStack.push(cmd.release());
     }
+}
+
+void QtMainWindow::sceneSelectionChanged()
+{
 }

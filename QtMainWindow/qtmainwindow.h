@@ -85,4 +85,5 @@ private slots:
     void zoomComboStringChanged(const QString& newText);
     void zoomed();
     void textChange();
+    void sceneSelectionChanged();
 };
