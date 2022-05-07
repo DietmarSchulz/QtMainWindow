@@ -205,8 +205,18 @@
      <height>38</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="toolTip">
     <string>Selection Property</string>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
     <string>Properties</string>
@@ -230,6 +240,7 @@
      <property name="font">
       <font>
        <weight>75</weight>
+       <italic>false</italic>
        <bold>true</bold>
       </font>
      </property>
@@ -248,7 +259,7 @@
       <rect>
        <x>10</x>
        <y>50</y>
-       <width>65</width>
+       <width>74</width>
        <height>41</height>
       </rect>
      </property>
