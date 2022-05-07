@@ -575,6 +575,12 @@ void QtMainWindow::fillProps(T sel)
 {
     setSelectedLabelText(sel);
     ui.ScaleFactor->setValue(sel->scale());
+    if constexpr (std::is_same_v<T, MyPicture*>) {
+        ui.Brightness->setValue(sel->getGamma());
+    }
+    else {
+        ui.Brightness->setValue(1.0);
+    }
 }
 
 void QtMainWindow::sceneSelectionChanged()
