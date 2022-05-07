@@ -80,9 +80,6 @@ private slots:
     void itemMenuAboutToShow();
     void itemMenuAboutToHide();
 
-    void undone(bool checked);
-    void redone(bool checked);
-
     void zoomComboIndexChanged(int index);
     void zoomComboStringChanged(const QString& newText);
     void zoomed();
@@ -90,5 +87,6 @@ private slots:
     void setSelectedLabelText(const MyPicture* pic);
     void setSelectedLabelText(const QGraphicsTextItem* txt);
     void setSelectedLabelText(const QGraphicsRectItem* rect);
-    void sceneSelectionChanged();   
+    void undoIndexChanged(int idx);
+    void sceneSelectionChanged();
 };

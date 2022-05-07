@@ -49,8 +49,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.mainToolBar->addAction(redoAction);
     ui.menuEdit->addAction(undoAction);
     ui.menuEdit->addAction(redoAction);  //Add two actions to edit
-    connect(undoAction, SIGNAL(triggered(bool)), this, SLOT(undone(bool)));
-    connect(redoAction, SIGNAL(triggered(bool)), this, SLOT(redone(bool)));
+    connect(&undoStack, SIGNAL(indexChanged(int)), this, SLOT(undoIndexChanged(int)));
 
     // Add values in the combo box for zoom
     myZoomComboBox.addItem("1.0");
@@ -512,14 +511,6 @@ void QtMainWindow::itemMenuAboutToHide()
     ui.action_Delete->setEnabled(true);
 }
 
-void QtMainWindow::undone(bool checked)
-{
-}
-
-void QtMainWindow::redone(bool checked)
-{
-}
-
 void QtMainWindow::zoomComboIndexChanged(int index)
 {
     auto sel = myZoomComboBox.itemText(index);
@@ -571,6 +562,12 @@ void QtMainWindow::setSelectedLabelText(const QGraphicsTextItem* txt)
 void QtMainWindow::setSelectedLabelText(const QGraphicsRectItem* rect)
 {
     ui.SelectedObject->setText("Rectangular shape");
+}
+
+void QtMainWindow::undoIndexChanged(int idx)
+{
+    // Probably influence on the selection's properties
+    sceneSelectionChanged();
 }
 
 template <typename T>
