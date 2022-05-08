@@ -584,6 +584,7 @@ void QtMainWindow::fillProps(T sel)
     else {
         ui.Brightness->setValue(1.0);
     }
+    ui.ZValue->setValue(sel->zValue());
 }
 
 void QtMainWindow::sceneSelectionChanged()
