@@ -624,6 +624,8 @@ void QtMainWindow::sceneSelectionChanged()
 
 void QtMainWindow::setSelScale(double newScale)
 {
+    if (scene.selectedItems().count() != 1)
+        return;
     auto* sceneItem = scene.selectedItems().first();
     auto currScale = sceneItem->scale();
     if (newScale == currScale)
@@ -634,6 +636,8 @@ void QtMainWindow::setSelScale(double newScale)
 
 void QtMainWindow::setSelGamma(double newGamma)
 {
+    if (scene.selectedItems().count() != 1)
+        return;
     auto* sceneItem = scene.selectedItems().first();
     if (sceneItem->type() != QGraphicsPixmapItem::Type)
         return; // Only relevant for pictures
