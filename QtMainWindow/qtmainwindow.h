@@ -89,4 +89,5 @@ private slots:
     void setSelectedLabelText(const QGraphicsRectItem* rect);
     void undoIndexChanged(int idx);
     void sceneSelectionChanged();
+    void setSelScale(double newScale);
 };

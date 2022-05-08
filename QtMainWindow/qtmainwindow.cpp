@@ -51,6 +51,9 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.menuEdit->addAction(redoAction);  //Add two actions to edit
     connect(&undoStack, SIGNAL(indexChanged(int)), this, SLOT(undoIndexChanged(int)));
 
+    // Properties
+    connect(ui.ScaleFactor, SIGNAL(valueChanged(double)), this, SLOT(setSelScale(double)));
+
     // Add values in the combo box for zoom
     myZoomComboBox.addItem("1.0");
     myZoomComboBox.addItem("0.5");
@@ -615,4 +618,14 @@ void QtMainWindow::sceneSelectionChanged()
             break;
         }
     }
+}
+
+void QtMainWindow::setSelScale(double newScale)
+{
+    auto* sceneItem = scene.selectedItems().first();
+    auto currScale = sceneItem->scale();
+    if (newScale == currScale)
+        return; // avoid event circle!
+    sceneItem->setScale(newScale);
+    itemScaled(sceneItem, currScale);
 }
