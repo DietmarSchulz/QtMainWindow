@@ -300,6 +300,24 @@ void ModifyBrightnessCommand::redo()
     myGraphicsScene->update();
 }
 
+SetBrightnessCommand::SetBrightnessCommand(double gamma, MyPicture* qPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent) : ModifyBrightnessCommand(graphicsScene, qPicture, parent)
+{
+    newGamma = gamma;
+    oldGamma = myPicture->getGamma();
+    setText("Helligkeit setzen: " + QString::number(newGamma));
+}
+
+bool SetBrightnessCommand::mergeWith(const QUndoCommand* command)
+{
+    const SetBrightnessCommand* brightnessCommand = static_cast<const SetBrightnessCommand*>(command);
+    auto& picToMerge = brightnessCommand->myPicture;
+    if (myPicture != picToMerge)
+        return false;
+    newGamma = brightnessCommand->newGamma;
+    setText("Helligkeit setzen: " + QString::number(newGamma));
+    return true;
+}
+
 ChangeTextCommand::ChangeTextCommand(QGraphicsTextItem* newItem, QUndoCommand* parent) : firstTime(true), myItem(newItem)
 {
     setText(reinterpret_cast<const char*>(u8"Textänderung"));
@@ -579,3 +597,4 @@ void AddPicturesCommand::redo()
     myPicture->setAlphaAdd(newAlphaAdd);
     myGraphicsScene->update();
 }
+

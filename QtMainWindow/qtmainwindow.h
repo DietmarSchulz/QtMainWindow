@@ -90,4 +90,5 @@ private slots:
     void undoIndexChanged(int idx);
     void sceneSelectionChanged();
     void setSelScale(double newScale);
+    void setSelGamma(double newGamma);
 };

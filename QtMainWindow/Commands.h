@@ -117,15 +117,26 @@ public:
 class ModifyBrightnessCommand : public QUndoCommand
 {
 public:
+    enum { Id = 6891 };
     ModifyBrightnessCommand(MyPicture* qPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent = nullptr);
     void undo() override;
     void redo() override;
 
-private:
+protected:
+    ModifyBrightnessCommand(QGraphicsScene* graphicsScene, MyPicture* qPicture, QUndoCommand* parent = nullptr) : QUndoCommand(parent), myPicture(qPicture), myGraphicsScene(graphicsScene) {};
     QGraphicsScene* myGraphicsScene;
     MyPicture* myPicture;
     double oldGamma;
     double newGamma;
+};
+
+class SetBrightnessCommand : public ModifyBrightnessCommand
+{
+public:
+    enum { Id = 7891 };
+    SetBrightnessCommand(double gamma, MyPicture* qPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent = nullptr);
+    bool mergeWith(const QUndoCommand* command) override;
+    int id() const override { return Id; }
 };
 
 class ChangeTextCommand : public QUndoCommand

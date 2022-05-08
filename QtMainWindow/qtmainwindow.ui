@@ -254,7 +254,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>11</x>
@@ -290,6 +290,9 @@
       </item>
       <item row="3" column="0">
        <widget class="QDoubleSpinBox" name="Brightness">
+        <property name="maximum">
+         <double>2.000000000000000</double>
+        </property>
         <property name="singleStep">
          <double>0.010000000000000</double>
         </property>
