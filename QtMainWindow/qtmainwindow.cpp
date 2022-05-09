@@ -54,6 +54,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     // Properties
     connect(ui.ScaleFactor, SIGNAL(valueChanged(double)), this, SLOT(setSelScale(double)));
     connect(ui.Brightness, SIGNAL(valueChanged(double)), this, SLOT(setSelGamma(double)));
+    connect(ui.ZValue, SIGNAL(valueChanged(double)), this, SLOT(setZvalue(double)));
 
     // Add values in the combo box for zoom
     myZoomComboBox.addItem("1.0");
@@ -646,4 +647,12 @@ void QtMainWindow::setSelGamma(double newGamma)
     if (oldGamma == newGamma)
         return; // avoid event circle!
     undoStack.push(new SetBrightnessCommand(newGamma, myPic, &scene));
+}
+
+void QtMainWindow::setZvalue(double newZvalue)
+{
+    if (scene.selectedItems().count() != 1)
+        return;
+    auto* sceneItem = scene.selectedItems().first();
+    undoStack.push(new ZvalueCommand(sceneItem, newZvalue));
 }

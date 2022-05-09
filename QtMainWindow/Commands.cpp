@@ -95,6 +95,35 @@ bool ScaleCommand::mergeWith(const QUndoCommand* command)
     return true;
 }
 
+ZvalueCommand::ZvalueCommand(QGraphicsItem* item, double newZvalue, QUndoCommand* parent) : QUndoCommand(parent), myItem(item), newZvalue(newZvalue)
+{
+    myOldZvalue = item->zValue();
+    setText(QObject::tr("Setze Z-Value %1 (%2)").arg(myItem->type()).arg(newZvalue));
+}
+
+void ZvalueCommand::undo()
+{
+    myItem->setZValue(myOldZvalue);
+}
+
+void ZvalueCommand::redo()
+{
+    myItem->setZValue(newZvalue);
+}
+
+bool ZvalueCommand::mergeWith(const QUndoCommand* command)
+{
+    const ZvalueCommand* zvalueCommand = static_cast<const ZvalueCommand*>(command);
+    auto& item = zvalueCommand->myItem;
+
+    if (myItem != item)
+        return false;
+
+    newZvalue = item->zValue();
+    setText(QObject::tr("Setze Z-Value %1 (%2)").arg(myItem->type()).arg(newZvalue));
+    return true;
+}
+
 RotateCommand::RotateCommand(QGraphicsItem* item, double oldRotation, QUndoCommand* parent)
     : QUndoCommand(parent), myItem(item), myOldRotation(oldRotation)
 {
@@ -597,4 +626,3 @@ void AddPicturesCommand::redo()
     myPicture->setAlphaAdd(newAlphaAdd);
     myGraphicsScene->update();
 }
-

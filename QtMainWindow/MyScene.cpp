@@ -160,6 +160,9 @@ void MyScene::write(const QGraphicsRectItem* rectItem, QJsonObject& jObject)
     jObject["penWidth"] = rectItem->pen().width();
     jObject["brushColor"] = (int) rectItem->brush().color().rgba();
     jObject["scale"] = rectItem->scale();
+    if (rectItem->zValue() != 0.0) {
+        jObject["zvalue"] = rectItem->zValue();
+    }
     jObject["rotation"] = rectItem->rotation();
 }
 
@@ -171,6 +174,9 @@ void MyScene::write(const QGraphicsTextItem* textItem, QJsonObject& jObject)
     jObject["positionX"] = textItem->pos().x();
     jObject["positionY"] = textItem->pos().y();
     jObject["scale"] = textItem->scale();
+    if (textItem->zValue() != 0.0) {
+        jObject["zvalue"] = textItem->zValue();
+    }
     jObject["rotation"] = textItem->rotation();
 }
 
@@ -202,6 +208,9 @@ void MyScene::read(QGraphicsRectItem* rectItem, const QJsonObject& jObject)
     if (jObject.contains("scale") && jObject["scale"].isDouble()) {
         rectItem->setScale(jObject["scale"].toDouble());
     }
+    if (jObject.contains("zvalue") && jObject["zvalue"].isDouble()) {
+        rectItem->setZValue(jObject["zvalue"].toDouble());
+    }
     if (jObject.contains("rotation") && jObject["rotation"].isDouble()) {
         rectItem->setRotation(jObject["rotation"].toDouble());
     }
@@ -224,6 +233,9 @@ void MyScene::read(QGraphicsTextItem* textItem, const QJsonObject& jObject)
     }
     if (jObject.contains("scale") && jObject["scale"].isDouble()) {
         textItem->setScale(jObject["scale"].toDouble());
+    }
+    if (jObject.contains("zvalue") && jObject["zvalue"].isDouble()) {
+        textItem->setZValue(jObject["zvalue"].toDouble());
     }
     if (jObject.contains("rotation") && jObject["rotation"].isDouble()) {
         textItem->setRotation(jObject["rotation"].toDouble());

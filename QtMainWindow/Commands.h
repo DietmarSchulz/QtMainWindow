@@ -42,6 +42,25 @@ private:
     double newScale;
 };
 
+class ZvalueCommand : public QUndoCommand
+{
+public:
+    enum { Id = 4321 };
+
+    ZvalueCommand(QGraphicsItem* item, double newZvalue,
+        QUndoCommand* parent = nullptr);
+
+    void undo() override;
+    void redo() override;
+    bool mergeWith(const QUndoCommand* command) override;
+    int id() const override { return Id; }
+
+private:
+    QGraphicsItem* myItem;
+    double myOldZvalue;
+    double newZvalue;
+};
+
 class RotateCommand : public QUndoCommand
 {
 public:
