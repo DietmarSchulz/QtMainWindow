@@ -587,6 +587,12 @@ void QtMainWindow::fillProps(T sel)
         ui.Brightness->setValue(1.0);
     }
     ui.ZValue->setValue(sel->zValue());
+    if constexpr (std::is_same_v<T, QGraphicsTextItem*>) {
+        ui.fontComboBox->setFont(sel->font());
+    }
+    else {
+        ui.fontComboBox->setFont(QFont());
+    }
 }
 
 void QtMainWindow::sceneSelectionChanged()
@@ -601,7 +607,7 @@ void QtMainWindow::sceneSelectionChanged()
         {
         case QGraphicsRectItem::Type:
             {
-                auto* rect = static_cast<QGraphicsRectItem*>(sel); 
+                auto* rect = static_cast<QGraphicsRectItem*>(sel);
                 fillProps(rect);
         }
             break;
