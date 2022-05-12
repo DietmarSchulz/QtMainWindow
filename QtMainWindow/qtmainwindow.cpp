@@ -53,6 +53,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
 
     // Properties
     connect(ui.ScaleFactor, SIGNAL(valueChanged(double)), this, SLOT(setSelScale(double)));
+    connect(ui.Rotation, SIGNAL(valueChanged(double)), this, SLOT(setSelRotation(double)));
     connect(ui.Brightness, SIGNAL(valueChanged(double)), this, SLOT(setSelGamma(double)));
     connect(ui.ZValue, SIGNAL(valueChanged(double)), this, SLOT(setZvalue(double)));
 
@@ -580,6 +581,7 @@ void QtMainWindow::fillProps(T sel)
 {
     setSelectedLabelText(sel);
     ui.ScaleFactor->setValue(sel->scale());
+    ui.Rotation->setValue(sel->rotation());
     if constexpr (std::is_same_v<T, MyPicture*>) {
         ui.Brightness->setValue(sel->getGamma());
     }
@@ -588,10 +590,10 @@ void QtMainWindow::fillProps(T sel)
     }
     ui.ZValue->setValue(sel->zValue());
     if constexpr (std::is_same_v<T, QGraphicsTextItem*>) {
-        ui.fontComboBox->setFont(sel->font());
+        ui.fontComboBox->setCurrentFont(sel->font());
     }
     else {
-        ui.fontComboBox->setFont(QFont());
+        ui.fontComboBox->setCurrentFont(QFont());
     }
 }
 
@@ -639,6 +641,18 @@ void QtMainWindow::setSelScale(double newScale)
         return; // avoid event circle!
     sceneItem->setScale(newScale);
     itemScaled(sceneItem, currScale);
+}
+
+void QtMainWindow::setSelRotation(double newScale)
+{
+    if (scene.selectedItems().count() != 1)
+        return;
+    auto* sceneItem = scene.selectedItems().first();
+    auto currRotation = sceneItem->rotation();
+    if (newScale == currRotation)
+        return; // avoid event circle!
+    sceneItem->setRotation(newScale);
+    itemRotated(sceneItem, currRotation);
 }
 
 void QtMainWindow::setSelGamma(double newGamma)

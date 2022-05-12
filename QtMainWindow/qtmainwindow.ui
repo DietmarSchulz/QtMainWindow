@@ -10,6 +10,12 @@
     <height>779</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="contextMenuPolicy">
    <enum>Qt::NoContextMenu</enum>
   </property>
@@ -19,6 +25,15 @@
   <property name="windowIcon">
    <iconset resource="qtmainwindow.qrc">
     <normaloff>:/QtMainWindow/images/ok.png</normaloff>:/QtMainWindow/images/ok.png</iconset>
+  </property>
+  <property name="toolTip">
+   <string>Font of selected text</string>
+  </property>
+  <property name="statusTip">
+   <string>Font of selected text</string>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -254,13 +269,13 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
        <x>11</x>
        <y>52</y>
-       <width>65</width>
-       <height>131</height>
+       <width>161</width>
+       <height>176</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
@@ -271,6 +286,13 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="Rotationlabel">
+        <property name="text">
+         <string>Rotation:</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
        <widget class="QDoubleSpinBox" name="ScaleFactor">
         <property name="singleStep">
@@ -278,6 +300,16 @@
         </property>
         <property name="stepType">
          <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="Rotation">
+        <property name="decimals">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <double>360.899999999999977</double>
         </property>
        </widget>
       </item>
@@ -311,27 +343,21 @@
       <item row="5" column="0">
        <widget class="QDoubleSpinBox" name="ZValue"/>
       </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>190</y>
-       <width>190</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="0" column="0">
+      <item row="6" column="0">
        <widget class="QLabel" name="labelFont">
         <property name="text">
          <string>Font for Text:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QFontComboBox" name="fontComboBox"/>
+      <item row="7" column="0" colspan="2">
+       <widget class="QFontComboBox" name="fontComboBox">
+        <property name="currentFont">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
