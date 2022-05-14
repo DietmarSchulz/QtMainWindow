@@ -83,6 +83,7 @@ private slots:
     void zoomComboIndexChanged(int index);
     void zoomComboStringChanged(const QString& newText);
     void zoomed();
+    void fontComboIndexChanged(int index);
     void textChange();
     void setSelectedLabelText(const MyPicture* pic);
     void setSelectedLabelText(const QGraphicsTextItem* txt);
@@ -92,5 +93,6 @@ private slots:
     void setSelScale(double newScale);
     void setSelRotation(double newScale);
     void setSelGamma(double newGamma);
-    void setZvalue(double newZvalue);
+    void setSelZvalue(double newZvalue);
+    void setSelFont(QString fontName);
 };

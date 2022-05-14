@@ -172,6 +172,21 @@ private:
     bool firstTime;
 };
 
+class ChangeTextFontCommand : public QUndoCommand
+{
+public:
+    ChangeTextFontCommand(QString fontNameToSet, QGraphicsTextItem* newItem,
+        QUndoCommand* parent = nullptr);
+
+    void undo() override;
+    void redo() override;
+
+private:
+    QGraphicsTextItem* myItem;
+    QString oldFontName;
+    QString newFontName;
+};
+
 class ModifyRGBScaleCommand : public QUndoCommand
 {
 public:

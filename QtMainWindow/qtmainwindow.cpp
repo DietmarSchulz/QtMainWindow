@@ -55,7 +55,9 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     connect(ui.ScaleFactor, SIGNAL(valueChanged(double)), this, SLOT(setSelScale(double)));
     connect(ui.Rotation, SIGNAL(valueChanged(double)), this, SLOT(setSelRotation(double)));
     connect(ui.Brightness, SIGNAL(valueChanged(double)), this, SLOT(setSelGamma(double)));
-    connect(ui.ZValue, SIGNAL(valueChanged(double)), this, SLOT(setZvalue(double)));
+    connect(ui.ZValue, SIGNAL(valueChanged(double)), this, SLOT(setSelZvalue(double)));
+    connect(ui.fontComboBox, SIGNAL(activated(const QString&)), this, SLOT(setSelFont(double)));
+    connect(ui.fontComboBox, SIGNAL(currentIndexChanged(int)), SLOT(fontComboIndexChanged(int)));
 
     // Add values in the combo box for zoom
     myZoomComboBox.addItem("1.0");
@@ -545,6 +547,12 @@ void QtMainWindow::zoomed()
     myZoomComboBox.setCurrentText(QString::fromStdString(s));
 }
 
+void QtMainWindow::fontComboIndexChanged(int index)
+{
+    auto sel = ui.fontComboBox->itemText(index);
+    setSelFont(sel);
+}
+
 void QtMainWindow::textChange()
 {
     auto* focused = scene.focusItem();
@@ -669,10 +677,24 @@ void QtMainWindow::setSelGamma(double newGamma)
     undoStack.push(new SetBrightnessCommand(newGamma, myPic, &scene));
 }
 
-void QtMainWindow::setZvalue(double newZvalue)
+void QtMainWindow::setSelZvalue(double newZvalue)
 {
     if (scene.selectedItems().count() != 1)
         return;
     auto* sceneItem = scene.selectedItems().first();
     undoStack.push(new ZvalueCommand(sceneItem, newZvalue));
+}
+
+void QtMainWindow::setSelFont(QString fontName)
+{
+    if (scene.selectedItems().count() != 1)
+        return;
+    auto* sceneItem = scene.selectedItems().first();
+    if (sceneItem->type() != QGraphicsTextItem::Type)
+        return; // Only relevant for pictures
+    auto* myText = static_cast<QGraphicsTextItem*>(sceneItem);
+    const auto& currFont = myText->font().family();
+    if (currFont == fontName)
+        return; // avoid event circle!
+    undoStack.push(new ChangeTextFontCommand(fontName, myText));
 }

@@ -626,3 +626,19 @@ void AddPicturesCommand::redo()
     myPicture->setAlphaAdd(newAlphaAdd);
     myGraphicsScene->update();
 }
+
+ChangeTextFontCommand::ChangeTextFontCommand(QString fontNameToSet, QGraphicsTextItem* newItem, QUndoCommand* parent) : QUndoCommand(parent), myItem(newItem), newFontName(fontNameToSet)
+{
+    oldFontName = myItem->font().family();
+    setText("Neuer Font: " + newFontName);
+}
+
+void ChangeTextFontCommand::undo()
+{
+    myItem->setFont(QFont(oldFontName, 20));
+}
+
+void ChangeTextFontCommand::redo()
+{
+    myItem->setFont(QFont(newFontName, 20));
+}
