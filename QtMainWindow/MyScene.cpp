@@ -242,6 +242,7 @@ void MyScene::read(QGraphicsTextItem* textItem, const QJsonObject& jObject)
     }
     textItem->setFlag(QGraphicsItem::ItemIsMovable);
     textItem->setFlag(QGraphicsItem::ItemIsSelectable);
+    textItem->setFlag(QGraphicsItem::ItemIsPanel);
     textItem->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditorInteraction);
 }
 
