@@ -55,6 +55,9 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     connect(ui.ScaleFactor, SIGNAL(valueChanged(double)), this, SLOT(setSelScale(double)));
     connect(ui.Rotation, SIGNAL(valueChanged(double)), this, SLOT(setSelRotation(double)));
     connect(ui.Brightness, SIGNAL(valueChanged(double)), this, SLOT(setSelGamma(double)));
+    connect(ui.dial_Red, SIGNAL(valueChanged(int)), this, SLOT(setSelGammaRed(int)));
+    connect(ui.dial_Green, SIGNAL(valueChanged(int)), this, SLOT(setSelGammaGreen(int)));
+    connect(ui.dial_Blue, SIGNAL(valueChanged(int)), this, SLOT(setSelGammaBlue(int)));
     connect(ui.ZValue, SIGNAL(valueChanged(double)), this, SLOT(setSelZvalue(double)));
     connect(ui.fontComboBox, SIGNAL(activated(const QString&)), this, SLOT(setSelFont(double)));
     connect(ui.fontComboBox, SIGNAL(currentIndexChanged(int)), SLOT(fontComboIndexChanged(int)));
@@ -592,7 +595,7 @@ void QtMainWindow::fillProps(T sel)
     ui.ScaleFactor->setValue(sel->scale());
     ui.Rotation->setValue(sel->rotation());
     if constexpr (std::is_same_v<T, MyPicture*>) {
-        ui.Brightness->setValue(sel->getGamma() * 100);
+        ui.Brightness->setValue(sel->getGamma());
         ui.dial_Red->setValue(sel->getGammaRed() * 100);
         ui.dial_Green->setValue(sel->getGammaGreen() * 100);
         ui.dial_Blue->setValue(sel->getGammaBlue() * 100);
@@ -679,6 +682,48 @@ void QtMainWindow::setSelGamma(double newGamma)
     if (oldGamma == newGamma)
         return; // avoid event circle!
     undoStack.push(new SetBrightnessCommand(newGamma, myPic, &scene));
+}
+
+void QtMainWindow::setSelGammaRed(int newGammaRed)
+{
+    if (scene.selectedItems().count() != 1)
+        return;
+    auto* sceneItem = scene.selectedItems().first();
+    if (sceneItem->type() != QGraphicsPixmapItem::Type)
+        return; // Only relevant for pictures
+    auto* myPic = static_cast<MyPicture*>(sceneItem);
+    auto oldGammaRed = myPic->getGammaRed();
+    if (oldGammaRed == newGammaRed / 100.0)
+        return; // avoid event circle!
+    undoStack.push(new SetRGBScaleCommand(newGammaRed / 100.0, myPic->getGammaGreen(), myPic->getGammaBlue(), myPic, &scene));
+}
+
+void QtMainWindow::setSelGammaGreen(int newGammaGreen)
+{
+    if (scene.selectedItems().count() != 1)
+        return;
+    auto* sceneItem = scene.selectedItems().first();
+    if (sceneItem->type() != QGraphicsPixmapItem::Type)
+        return; // Only relevant for pictures
+    auto* myPic = static_cast<MyPicture*>(sceneItem);
+    auto oldGammaGreen = myPic->getGammaGreen();
+    if (oldGammaGreen == newGammaGreen / 100.0)
+        return; // avoid event circle!
+    undoStack.push(new SetRGBScaleCommand(myPic->getGammaRed(), newGammaGreen / 100.0, myPic->getGammaBlue(), myPic, &scene));
+}
+
+void QtMainWindow::setSelGammaBlue(int newGammaBlue)
+{
+    if (scene.selectedItems().count() != 1)
+        return;
+    auto* sceneItem = scene.selectedItems().first();
+    if (sceneItem->type() != QGraphicsPixmapItem::Type)
+        return; // Only relevant for pictures
+    auto* myPic = static_cast<MyPicture*>(sceneItem);
+    auto oldGammaBlue = myPic->getGammaBlue();
+    if (oldGammaBlue == newGammaBlue / 100.0)
+        return; // avoid event circle!
+    undoStack.push(new SetRGBScaleCommand(myPic->getGammaRed(), myPic->getGammaGreen(), newGammaBlue / 100.0, myPic, &scene));
 }
 
 void QtMainWindow::setSelZvalue(double newZvalue)

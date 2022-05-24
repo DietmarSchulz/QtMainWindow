@@ -93,6 +93,9 @@ private slots:
     void setSelScale(double newScale);
     void setSelRotation(double newScale);
     void setSelGamma(double newGamma);
+    void setSelGammaRed(int newGammaRed);
+    void setSelGammaGreen(int newGammaGreen);
+    void setSelGammaBlue(int newGammaBlue);
     void setSelZvalue(double newZvalue);
     void setSelFont(QString fontName);
 };

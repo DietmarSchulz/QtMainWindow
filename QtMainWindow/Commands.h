@@ -194,7 +194,8 @@ public:
     void undo() override;
     void redo() override;
 
-private:
+protected:
+    ModifyRGBScaleCommand(QGraphicsScene* graphicsScene, MyPicture* qPicture, QUndoCommand* parent = nullptr) : QUndoCommand(parent), myPicture(qPicture), myGraphicsScene(graphicsScene) {};
     QGraphicsScene* myGraphicsScene;
     MyPicture* myPicture;
     double oldGammaRed;
@@ -203,6 +204,15 @@ private:
     double newGammaRed;
     double newGammaGreen;
     double newGammaBlue;
+};
+
+class SetRGBScaleCommand : public ModifyRGBScaleCommand
+{
+public:
+    enum { Id = 7892 };
+    SetRGBScaleCommand(double gammaRed, double gammaGreen, double gammaBlue, MyPicture* qPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent = nullptr);
+    bool mergeWith(const QUndoCommand* command) override;
+    int id() const override { return Id; }
 };
 
 class AddPicturesCommand : public QUndoCommand

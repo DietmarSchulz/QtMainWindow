@@ -507,6 +507,29 @@ void ModifyRGBScaleCommand::redo()
     myGraphicsScene->update();
 }
 
+SetRGBScaleCommand::SetRGBScaleCommand(double gammaRed, double gammaGreen, double gammaBlue, MyPicture* qPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent) : ModifyRGBScaleCommand(graphicsScene, qPicture, parent)
+{
+    newGammaRed = gammaRed;
+    newGammaGreen = gammaGreen;
+    newGammaBlue = gammaBlue;
+    oldGammaRed = myPicture->getGammaRed();
+    oldGammaGreen = myPicture->getGammaGreen();
+    oldGammaBlue = myPicture->getGammaBlue();
+    setText("RGB setzeb: " + QString::number(newGammaRed + newGammaGreen + newGammaBlue));
+}
+
+bool SetRGBScaleCommand::mergeWith(const QUndoCommand* command)
+{
+    const SetRGBScaleCommand* setRGBCommand = static_cast<const SetRGBScaleCommand*>(command);
+    auto& picToMerge = setRGBCommand->myPicture;
+    if (myPicture != picToMerge)
+        return false;
+    newGammaRed = setRGBCommand->newGammaRed;
+    newGammaGreen = setRGBCommand->newGammaGreen;
+    newGammaBlue = setRGBCommand->newGammaBlue;
+    return true;
+}
+
 AddPicturesCommand::AddPicturesCommand(MyPicture* qPicture, MyPicture* secondPicture, QGraphicsScene* graphicsScene, QUndoCommand* parent) : QUndoCommand(parent), myPicture(qPicture), myGraphicsScene(graphicsScene)
 {
     oldAlphaAdd = myPicture->getAlphaAdd();
@@ -642,3 +665,5 @@ void ChangeTextFontCommand::redo()
 {
     myItem->setFont(QFont(newFontName, 20));
 }
+
+
