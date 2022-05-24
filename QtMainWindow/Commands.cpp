@@ -373,7 +373,7 @@ ModifyRGBScaleCommand::ModifyRGBScaleCommand(MyPicture* qPicture, QGraphicsScene
     std::string redWindowName{ "Rotanteil" };
     cv::namedWindow(redWindowName, cv::WINDOW_NORMAL);
     cv::moveWindow(redWindowName, 400, 0);
-    std::string greenWindowName{ "Gr\303\274nanteil" };
+    std::string greenWindowName{ "Gruenanteil" };
     cv::namedWindow(greenWindowName, cv::WINDOW_NORMAL);
     cv::moveWindow(greenWindowName, 800, 0);
     std::string blueWindowName{ "Blauanteil" };

@@ -592,7 +592,10 @@ void QtMainWindow::fillProps(T sel)
     ui.ScaleFactor->setValue(sel->scale());
     ui.Rotation->setValue(sel->rotation());
     if constexpr (std::is_same_v<T, MyPicture*>) {
-        ui.Brightness->setValue(sel->getGamma());
+        ui.Brightness->setValue(sel->getGamma() * 100);
+        ui.dial_Red->setValue(sel->getGammaRed() * 100);
+        ui.dial_Green->setValue(sel->getGammaGreen() * 100);
+        ui.dial_Blue->setValue(sel->getGammaBlue() * 100);
     }
     else {
         ui.Brightness->setValue(1.0);
