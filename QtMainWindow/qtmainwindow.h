@@ -47,7 +47,8 @@ private:
     bool checkSelection(int num);
     OpenCVWrapper lSobel;
     template<typename T>
-    void fillProps(T sel);
+        requires std::is_base_of_v<QGraphicsItem, T>
+    void fillProps(T* sel);
 private slots:
     void OpenRecentFile();
     void on_action_New_triggered();

@@ -589,12 +589,13 @@ void QtMainWindow::undoIndexChanged(int idx)
 }
 
 template <typename T>
-void QtMainWindow::fillProps(T sel)
+    requires std::is_base_of_v<QGraphicsItem, T>
+void QtMainWindow::fillProps(T* sel)
 {
     setSelectedLabelText(sel);
     ui.ScaleFactor->setValue(sel->scale());
     ui.Rotation->setValue(sel->rotation());
-    if constexpr (std::is_same_v<T, MyPicture*>) {
+    if constexpr (std::is_same_v<T, MyPicture>) {
         ui.Brightness->setValue(sel->getGamma());
         ui.dial_Red->setValue(sel->getGammaRed() * 100);
         ui.dial_Green->setValue(sel->getGammaGreen() * 100);
@@ -604,7 +605,7 @@ void QtMainWindow::fillProps(T sel)
         ui.Brightness->setValue(1.0);
     }
     ui.ZValue->setValue(sel->zValue());
-    if constexpr (std::is_same_v<T, QGraphicsTextItem*>) {
+    if constexpr (std::is_same_v<T, QGraphicsTextItem>) {
         ui.fontComboBox->setCurrentFont(sel->font());
     }
     else {
