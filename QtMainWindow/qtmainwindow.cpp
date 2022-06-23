@@ -206,6 +206,12 @@ void QtMainWindow::itemRotated(QGraphicsItem* item, double oldRotation)
 
 bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)
 {
+    if (event->type() == QEvent::GraphicsSceneMouseMove) {
+        QGraphicsSceneMouseEvent* mouseEvent = dynamic_cast<QGraphicsSceneMouseEvent*>(event);
+
+        qDebug() << "x: " << mouseEvent->scenePos().x();
+        qDebug() << "y: " << mouseEvent->scenePos().y();
+    }
     auto* focusItem = scene.focusItem();
     if (focusItem == nullptr || focusItem->type() != QGraphicsTextItem::Type)
         return false;
