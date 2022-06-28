@@ -225,6 +225,9 @@ bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)
         qDebug() << mouseEvent->type();
         qDebug() << mouseEvent->widget();
     }
+    else if (event->type() == QEvent::Leave) {
+        setCursor(QCursor(Qt::ArrowCursor));
+    }
     else {
         qDebug() << event->type();
     }
