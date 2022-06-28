@@ -208,9 +208,25 @@ bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)
 {
     if (event->type() == QEvent::GraphicsSceneMouseMove) {
         QGraphicsSceneMouseEvent* mouseEvent = dynamic_cast<QGraphicsSceneMouseEvent*>(event);
-
+        ui.graphicsView->cursor().setShape(Qt::CrossCursor);
+        cursor().setShape(Qt::CrossCursor);
+        qDebug() << mouseEvent->type();
         qDebug() << "x: " << mouseEvent->scenePos().x();
         qDebug() << "y: " << mouseEvent->scenePos().y();
+        if (scene.itemAt(mouseEvent->scenePos().x(), mouseEvent->scenePos().y(), QTransform()) != nullptr) {
+            setCursor(QCursor(Qt::ArrowCursor));
+        }
+        else {
+            setCursor(QCursor(Qt::CrossCursor));
+        }
+    }
+    else if (event->type() == QEvent::GraphicsSceneHoverMove || event->type() == QEvent::GraphicsSceneHoverEnter || event->type() == QEvent::GraphicsSceneHoverLeave) {
+        QGraphicsSceneHoverEvent* mouseEvent = dynamic_cast<QGraphicsSceneHoverEvent*>(event);
+        qDebug() << mouseEvent->type();
+        qDebug() << mouseEvent->widget();
+    }
+    else {
+        qDebug() << event->type();
     }
     auto* focusItem = scene.focusItem();
     if (focusItem == nullptr || focusItem->type() != QGraphicsTextItem::Type)
