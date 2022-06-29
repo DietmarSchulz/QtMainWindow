@@ -368,6 +368,7 @@ void QtMainWindow::on_action_Rect_triggered()
     rect->setFlag(QGraphicsItem::ItemIsMovable);
     rect->setFlag(QGraphicsItem::ItemIsSelectable);
     undoStack.push(new AddBoxCommand(rect, &scene));
+    scene.SetModified(true);
 }
 
 void QtMainWindow::on_action_Picture_triggered()
