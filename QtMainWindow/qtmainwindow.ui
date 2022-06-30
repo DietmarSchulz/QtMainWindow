@@ -27,10 +27,10 @@
     <normaloff>:/QtMainWindow/images/ok.png</normaloff>:/QtMainWindow/images/ok.png</iconset>
   </property>
   <property name="toolTip">
-   <string>Font of selected text</string>
+   <string/>
   </property>
   <property name="statusTip">
-   <string>Font of selected text</string>
+   <string/>
   </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
@@ -352,6 +352,12 @@
       </item>
       <item row="7" column="0" colspan="2">
        <widget class="QFontComboBox" name="fontComboBox">
+        <property name="toolTip">
+         <string>Font of selected text</string>
+        </property>
+        <property name="statusTip">
+         <string>Font of selected text</string>
+        </property>
         <property name="currentFont">
          <font>
           <pointsize>20</pointsize>
