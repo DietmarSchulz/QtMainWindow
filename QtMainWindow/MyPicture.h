@@ -9,7 +9,7 @@ class MyPicture : public QGraphicsPixmapItem
 	Q_GADGET;
 public:
 	MyPicture(QGraphicsItem* parent = nullptr) : QGraphicsPixmapItem(parent), gamma(1.0),
-											gammaRed(1.0), gammaGreen(1.0), gammaBlue(1.0) {}
+											gammaRed(1.0), gammaGreen(1.0), gammaBlue(1.0), alphaAdd(0.5) {}
 	MyPicture(std::string path, QPixmap pixmap, QGraphicsItem* parent = nullptr) : QGraphicsPixmapItem(pixmap, parent), currPath(path), gamma(1.0),
 																		gammaRed(1.0), gammaGreen(1.0), gammaBlue(1.0), alphaAdd(0.5) {}
 
@@ -107,9 +107,9 @@ private:
 	double gammaRed;
 	double gammaGreen;
 	double gammaBlue;
-	double gammaSecond;
-	double gammaRedSecond;
-	double gammaGreenSecond;
-	double gammaBlueSecond;
+	double gammaSecond = 0.0;
+	double gammaRedSecond = 0.0;
+	double gammaGreenSecond = 0.0;
+	double gammaBlueSecond = 0.0;
 };
 
