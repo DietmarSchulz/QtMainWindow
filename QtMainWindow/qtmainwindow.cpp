@@ -697,6 +697,8 @@ void QtMainWindow::setSelGammaRed(int newGammaRed)
     if (oldGammaRed == newGammaRed / 100.0)
         return; // avoid event circle!
     undoStack.push(new SetRGBScaleCommand(newGammaRed / 100.0, myPic->getGammaGreen(), myPic->getGammaBlue(), myPic, &scene));
+    auto ga = MyPicfoo(*myPic);
+    qDebug() << ga;
 }
 
 void QtMainWindow::setSelGammaGreen(int newGammaGreen)

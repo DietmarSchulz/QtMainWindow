@@ -3,6 +3,31 @@
 #include <qgraphicsitem.h>
 #include <opencv2/opencv.hpp>
 #include <QJsonObject>
+#include <concepts>
+
+template <typename T>
+concept MyBrightnessType = requires(T& t, double val)
+{
+	{ t.getGamma() } -> std::convertible_to<double>;
+	{ t.setGamma(val) } -> std::convertible_to<void>;
+};
+
+template <typename T>
+concept MyColorableType = MyBrightnessType<T> && requires (T a, double val)
+{
+	{ a.getGammaRed() } -> std::convertible_to<double>;
+	{ a.getGammaBlue() } -> std::convertible_to<double>;
+	{ a.getGammaGreen() } -> std::convertible_to<double>;
+	{ a.setGammaRed(val) } -> std::convertible_to<void>;
+	{ a.setGammaBlue(val) } -> std::convertible_to<void>;
+	{ a.setGammaGreen(val) } -> std::convertible_to<void>;
+};
+
+template <MyColorableType T>
+double MyPicfoo(T& value)
+{
+	return value.getGamma() + value.getGammaRed() + value.getGammaBlue() + value.getGammaGreen();
+}
 
 class MyPicture : public QGraphicsPixmapItem
 {
@@ -12,7 +37,6 @@ public:
 											gammaRed(1.0), gammaGreen(1.0), gammaBlue(1.0) {}
 	MyPicture(std::string path, QPixmap pixmap, QGraphicsItem* parent = nullptr) : QGraphicsPixmapItem(pixmap, parent), currPath(path), gamma(1.0),
 																		gammaRed(1.0), gammaGreen(1.0), gammaBlue(1.0), alphaAdd(0.5) {}
-
 	void read(const QJsonObject& json);
 	void write(QJsonObject& json) const;
 	double getGamma()
