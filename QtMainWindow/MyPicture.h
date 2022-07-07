@@ -8,19 +8,19 @@
 template <typename T>
 concept MyBrightnessType = requires(T& t, double val)
 {
-	{ t.getGamma() } -> std::convertible_to<double>;
-	{ t.setGamma(val) } -> std::convertible_to<void>;
+	{ t.getGamma() } -> std::same_as<double>;
+	{ t.setGamma(val) } -> std::same_as<void>;
 };
 
 template <typename T>
 concept MyColorableType = MyBrightnessType<T> && requires (T a, double val)
 {
-	{ a.getGammaRed() } -> std::convertible_to<double>;
-	{ a.getGammaBlue() } -> std::convertible_to<double>;
-	{ a.getGammaGreen() } -> std::convertible_to<double>;
-	{ a.setGammaRed(val) } -> std::convertible_to<void>;
-	{ a.setGammaBlue(val) } -> std::convertible_to<void>;
-	{ a.setGammaGreen(val) } -> std::convertible_to<void>;
+	{ a.getGammaRed() } -> std::same_as<double>;
+	{ a.getGammaBlue() } -> std::same_as<double>;
+	{ a.getGammaGreen() } -> std::same_as<double>;
+	{ a.setGammaRed(val) } -> std::same_as<void>;
+	{ a.setGammaBlue(val) } -> std::same_as<void>;
+	{ a.setGammaGreen(val) } -> std::same_as<void>;
 };
 
 template <MyColorableType T>
