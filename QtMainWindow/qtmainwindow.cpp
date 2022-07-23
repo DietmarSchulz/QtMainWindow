@@ -366,6 +366,8 @@ void QtMainWindow::on_action_Textfield_triggered()
     text->setFlag(QGraphicsItem::ItemIsSelectable);
     text->setFlag(QGraphicsItem::ItemIsPanel);
     text->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditorInteraction);
+    QPoint pos(ui.graphicsView->cursor().pos().x(), ui.graphicsView->cursor().pos().y());
+    qDebug() << pos;
     undoStack.push(new AddBoxCommand(text, &scene));
     scene.SetModified(true);
 }
