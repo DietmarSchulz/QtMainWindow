@@ -6,7 +6,8 @@
 #include <concepts>
 
 template <typename T>
-concept MyBrightnessType = requires(T& t, double val)
+concept MyBrightnessType =	std::is_base_of<QGraphicsPixmapItem, T>::value &&
+	requires(T& t, double val)
 {
 	{ t.getGamma() } -> std::same_as<double>;
 	{ t.setGamma(val) } -> std::same_as<void>;
