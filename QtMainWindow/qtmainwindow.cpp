@@ -367,7 +367,8 @@ void QtMainWindow::on_action_Rect_triggered()
     QBrush blueBrush(Qt::blue);
     QPen outlinePen(Qt::black);
     outlinePen.setWidth(2);
-    QPoint pos(ui.graphicsView->cursor().pos().x(), ui.graphicsView->cursor().pos().y());
+    QPoint pos(ui.graphicsView->cursor().pos());
+    pos = ui.graphicsView->mapToScene(ui.graphicsView->mapFromGlobal(pos)).toPoint();
 
     QGraphicsRectItem* rectangle = new QGraphicsRectItem(100, 0, 80, 100);
     rectangle->setBrush(greenBrush);
@@ -406,6 +407,8 @@ void QtMainWindow::on_action_Textfield_triggered()
     text->setFlag(QGraphicsItem::ItemIsPanel);
     text->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditorInteraction);
     QPoint pos(ui.graphicsView->cursor().pos());
+    qDebug() << pos;
+    pos = ui.graphicsView->mapToScene(ui.graphicsView->mapFromGlobal( pos)).toPoint();
     qDebug() << pos;
     undoStack.push(new AddBoxCommand(text, &scene, pos));
     scene.SetModified(true);
