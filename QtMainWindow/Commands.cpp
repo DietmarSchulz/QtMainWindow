@@ -209,14 +209,13 @@ void AddCommand::redo()
     myGraphicsScene->update();
 }
 
-AddBoxCommand::AddBoxCommand(QGraphicsItem* box, QGraphicsScene* graphicsScene, QUndoCommand* parent) : AddCommand(graphicsScene, parent)
+AddBoxCommand::AddBoxCommand(QGraphicsItem* box, QGraphicsScene* graphicsScene, QPoint& startPos, QUndoCommand* parent) : AddCommand(graphicsScene, parent)
 {
     auto* myItem = box;
     myItems.append(myItem);
+    initialPosition = startPos;
     setText(QObject::tr("Add %1")
         .arg(createCommandString(myItem, initialPosition)));
-    initialPosition = QPointF((itemCount * 15) % int(graphicsScene->width()),
-        (itemCount * 15) % int(graphicsScene->height()));
     ++itemCount;
     myGraphicsScene->update();
 }

@@ -329,20 +329,21 @@ void QtMainWindow::on_action_Rect_triggered()
     QBrush blueBrush(Qt::blue);
     QPen outlinePen(Qt::black);
     outlinePen.setWidth(2);
+    QPoint pos(ui.graphicsView->cursor().pos().x(), ui.graphicsView->cursor().pos().y());
 
     QGraphicsRectItem* rectangle = new QGraphicsRectItem(100, 0, 80, 100);
     rectangle->setBrush(greenBrush);
     rectangle->setPen(outlinePen);
     rectangle->setFlag(QGraphicsItem::ItemIsMovable);
     rectangle->setFlag(QGraphicsItem::ItemIsSelectable);
-    undoStack.push(new AddBoxCommand(rectangle, &scene));
+    undoStack.push(new AddBoxCommand(rectangle, &scene, pos));
 
     QGraphicsRectItem* rect = new QGraphicsRectItem(0, 0, 100, 100);
     rect->setBrush(blueBrush);
     rect->setPen(outlinePen);
     rect->setFlag(QGraphicsItem::ItemIsMovable);
     rect->setFlag(QGraphicsItem::ItemIsSelectable);
-    undoStack.push(new AddBoxCommand(rect, &scene));
+    undoStack.push(new AddBoxCommand(rect, &scene, pos));
 }
 
 void QtMainWindow::on_action_Picture_triggered()
@@ -366,9 +367,9 @@ void QtMainWindow::on_action_Textfield_triggered()
     text->setFlag(QGraphicsItem::ItemIsSelectable);
     text->setFlag(QGraphicsItem::ItemIsPanel);
     text->setTextInteractionFlags(Qt::TextInteractionFlag::TextEditorInteraction);
-    QPoint pos(ui.graphicsView->cursor().pos().x(), ui.graphicsView->cursor().pos().y());
+    QPoint pos(ui.graphicsView->cursor().pos());
     qDebug() << pos;
-    undoStack.push(new AddBoxCommand(text, &scene));
+    undoStack.push(new AddBoxCommand(text, &scene, pos));
     scene.SetModified(true);
 }
 

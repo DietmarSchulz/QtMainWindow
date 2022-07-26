@@ -114,8 +114,7 @@ protected:
 class AddBoxCommand : public AddCommand
 {
 public:
-    AddBoxCommand(QGraphicsItem* box, QGraphicsScene* graphicsScene,
-        QUndoCommand* parent = nullptr);
+    AddBoxCommand(QGraphicsItem* box, QGraphicsScene* graphicsScene, QPoint& startPos, QUndoCommand* parent = nullptr);
 };
 
 class AddPictureCommand : public AddCommand
