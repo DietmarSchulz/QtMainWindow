@@ -221,6 +221,9 @@ bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)
             else {
                 setCursor(QCursor(Qt::CrossCursor));
             }
+            if (rubberBand)
+                rubberBand->setGeometry(QRect(ui.graphicsView->mapFromScene(origin.toPoint()),
+                    ui.graphicsView->mapFromScene(mouseEvent->scenePos().toPoint())).normalized());
         }
         break;
         case QEvent::GraphicsSceneHoverMove:
@@ -237,6 +240,22 @@ bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)
         case QEvent::Leave:
         {
             setCursor(QCursor(Qt::ArrowCursor));
+        }
+        break;
+        case QEvent::GraphicsSceneMousePress:
+        {
+            QGraphicsSceneMouseEvent* mouseEvent = dynamic_cast<QGraphicsSceneMouseEvent*>(event);
+            origin = mouseEvent->scenePos();
+            if (!rubberBand)
+                rubberBand = std::make_unique<QRubberBand>(QRubberBand::Rectangle, this);
+            rubberBand->setGeometry(QRect(ui.graphicsView->mapFromScene(origin.toPoint()), QSize()));
+            rubberBand->show();
+        }
+        break;
+        case QEvent::GraphicsSceneMouseRelease:
+        {
+            if (rubberBand)
+                rubberBand->hide();
         }
         break;
         default:

@@ -9,6 +9,7 @@
 #include <qcombobox>
 #include <qt5/QtPrintSupport/qprinter.h>
 #include "OpenCVWrapper.h"
+#include <memory>
 
 class QtMainWindow : public QMainWindow
 {
@@ -49,6 +50,8 @@ private:
     template<typename T>
         requires std::is_base_of_v<QGraphicsItem, T>
     void fillProps(T* sel);
+    std::unique_ptr<QRubberBand> rubberBand;
+    QPointF origin;
 private slots:
     void OpenRecentFile();
     void on_action_New_triggered();
