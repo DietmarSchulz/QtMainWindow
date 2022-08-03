@@ -222,8 +222,8 @@ bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)
                 setCursor(QCursor(Qt::CrossCursor));
             }
             if (rubberBand)
-                rubberBand->setGeometry(QRect(ui.graphicsView->mapFromScene(origin.toPoint()),
-                    ui.graphicsView->mapFromScene(mouseEvent->scenePos().toPoint())).normalized());
+                rubberBand->setGeometry(QRect(ui.graphicsView->mapFromScene(origin.toPoint()) + QPoint(10, 67),
+                    ui.graphicsView->mapFromScene((mouseEvent->scenePos()).toPoint()) + QPoint(10, 67)).normalized());
         }
         break;
         case QEvent::GraphicsSceneHoverMove:
@@ -248,7 +248,7 @@ bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)
             origin = mouseEvent->scenePos();
             if (!rubberBand)
                 rubberBand = std::make_unique<QRubberBand>(QRubberBand::Rectangle, this);
-            rubberBand->setGeometry(QRect(ui.graphicsView->mapFromScene(origin.toPoint()), QSize()));
+            rubberBand->setGeometry(QRect(ui.graphicsView->mapFromScene(origin.toPoint()) + QPoint(10, 67), QSize()));
             rubberBand->show();
         }
         break;
