@@ -403,6 +403,7 @@ void QtMainWindow::on_action_Rect_triggered()
     rect->setPen(outlinePen);
     rect->setFlag(QGraphicsItem::ItemIsMovable);
     rect->setFlag(QGraphicsItem::ItemIsSelectable);
+    scene.SetModified(true);
     undoStack.push(new AddBoxCommand(rect, &scene, pos));
 }
 
