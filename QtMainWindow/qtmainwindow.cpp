@@ -245,11 +245,13 @@ bool QtMainWindow::eventFilter(QObject* watched, QEvent* event)
         case QEvent::GraphicsSceneMousePress:
         {
             QGraphicsSceneMouseEvent* mouseEvent = dynamic_cast<QGraphicsSceneMouseEvent*>(event);
-            origin = mouseEvent->scenePos();
-            if (!rubberBand)
-                rubberBand = std::make_unique<QRubberBand>(QRubberBand::Rectangle, this);
-            rubberBand->setGeometry(QRect(ui.graphicsView->mapFromScene(origin.toPoint()) + QPoint(10, 67), QSize()));
-            rubberBand->show();
+            if (mouseEvent->buttons().testFlag(Qt::MouseButton::LeftButton)) {
+                origin = mouseEvent->scenePos();
+                if (!rubberBand)
+                    rubberBand = std::make_unique<QRubberBand>(QRubberBand::Rectangle, this);
+                rubberBand->setGeometry(QRect(ui.graphicsView->mapFromScene(origin.toPoint()) + QPoint(10, 67), QSize()));
+                rubberBand->show();
+            }
         }
         break;
         case QEvent::GraphicsSceneMouseRelease:
