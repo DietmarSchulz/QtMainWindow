@@ -131,12 +131,25 @@ void MyScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         }
         modified = true;
     }
+    else if (event->button() == Qt::LeftButton) {
+        QWidget* parentWidget = static_cast<QWidget*>(parent());
+        origin = event->scenePos();
+        auto start = pview->mapFromScene(origin.toPoint()) + QPoint(10, 67);
+        if (!rubberBand)
+            rubberBand = std::make_unique<QRubberBand>(QRubberBand::Rectangle, parentWidget);
+        rubberBand->setGeometry(QRect(start, QSize()));
+        if (selectedItems().count() == 0) {
+            rubberBand->show();
+        }
+    }
 
     QGraphicsScene::mousePressEvent(event);
 }
 
 void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+    QPointF mousePos(event->buttonDownScenePos(Qt::LeftButton).x(),
+        event->buttonDownScenePos(Qt::LeftButton).y());
     if (movingItem != nullptr && event->button() == Qt::LeftButton) {
         if (oldPos != movingItem->pos()) {
             auto sel = selectedItems();
@@ -147,7 +160,33 @@ void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         movingItem = nullptr;
         emit message("Items moved");
     }
+    else {
+        if (rubberBand) {
+            if (rubberBand->isVisible()) {
+                auto rect = rubberBand->rect();
+                clearSelection();
+                for (auto& item : items()) {
+                    if (rect.contains(item->scenePos().toPoint())) {
+                        item->hide();
+                    }
+                }
+            }
+            rubberBand->hide();
+        }
+
+    }
     QGraphicsScene::mouseReleaseEvent(event);
+}
+
+void MyScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+    if (rubberBand) {
+        auto start = pview->mapFromScene(origin.toPoint()) + QPoint(10, 67);
+        auto end = pview->mapFromScene(event->scenePos().toPoint()) + QPoint(10, 67);
+        rubberBand->setGeometry(QRect(start,
+            end).normalized());
+    }
+    QGraphicsScene::mouseMoveEvent(event);
 }
 
 void MyScene::write(const QGraphicsRectItem* rectItem, QJsonObject& jObject)

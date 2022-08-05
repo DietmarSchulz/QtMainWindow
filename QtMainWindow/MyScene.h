@@ -2,7 +2,9 @@
 
 #include <QObject>
 #include <QGraphicsScene>
+#include <QGraphicsView>
 #include <qundostack.h>
+#include <QRubberBand>
 #include "MyPicture.h"
 
 class MyScene : public QGraphicsScene
@@ -20,6 +22,7 @@ public:
     void write(QJsonObject& json) const;
     bool isModified();
     void SetModified(bool val);
+    void SetView(QGraphicsView* view) { pview = view; }
     static QList<QGraphicsItem*> fromJson(const QJsonObject& json);
     static QJsonObject toJson(const QList<QGraphicsItem*>& selectedItems);
 signals:
@@ -28,14 +31,18 @@ signals:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
+    QGraphicsView* pview;
     QGraphicsItem* movingItem = nullptr;
     QPointF oldPos;
     std::vector<QPointF> oldPositions;
     QString filePath;
     bool modified;
     QUndoStack& undoStack;
+    std::unique_ptr<QRubberBand> rubberBand;
+    QPointF origin;
 
     static void write(const QGraphicsRectItem* rectItem, QJsonObject& jObject);
     static void write(const QGraphicsTextItem* textItem, QJsonObject& jObject);
