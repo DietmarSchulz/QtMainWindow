@@ -163,11 +163,11 @@ void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     else {
         if (rubberBand) {
             if (rubberBand->isVisible()) {
-                auto rect = rubberBand->rect();
+                auto rect = QRect (pview->mapToScene(rubberBand->rect().topLeft() - QPoint(10, 67)).toPoint(), pview->mapToScene(rubberBand->rect().bottomRight() - QPoint(10, 67)).toPoint());
                 clearSelection();
                 for (auto& item : items()) {
                     if (rect.contains(item->scenePos().toPoint())) {
-                        item->hide();
+                        item->setSelected(true);
                     }
                 }
             }
