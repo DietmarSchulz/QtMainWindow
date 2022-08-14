@@ -181,6 +181,7 @@ void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 void MyScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     if (rubberBand) {
+        auto offset = pview->pos();
         auto start = pview->mapFromScene(origin.toPoint()) + QPoint(10, 67);
         auto end = pview->mapFromScene(event->scenePos().toPoint()) + QPoint(10, 67);
         rubberBand->setGeometry(QRect(start,

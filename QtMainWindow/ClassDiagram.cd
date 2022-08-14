@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MyScene" Collapsed="true">
+    <Position X="5.75" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CAoAEQAAAIHBECAAACAAAABAAAAwAGARAQAAAAAAACA=</HashCode>
+      <FileName>MyScene.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="movingItem" />
+      <Field Name="undoStack" />
+      <Field Name="pview" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MyPicture" Collapsed="true">
+    <Position X="12.5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QCEYFABoCAAQAAORACAAAZABKAQEAACAAUAAgAABAAI=</HashCode>
+      <FileName>MyPicture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QGraphicsItem" Collapsed="true">
+    <Position X="8.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>yJ9uEArUBkF46e2STrCWJPhDrgnVk6IaJ3H+hwfXhDU=</HashCode>
+      <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qgraphicsitem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QGraphicsPixmapItem" Collapsed="true">
+    <Position X="12.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABiAAAAAAACYCAAAAAAABAAAAAsBAAAQgCEAAgAABAA=</HashCode>
+      <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qgraphicsitem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QUndoStack" Collapsed="true">
+    <Position X="2.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gEAMAQAEgAAgAQAABQEAAFkBAQQAAAAKAwAIQAEBAAE=</HashCode>
+      <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qundostack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyGraphicsView">
+    <Position X="2.75" Y="10" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAACAAgAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MyGraphicsView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QGraphicsView" Collapsed="true">
+    <Position X="6.5" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>FBoIACjABkHMKMAQBIhxKORiIyRUJqZgDCCBAAFSBCM=</HashCode>
+      <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qgraphicsview.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MoveCommand" Collapsed="true">
+    <Position X="17.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAEAAIAAAAAAAEEBAAAAAAAAAAAIAAAAAAAAgA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScaleCommand" Collapsed="true">
+    <Position X="17.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAEAAIAAACAAAEAAAAAAAAAQAAAIAAAAAAAAgA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZvalueCommand" Collapsed="true">
+    <Position X="19.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAUAAICAAAAAAEAAAAAAAAAAAAAIAAAAAAACgA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RotateCommand" Collapsed="true">
+    <Position X="22.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAIAAAAAAAEAAAEAAAAAAAAAIAAQAAAEAgA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeleteCommand" Collapsed="true">
+    <Position X="22.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACEAAIAAAEAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AddCommand" Collapsed="true">
+    <Position X="12.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAACEAAABAAACAAEAAAAAAAAAAABAABAAAAAAAAA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AddBoxCommand" Collapsed="true">
+    <Position X="10.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AddPictureCommand" Collapsed="true">
+    <Position X="12.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AddPasteCommand" Collapsed="true">
+    <Position X="15" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModifyBrightnessCommand" Collapsed="true">
+    <Position X="10.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACEAAAACACAAAEAAAAACAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SetBrightnessCommand" Collapsed="true">
+    <Position X="10.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAEAgA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChangeTextCommand" Collapsed="true">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAEAEIAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChangeTextFontCommand" Collapsed="true">
+    <Position X="21" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAEAAIAAAAABAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModifyRGBScaleCommand" Collapsed="true">
+    <Position X="8.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFABACFAAAACAAAAAEAAAAAAAAAAAAAAAAAAQABAAA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SetRGBScaleCommand" Collapsed="true">
+    <Position X="8.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAIAAAAAAAAgA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AddPicturesCommand" Collapsed="true">
+    <Position X="17.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACEAAACCAAAABEIAAAAAAIAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Commands.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenCVWrapper" Collapsed="true">
+    <Position X="19.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAICAAAAAAAAgCAAAAAAAAAAAAAAABACBABAAACAAAA=</HashCode>
+      <FileName>OpenCVWrapper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QtMainWindow" Collapsed="true">
+    <Position X="1" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>lCQSQSMg0EnIFAsZCAQAAJICACQkAoBEQNgAAAKIQSE=</HashCode>
+      <FileName>qtmainwindow.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="clipboard" />
+      <Field Name="lSobel" />
+      <Field Name="ui" />
+      <Field Name="recentFiles" />
+      <Field Name="scene" />
+      <Field Name="undoStack" />
+      <Field Name="undoView" />
+      <Field Name="myZoomComboBox" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="QUndoCommand" Collapsed="true">
+    <Position X="17" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAggEAAAAAAAAAAOAAACAIAAAAAAMIAAAAAAAAgI=</HashCode>
+      <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qundostack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QMainWindow" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoACQgKYCA0hRAgRkKBY4oAAABEAABuBggAgIAMgACA=</HashCode>
+      <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qmainwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QClipboard" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAgAIAAIAAgAAAECQAASAKAEAQgAAAYACAAAgACAQA=</HashCode>
+      <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtGui\qclipboard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::QtMainWindowClass" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>x64\Debug\uic\ui_qtmainwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QAction" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAMEIEQAQAQAQQARnBAGwAiiACAEgMINJQBQggEAADE=</HashCode>
+      <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qaction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QUndoView" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAABEAEAAAAAAAAAAQAAAAAAAIAIAMAAAAAAAAA=</HashCode>
+      <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qundoview.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QComboBox" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>LCpICBKgAjCLAIHdJACVeA1EADERIAaCCQiARKEYcLA=</HashCode>
+      <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qcombobox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

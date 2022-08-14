@@ -63,7 +63,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -117,6 +121,7 @@
     <ClCompile Include="OpenCVWrapper.cpp" />
     <ClCompile Include="qtmainwindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <None Include="ClassDiagram.cd" />
     <None Include="QtMainWindow.ico" />
     <ResourceCompile Include="QtMainWindow.rc" />
     <QtMoc Include="MyGraphicsView.h" />
