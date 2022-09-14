@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="MyScene" Collapsed="true">
-    <Position X="5.75" Y="4" Width="1.75" />
+    <Position X="5.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAoAEQAAAIHBECAAACAAAABAAAAwAGARAQAAAAAAACA=</HashCode>
       <FileName>MyScene.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Field Name="pview" />
       <Field Name="movingItem" />
       <Field Name="undoStack" />
-      <Field Name="pview" />
     </ShowAsAssociation>
   </Class>
   <Class Name="MyPicture" Collapsed="true">
-    <Position X="12.5" Y="4" Width="2" />
+    <Position X="12.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QCEYFABoCAAQAAORACAAAZABKAQEAACAAUAAgAABAAI=</HashCode>
       <FileName>MyPicture.h</FileName>
@@ -27,7 +27,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="QGraphicsPixmapItem" Collapsed="true">
-    <Position X="12.75" Y="2.75" Width="1.5" />
+    <Position X="12.75" Y="2.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>ABiAAAAAAACYCAAAAAAABAAAAAsBAAAQgCEAAgAABAA=</HashCode>
       <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qgraphicsitem.h</FileName>
@@ -48,7 +48,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="QGraphicsView" Collapsed="true">
-    <Position X="6.5" Y="8" Width="1.75" />
+    <Position X="6.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>FBoIACjABkHMKMAQBIhxKORiIyRUJqZgDCCBAAFSBCM=</HashCode>
       <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qgraphicsview.h</FileName>
@@ -104,63 +104,63 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AddPictureCommand" Collapsed="true">
-    <Position X="12.75" Y="6.5" Width="1.5" />
+    <Position X="12.75" Y="6.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>Commands.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AddPasteCommand" Collapsed="true">
-    <Position X="15" Y="6.5" Width="1.5" />
+    <Position X="15" Y="6.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>Commands.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ModifyBrightnessCommand" Collapsed="true">
-    <Position X="10.25" Y="8.25" Width="1.5" />
+    <Position X="10.25" Y="8.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAACEAAAACACAAAEAAAAACAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Commands.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SetBrightnessCommand" Collapsed="true">
-    <Position X="10.25" Y="9.5" Width="1.5" />
+    <Position X="10.25" Y="9.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAEAgA=</HashCode>
       <FileName>Commands.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ChangeTextCommand" Collapsed="true">
-    <Position X="20" Y="0.5" Width="1.5" />
+    <Position X="20" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAEAAEAEIAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Commands.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ChangeTextFontCommand" Collapsed="true">
-    <Position X="21" Y="5.25" Width="1.5" />
+    <Position X="21" Y="5.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAEAAAAEAAIAAAAABAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Commands.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ModifyRGBScaleCommand" Collapsed="true">
-    <Position X="8.25" Y="6" Width="1.5" />
+    <Position X="8.25" Y="6" Width="2" />
     <TypeIdentifier>
       <HashCode>AAFABACFAAAACAAAAAEAAAAAAAAAAAAAAAAAAQABAAA=</HashCode>
       <FileName>Commands.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SetRGBScaleCommand" Collapsed="true">
-    <Position X="8.25" Y="9.75" Width="1.5" />
+    <Position X="8.25" Y="9.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAIAAAAAAAAgA=</HashCode>
       <FileName>Commands.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AddPicturesCommand" Collapsed="true">
-    <Position X="17.5" Y="5.25" Width="1.5" />
+    <Position X="17.5" Y="5.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAACEAAACCAAAABEIAAAAAAIAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>Commands.h</FileName>
@@ -180,14 +180,14 @@
       <FileName>qtmainwindow.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="clipboard" />
-      <Field Name="lSobel" />
       <Field Name="ui" />
-      <Field Name="recentFiles" />
       <Field Name="scene" />
       <Field Name="undoStack" />
       <Field Name="undoView" />
       <Field Name="myZoomComboBox" />
+      <Field Name="clipboard" />
+      <Field Name="recentFiles" />
+      <Field Name="lSobel" />
     </ShowAsAssociation>
   </Class>
   <Class Name="QUndoCommand" Collapsed="true">
@@ -212,7 +212,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Ui::QtMainWindowClass" Collapsed="true">
-    <Position X="9" Y="0.5" Width="1.5" />
+    <Position X="9" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>x64\Debug\uic\ui_qtmainwindow.h</FileName>
