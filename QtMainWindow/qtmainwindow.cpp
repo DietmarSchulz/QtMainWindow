@@ -538,6 +538,11 @@ void QtMainWindow::on_action_HistogramEqualize_triggered()
     }
 }
 
+void QtMainWindow::on_action_Farbe_triggered()
+{
+    QColor newColor = QColorDialog::getColor(Qt::yellow, this, "Neue Objektfarbe");
+}
+
 void QtMainWindow::on_action_Print_triggered()
 {
     QPrinter printer(QPrinter::HighResolution);

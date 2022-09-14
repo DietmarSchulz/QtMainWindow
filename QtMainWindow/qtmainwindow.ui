@@ -131,6 +131,7 @@
      <addaction name="action_AddImage"/>
      <addaction name="action_Sobel"/>
      <addaction name="action_HistogramEqualize"/>
+     <addaction name="action_Farbe"/>
     </widget>
     <addaction name="menuBild"/>
    </widget>
@@ -2065,6 +2066,15 @@
    </property>
    <property name="statusTip">
     <string>Bild wir mit gleichmässigem Histogrramm abgeglichen</string>
+   </property>
+  </action>
+  <action name="action_Farbe">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/ColorDialog.png</normaloff>:/QtMainWindow/images/ColorDialog.png</iconset>
+   </property>
+   <property name="text">
+    <string>Farbe</string>
    </property>
   </action>
  </widget>
