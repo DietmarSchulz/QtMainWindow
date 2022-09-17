@@ -665,4 +665,20 @@ void ChangeTextFontCommand::redo()
     myItem->setFont(QFont(newFontName, 20));
 }
 
+ModifyShapColorCommand::ModifyShapColorCommand(QAbstractGraphicsShapeItem* shapeItem, int argb, QGraphicsScene* graphicsScene, QUndoCommand* parent) : item(shapeItem), myGraphicsScene(graphicsScene), QUndoCommand(parent)
+{
+    oldArgb = shapeItem->brush().color().rgba();
+    newArgb = argb;
+}
 
+void ModifyShapColorCommand::undo()
+{
+    item->setBrush(QBrush(QColor(oldArgb)));
+    myGraphicsScene->update();
+}
+
+void ModifyShapColorCommand::redo()
+{
+    item->setBrush(QBrush(QColor(newArgb)));
+    myGraphicsScene->update();
+}

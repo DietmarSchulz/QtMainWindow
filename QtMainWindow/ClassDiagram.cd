@@ -117,13 +117,6 @@
       <FileName>Commands.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ModifyBrightnessCommand" Collapsed="true">
-    <Position X="10.25" Y="8.25" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAACEAAAACACAAAEAAAAACAAAAAAAAAAAAAAAgAA=</HashCode>
-      <FileName>Commands.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="SetBrightnessCommand" Collapsed="true">
     <Position X="10.25" Y="9.5" Width="2" />
     <TypeIdentifier>
@@ -176,7 +169,7 @@
   <Class Name="QtMainWindow" Collapsed="true">
     <Position X="1" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>lCQSQSMg0EnIFAsZCAQAAJICACQkAoBEQNgAAAKIQSE=</HashCode>
+      <HashCode>lCQSQSMg0EnIFAsZCAQAAJICACQkAoBEQNgAAAKIQWE=</HashCode>
       <FileName>qtmainwindow.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -237,6 +230,13 @@
     <TypeIdentifier>
       <HashCode>LCpICBKgAjCLAIHdJACVeA1EADERIAaCCQiARKEYcLA=</HashCode>
       <FileName>D:\Programming\vcpkg_clone\installed\x64-windows\include\qt5\QtWidgets\qcombobox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModifyBrightnessCommand" Collapsed="true">
+    <Position X="10.25" Y="8.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACEAAAACACAAAEAAAAACAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Commands.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -548,7 +548,7 @@ void QtMainWindow::on_action_Farbe_triggered()
         auto* mRect = static_cast<QGraphicsRectItem*>(item);
         
         QColor newColor = QColorDialog::getColor(mRect->brush().color(), this, "Neue Objektfarbe");
-        mRect->setBrush(QBrush(newColor));
+        undoStack.push(new ModifyShapColorCommand(mRect, newColor.rgba(), &scene));
     }
 }
 

@@ -132,6 +132,20 @@ public:
         QUndoCommand* parent = nullptr);
 };
 
+class ModifyShapColorCommand : public QUndoCommand
+{
+public:
+    enum { Id = 8891 };
+    ModifyShapColorCommand(QAbstractGraphicsShapeItem* shapeItem, int argb, QGraphicsScene* graphicsScene, QUndoCommand* parent = nullptr);
+    void undo() override;
+    void redo() override;
+private:
+    int oldArgb;
+    int newArgb;
+    QGraphicsScene* myGraphicsScene;
+    QAbstractGraphicsShapeItem* item;
+};
+
 class ModifyBrightnessCommand : public QUndoCommand
 {
 public:
