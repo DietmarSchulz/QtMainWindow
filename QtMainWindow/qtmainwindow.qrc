@@ -1,29 +1,30 @@
 <RCC>
-  <qresource prefix="/QtMainWindow">
-    <file>images/ChartFilter.png</file>
-    <file>images/AnalyzeTrace.png</file>
-    <file>images/Print.png</file>
-    <file>images/PrintDialog.png</file>
-    <file>images/PrintPreviewDialog.png</file>
-    <file>images/AddImage.png</file>
-    <file>images/save_as.png</file>
-    <file>images/undo.png</file>
-    <file>images/redo.png</file>
-    <file>images/remove.png</file>
-    <file>images/ok.png</file>
-    <file>images/ico_select_fill.png</file>
-    <file>images/copy.png</file>
-    <file>images/cut.png</file>
-    <file>images/new.png</file>
-    <file>images/open.png</file>
-    <file>images/paste.png</file>
-    <file>images/save.png</file>
-    <file>images/ico_draw_rect.png</file>
-    <file>images/canvas.png</file>
-    <file>images/ico_layer_add.png</file>
-    <file>images/ico_layer_erase.png</file>
-    <file>images/TextElement.png</file>
-    <file>images/ColorDialog.png</file>
-    <file>Models/model.yml</file>
-  </qresource>
+    <qresource prefix="/QtMainWindow">
+        <file>images/ChartFilter.png</file>
+        <file>images/AnalyzeTrace.png</file>
+        <file>images/Print.png</file>
+        <file>images/PrintDialog.png</file>
+        <file>images/PrintPreviewDialog.png</file>
+        <file>images/AddImage.png</file>
+        <file>images/save_as.png</file>
+        <file>images/undo.png</file>
+        <file>images/redo.png</file>
+        <file>images/remove.png</file>
+        <file>images/ok.png</file>
+        <file>images/ico_select_fill.png</file>
+        <file>images/copy.png</file>
+        <file>images/cut.png</file>
+        <file>images/new.png</file>
+        <file>images/open.png</file>
+        <file>images/paste.png</file>
+        <file>images/save.png</file>
+        <file>images/ico_draw_rect.png</file>
+        <file>images/canvas.png</file>
+        <file>images/ico_layer_add.png</file>
+        <file>images/ico_layer_erase.png</file>
+        <file>images/TextElement.png</file>
+        <file>images/ColorDialog.png</file>
+        <file>Models/model.yml</file>
+        <file>images/Scale.png</file>
+    </qresource>
 </RCC>

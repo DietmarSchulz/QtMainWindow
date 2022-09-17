@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1203</width>
+    <width>1204</width>
     <height>934</height>
    </rect>
   </property>
@@ -78,7 +78,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1203</width>
+     <width>1204</width>
      <height>21</height>
     </rect>
    </property>
@@ -131,9 +131,15 @@
      <addaction name="action_AddImage"/>
      <addaction name="action_Sobel"/>
      <addaction name="action_HistogramEqualize"/>
+    </widget>
+    <widget class="QMenu" name="menuForm">
+     <property name="title">
+      <string>Form</string>
+     </property>
      <addaction name="action_Farbe"/>
     </widget>
     <addaction name="menuBild"/>
+    <addaction name="menuForm"/>
    </widget>
    <addaction name="menuDatei"/>
    <addaction name="menuEdit"/>
@@ -213,6 +219,7 @@
    <addaction name="action_AddImage"/>
    <addaction name="action_Sobel"/>
    <addaction name="action_HistogramEqualize"/>
+   <addaction name="action_Farbe"/>
   </widget>
   <widget class="QDockWidget" name="PropertyDoc">
    <property name="minimumSize">
@@ -1984,7 +1991,7 @@
   <action name="action_RGB_scale">
    <property name="icon">
     <iconset resource="qtmainwindow.qrc">
-     <normaloff>:/QtMainWindow/images/ColorDialog.png</normaloff>:/QtMainWindow/images/ColorDialog.png</iconset>
+     <normaloff>:/QtMainWindow/images/Scale.png</normaloff>:/QtMainWindow/images/Scale.png</iconset>
    </property>
    <property name="text">
     <string>Rot/Grün/Blau Sklaierung</string>
@@ -2075,6 +2082,9 @@
    </property>
    <property name="text">
     <string>Farbe</string>
+   </property>
+   <property name="toolTip">
+    <string>Farbe aussuchen</string>
    </property>
   </action>
  </widget>

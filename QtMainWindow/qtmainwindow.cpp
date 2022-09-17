@@ -16,6 +16,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.graphicsView->contextMenu.addAction(ui.action_Rect);
     ui.graphicsView->contextMenu.addAction(ui.action_Picture);
     ui.graphicsView->contextMenu.addAction(ui.action_Textfield);
+    ui.graphicsView->contextMenu.addAction(ui.action_Farbe);
 
     ui.graphicsView->pictureContextMenu.addAction(ui.action_Brightnesss);
     ui.graphicsView->pictureContextMenu.addAction(ui.action_RGB_scale);
@@ -540,7 +541,15 @@ void QtMainWindow::on_action_HistogramEqualize_triggered()
 
 void QtMainWindow::on_action_Farbe_triggered()
 {
-    QColor newColor = QColorDialog::getColor(Qt::yellow, this, "Neue Objektfarbe");
+    if (!checkSelection(1))
+        return;
+    QGraphicsItem* item = scene.selectedItems().first();
+    if (item != nullptr && item->type() == QGraphicsRectItem::Type) {
+        auto* mRect = static_cast<QGraphicsRectItem*>(item);
+        
+        QColor newColor = QColorDialog::getColor(mRect->brush().color(), this, "Neue Objektfarbe");
+        mRect->setBrush(QBrush(newColor));
+    }
 }
 
 void QtMainWindow::on_action_Print_triggered()
