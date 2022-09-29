@@ -547,7 +547,7 @@ void QtMainWindow::on_action_Farbe_triggered()
     if (item != nullptr && item->type() == QGraphicsRectItem::Type) {
         auto* mRect = static_cast<QGraphicsRectItem*>(item);
         
-        QColor newColor = QColorDialog::getColor(mRect->brush().color(), this, "Neue Objektfarbe");
+        QColor newColor = QColorDialog::getColor(mRect->brush().color(), this, "Neue Objektfarbe", QColorDialog::ColorDialogOption::ShowAlphaChannel);
         undoStack.push(new ModifyShapColorCommand(mRect, newColor.rgba(), &scene));
     }
 }
