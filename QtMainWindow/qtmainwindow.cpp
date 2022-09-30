@@ -585,9 +585,9 @@ void QtMainWindow::on_action_Font_triggered()
     if (item != nullptr && item->type() == QGraphicsTextItem::Type) {
         auto* mText = static_cast<QGraphicsTextItem*>(item);
 
-        bool ok;
+        bool ok{false};
         QFont font = QFontDialog::getFont(
-            &ok, mText->font(), this);
+            &ok, mText->font(), this, "Font des Texts");
         undoStack.push(new ChangeTextFontCommand(font.family(), font.pointSize(), mText));
         scene.SetModified(true);
     }
