@@ -588,7 +588,7 @@ void QtMainWindow::on_action_Font_triggered()
         bool ok;
         QFont font = QFontDialog::getFont(
             &ok, mText->font(), this);
-        undoStack.push(new ChangeTextFontCommand(font.family(), mText));
+        undoStack.push(new ChangeTextFontCommand(font.family(), font.pointSize(), mText));
         scene.SetModified(true);
     }
 }
@@ -834,5 +834,5 @@ void QtMainWindow::setSelFont(QString fontName)
     const auto& currFont = myText->font().family();
     if (currFont == fontName)
         return; // avoid event circle!
-    undoStack.push(new ChangeTextFontCommand(fontName, myText));
+    undoStack.push(new ChangeTextFontCommand(fontName, 0, myText));
 }

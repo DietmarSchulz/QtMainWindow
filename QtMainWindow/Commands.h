@@ -188,7 +188,7 @@ private:
 class ChangeTextFontCommand : public QUndoCommand
 {
 public:
-    ChangeTextFontCommand(QString fontNameToSet, QGraphicsTextItem* newItem,
+    ChangeTextFontCommand(QString fontNameToSet, int fontSize, QGraphicsTextItem* newItem,
         QUndoCommand* parent = nullptr);
 
     void undo() override;
@@ -197,7 +197,9 @@ public:
 private:
     QGraphicsTextItem* myItem;
     QString oldFontName;
+    int oldFontSize;
     QString newFontName;
+    int newFontSize;
 };
 
 class ModifyRGBScaleCommand : public QUndoCommand

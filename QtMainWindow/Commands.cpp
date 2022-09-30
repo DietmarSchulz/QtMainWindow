@@ -649,20 +649,22 @@ void AddPicturesCommand::redo()
     myGraphicsScene->update();
 }
 
-ChangeTextFontCommand::ChangeTextFontCommand(QString fontNameToSet, QGraphicsTextItem* newItem, QUndoCommand* parent) : QUndoCommand(parent), myItem(newItem), newFontName(fontNameToSet)
+ChangeTextFontCommand::ChangeTextFontCommand(QString fontNameToSet, int fontSize, QGraphicsTextItem* newItem, QUndoCommand* parent) : QUndoCommand(parent), newFontSize(fontSize), myItem(newItem), newFontName(fontNameToSet)
 {
     oldFontName = myItem->font().family();
+    oldFontSize = myItem->font().pointSize();
     setText("Neuer Font: " + newFontName);
+    newFontSize = (fontSize == 0) ? oldFontSize : fontSize;
 }
 
 void ChangeTextFontCommand::undo()
 {
-    myItem->setFont(QFont(oldFontName, 20));
+    myItem->setFont(QFont(oldFontName, oldFontSize));
 }
 
 void ChangeTextFontCommand::redo()
 {
-    myItem->setFont(QFont(newFontName, 20));
+    myItem->setFont(QFont(newFontName, newFontSize));
 }
 
 ModifyShapColorCommand::ModifyShapColorCommand(QAbstractGraphicsShapeItem* shapeItem, int argb, QGraphicsScene* graphicsScene, QUndoCommand* parent) : item(shapeItem), myGraphicsScene(graphicsScene), QUndoCommand(parent)
