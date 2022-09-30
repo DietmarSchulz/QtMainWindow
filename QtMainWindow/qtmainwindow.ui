@@ -138,8 +138,15 @@
      </property>
      <addaction name="action_Farbe"/>
     </widget>
+    <widget class="QMenu" name="menuText">
+     <property name="title">
+      <string>Text</string>
+     </property>
+     <addaction name="action_Font"/>
+    </widget>
     <addaction name="menuBild"/>
     <addaction name="menuForm"/>
+    <addaction name="menuText"/>
    </widget>
    <addaction name="menuDatei"/>
    <addaction name="menuEdit"/>
@@ -220,6 +227,7 @@
    <addaction name="action_Sobel"/>
    <addaction name="action_HistogramEqualize"/>
    <addaction name="action_Farbe"/>
+   <addaction name="action_Font"/>
   </widget>
   <widget class="QDockWidget" name="PropertyDoc">
    <property name="minimumSize">
@@ -2085,6 +2093,18 @@
    </property>
    <property name="toolTip">
     <string>Farbe aussuchen</string>
+   </property>
+  </action>
+  <action name="action_Font">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/Font.png</normaloff>:/QtMainWindow/images/Font.png</iconset>
+   </property>
+   <property name="text">
+    <string>Font</string>
+   </property>
+   <property name="toolTip">
+    <string>Setze Text Font und Größe</string>
    </property>
   </action>
  </widget>

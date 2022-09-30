@@ -19,11 +19,14 @@ void MyGraphicsView::mouseDoubleClickEvent(QMouseEvent* event)
 void MyGraphicsView::mousePressEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::MouseButton::RightButton) {
-        QGraphicsItem* item = scene()->itemAt(event->pos(), QTransform());
+        QGraphicsItem* item = scene()->itemAt(mapToScene(event->pos()), QTransform());
         if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
             pictureContextMenu.exec(event->globalPos());
         }
         else {
+            if (item != nullptr) {
+                item->setSelected(true);
+            }
             contextMenu.exec(event->globalPos());
         }
     }

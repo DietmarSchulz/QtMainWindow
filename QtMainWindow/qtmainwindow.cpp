@@ -17,6 +17,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.graphicsView->contextMenu.addAction(ui.action_Picture);
     ui.graphicsView->contextMenu.addAction(ui.action_Textfield);
     ui.graphicsView->contextMenu.addAction(ui.action_Farbe);
+    ui.graphicsView->contextMenu.addAction(ui.action_Font);
 
     ui.graphicsView->pictureContextMenu.addAction(ui.action_Brightnesss);
     ui.graphicsView->pictureContextMenu.addAction(ui.action_RGB_scale);
@@ -576,6 +577,22 @@ void QtMainWindow::on_action_Print_Preview_triggered()
     printPreview.exec();
 }
 
+void QtMainWindow::on_action_Font_triggered()
+{
+    if (!checkSelection(1))
+        return;
+    QGraphicsItem* item = scene.selectedItems().first();
+    if (item != nullptr && item->type() == QGraphicsTextItem::Type) {
+        auto* mText = static_cast<QGraphicsTextItem*>(item);
+
+        bool ok;
+        QFont font = QFontDialog::getFont(
+            &ok, mText->font(), this);
+        undoStack.push(new ChangeTextFontCommand(font.family(), mText));
+        scene.SetModified(true);
+    }
+}
+
 void QtMainWindow::print(QPrinter* printer)
 {
     QPainter painter(printer);
@@ -812,7 +829,7 @@ void QtMainWindow::setSelFont(QString fontName)
         return;
     auto* sceneItem = scene.selectedItems().first();
     if (sceneItem->type() != QGraphicsTextItem::Type)
-        return; // Only relevant for pictures
+        return; // Only relevant for texts
     auto* myText = static_cast<QGraphicsTextItem*>(sceneItem);
     const auto& currFont = myText->font().family();
     if (currFont == fontName)

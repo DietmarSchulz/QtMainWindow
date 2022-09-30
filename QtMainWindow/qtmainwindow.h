@@ -79,6 +79,7 @@ private slots:
 
     void on_action_Print_triggered();
     void on_action_Print_Preview_triggered();
+    void on_action_Font_triggered();
 
     void itemMenuAboutToShow();
     void itemMenuAboutToHide();
