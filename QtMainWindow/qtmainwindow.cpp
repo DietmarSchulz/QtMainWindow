@@ -164,6 +164,7 @@ void QtMainWindow::OpenRecentFile()
             std::filesystem::path p = filename.toStdString();
             currdir = QString::fromStdString(p.parent_path().string());
             scene.load(filename);
+            setCurrentFile(filename);
         }
     }
 }
