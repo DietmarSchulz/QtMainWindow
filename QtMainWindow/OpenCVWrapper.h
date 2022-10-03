@@ -5,6 +5,7 @@
 #include <opencv2/xfeatures2d/nonfree.hpp>
 #include <opencv2/ximgproc.hpp>
 #include <qt5/QtGui/qimage.h>
+#include <qfiledialog.h>
 
 class OpenCVWrapper
 {
@@ -75,6 +76,36 @@ public:
     static cv::Mat ColorHistEqualization(cv::Mat image);
 
     cv::Mat Sobel(cv::Mat orgImg);
+
+
+    static std::string saveSubPicture(std::string& pic)
+    {
+        if (pic.empty())
+            return pic; // Nothing in, nothing out
+        /// Read the image
+        cv::Mat src = cv::imread(pic);
+
+        /// Show the image
+        std::string window_image{ "Original" };
+        std::string result_image{ "POI Image" };
+        cv::namedWindow(window_image, cv::WINDOW_NORMAL);
+        cv::imshow(window_image, src);
+        cv::namedWindow(result_image, cv::WINDOW_NORMAL);
+
+        auto roi = cv::selectROI(window_image, src);
+        auto subPicture = src(roi).clone();
+        imshow(result_image, subPicture);
+        std::string saveAsPath = QFileDialog::getSaveFileName(nullptr, "Save as:", QString(), "All picture Files (*.jpg *.png *.tiff)").toStdString();
+        if (!saveAsPath.empty()) {
+            auto success = imwrite(saveAsPath, subPicture);
+            if (!success) {
+                std::cout << "Error writing the file\n";
+            }
+        }
+        cv::waitKey();
+        cv::destroyAllWindows();
+        return saveAsPath;
+    }
 
 private:
     cv::Ptr<cv::ximgproc::StructuredEdgeDetection> pDollar;
