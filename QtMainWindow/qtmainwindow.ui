@@ -131,6 +131,7 @@
      <addaction name="action_AddImage"/>
      <addaction name="action_Sobel"/>
      <addaction name="action_HistogramEqualize"/>
+     <addaction name="action_SubPicture"/>
     </widget>
     <widget class="QMenu" name="menuForm">
      <property name="title">
@@ -226,6 +227,7 @@
    <addaction name="action_AddImage"/>
    <addaction name="action_Sobel"/>
    <addaction name="action_HistogramEqualize"/>
+   <addaction name="action_SubPicture"/>
    <addaction name="action_Farbe"/>
    <addaction name="action_Font"/>
   </widget>
@@ -2105,6 +2107,18 @@
    </property>
    <property name="toolTip">
     <string>Setze Text Font und Größe</string>
+   </property>
+  </action>
+  <action name="action_SubPicture">
+   <property name="icon">
+    <iconset resource="qtmainwindow.qrc">
+     <normaloff>:/QtMainWindow/images/SelectXY.png</normaloff>:/QtMainWindow/images/SelectXY.png</iconset>
+   </property>
+   <property name="text">
+    <string>Bildausschnitt</string>
+   </property>
+   <property name="toolTip">
+    <string>Rechtwinkligen Bildausschnitt speichern</string>
    </property>
   </action>
  </widget>

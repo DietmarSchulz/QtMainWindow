@@ -24,6 +24,7 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.graphicsView->pictureContextMenu.addAction(ui.action_AddImage);
     ui.graphicsView->pictureContextMenu.addAction(ui.action_Sobel);
     ui.graphicsView->pictureContextMenu.addAction(ui.action_HistogramEqualize);
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_SubPicture);
     undoView.setWindowTitle(tr("Kommando Liste"));
     undoView.show();
     undoView.move(0, 0);
@@ -552,6 +553,10 @@ void QtMainWindow::on_action_Farbe_triggered()
         QColor newColor = QColorDialog::getColor(mRect->brush().color(), this, "Neue Objektfarbe", QColorDialog::ColorDialogOption::ShowAlphaChannel);
         undoStack.push(new ModifyShapColorCommand(mRect, newColor.rgba(), &scene));
     }
+}
+
+void QtMainWindow::on_action_SubPicture_triggered()
+{
 }
 
 void QtMainWindow::on_action_Print_triggered()

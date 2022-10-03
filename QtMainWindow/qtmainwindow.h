@@ -76,6 +76,7 @@ private slots:
     void on_action_Sobel_triggered();
     void on_action_HistogramEqualize_triggered();
     void on_action_Farbe_triggered();
+    void on_action_SubPicture_triggered();
 
     void on_action_Print_triggered();
     void on_action_Print_Preview_triggered();

@@ -27,5 +27,6 @@
         <file>Models/model.yml</file>
         <file>images/Scale.png</file>
         <file>images/Font.png</file>
+        <file>images/SelectXY.png</file>
     </qresource>
 </RCC>
