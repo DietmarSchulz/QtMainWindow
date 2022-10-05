@@ -339,7 +339,7 @@ void QtMainWindow::on_action_Save_triggered()
 
 void QtMainWindow::on_action_SaveAs_triggered()
 {
-    QString filename = QFileDialog::getSaveFileName(this, "Hole Bild", currdir, "Json File (*.json)");
+    QString filename = QFileDialog::getSaveFileName(this, "Speichern unter:", currdir, "Json File (*.json)");
     if (filename.isEmpty())
         return;
     std::filesystem::path p = filename.toStdString();
@@ -557,6 +557,25 @@ void QtMainWindow::on_action_Farbe_triggered()
 
 void QtMainWindow::on_action_SubPicture_triggered()
 {
+    if (!checkSelection(1))
+        return;
+    QGraphicsItem* item = scene.selectedItems().first();
+    if (item != nullptr && item->type() == QGraphicsPixmapItem::Type) {
+        auto* mPic = static_cast<MyPicture*>(item);
+        hide();
+        auto partPath = OpenCVWrapper::saveSubPicture(mPic->getCurrPath());
+        if (partPath.empty()) {
+            show();
+            return;
+        }
+        undoStack.push(new AddPictureCommand(partPath, &scene));
+        show();
+    }
+    else {
+        QMessageBox::warning(this, "Applikation",
+            reinterpret_cast<const char*>(u8"Teilbild geht nur auf einem Bild!"),
+            QMessageBox::Discard);
+    }
 }
 
 void QtMainWindow::on_action_Print_triggered()

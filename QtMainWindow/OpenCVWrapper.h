@@ -78,7 +78,7 @@ public:
     cv::Mat Sobel(cv::Mat orgImg);
 
 
-    static std::string saveSubPicture(std::string& pic)
+    static std::string saveSubPicture(std::string&& pic)
     {
         if (pic.empty())
             return pic; // Nothing in, nothing out
@@ -91,11 +91,12 @@ public:
         cv::namedWindow(window_image, cv::WINDOW_NORMAL);
         cv::imshow(window_image, src);
         cv::namedWindow(result_image, cv::WINDOW_NORMAL);
+        cv::moveWindow(result_image, 0, 0);
 
         auto roi = cv::selectROI(window_image, src);
         auto subPicture = src(roi).clone();
         imshow(result_image, subPicture);
-        std::string saveAsPath = QFileDialog::getSaveFileName(nullptr, "Save as:", QString(), "All picture Files (*.jpg *.png *.tiff)").toStdString();
+        std::string saveAsPath = QFileDialog::getSaveFileName(nullptr, "Save as:", QString::fromStdString(pic), "All picture Files (*.jpg *.png *.tiff)").toStdString();
         if (!saveAsPath.empty()) {
             auto success = imwrite(saveAsPath, subPicture);
             if (!success) {
