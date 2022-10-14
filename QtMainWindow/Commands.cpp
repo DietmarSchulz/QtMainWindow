@@ -514,7 +514,7 @@ SetRGBScaleCommand::SetRGBScaleCommand(double gammaRed, double gammaGreen, doubl
     oldGammaRed = myPicture->getGammaRed();
     oldGammaGreen = myPicture->getGammaGreen();
     oldGammaBlue = myPicture->getGammaBlue();
-    setText("RGB setzeb: " + QString::number(newGammaRed + newGammaGreen + newGammaBlue));
+    setText("RGB setzen: " + QString::number(newGammaRed + newGammaGreen + newGammaBlue));
 }
 
 bool SetRGBScaleCommand::mergeWith(const QUndoCommand* command)
