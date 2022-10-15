@@ -93,7 +93,10 @@ public:
         cv::namedWindow(result_image, cv::WINDOW_NORMAL);
         cv::moveWindow(result_image, 0, 0);
 
-        auto roi = cv::selectROI(window_image, src);
+        cv::Rect roi;
+        while (roi.empty()) {
+            roi = cv::selectROI(window_image, src);
+        }
         auto subPicture = src(roi).clone();
         imshow(result_image, subPicture);
         std::string saveAsPath = QFileDialog::getSaveFileName(nullptr, "Save as:", QString::fromStdString(pic), "All picture Files (*.jpg *.png *.tiff)").toStdString();

@@ -565,6 +565,9 @@ void QtMainWindow::on_action_SubPicture_triggered()
         hide();
         auto partPath = OpenCVWrapper::saveSubPicture(mPic->getCurrPath());
         if (partPath.empty()) {
+            QMessageBox::warning(this, "Applikation",
+                reinterpret_cast<const char*>(u8"Teilbild wird nicht gespeichert!"),
+                QMessageBox::Discard);
             show();
             return;
         }
