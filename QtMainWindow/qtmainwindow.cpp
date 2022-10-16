@@ -55,33 +55,9 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.menuEdit->addAction(redoAction);  //Add two actions to edit
     connect(&undoStack, SIGNAL(indexChanged(int)), this, SLOT(undoIndexChanged(int)));
 
-    // Properties
-    connect(ui.ScaleFactor, SIGNAL(valueChanged(double)), this, SLOT(setSelScale(double)));
-    connect(ui.Rotation, SIGNAL(valueChanged(double)), this, SLOT(setSelRotation(double)));
-    connect(ui.Brightness, SIGNAL(valueChanged(double)), this, SLOT(setSelGamma(double)));
-    connect(ui.dial_Red, SIGNAL(valueChanged(int)), this, SLOT(setSelGammaRed(int)));
-    connect(ui.dial_Green, SIGNAL(valueChanged(int)), this, SLOT(setSelGammaGreen(int)));
-    connect(ui.dial_Blue, SIGNAL(valueChanged(int)), this, SLOT(setSelGammaBlue(int)));
-    connect(ui.ZValue, SIGNAL(valueChanged(double)), this, SLOT(setSelZvalue(double)));
-    connect(ui.fontComboBox, SIGNAL(activated(const QString&)), this, SLOT(setSelFont(double)));
-    connect(ui.fontComboBox, SIGNAL(currentIndexChanged(int)), SLOT(fontComboIndexChanged(int)));
+    PicturePropertyConnections();
 
-    // Add values in the combo box for zoom
-    myZoomComboBox.addItem("1.0");
-    myZoomComboBox.addItem("0.5");
-    myZoomComboBox.addItem("1.5");
-    myZoomComboBox.setEditable(true);
-    myZoomComboBox.setStatusTip("Set zoom factor for scene");
-    myZoomComboBox.setToolTip("Zoom factor for scene");
-    myZoomComboBox.setMinimumContentsLength(10);
-    ui.toolBar->addWidget(&myZoomComboBox);
-    // make the connection between the combo box and a slot
-    connect(&myZoomComboBox, SIGNAL(currentIndexChanged(int)),
-        SLOT(zoomComboIndexChanged(int)));
-    connect(&myZoomComboBox, SIGNAL(activated(const QString&)),
-        SLOT(zoomComboStringChanged(const QString&)));
-    connect(ui.graphicsView, &MyGraphicsView::zoomed,
-        this, &QtMainWindow::zoomed);
+    PrepareZooming();
 
     connect(&scene, &MyScene::itemMoved,
         this, &QtMainWindow::itemMoved);
@@ -114,6 +90,40 @@ QtMainWindow::QtMainWindow(QWidget *parent)
 
     // Keyboard events et al.
     scene.installEventFilter(this);
+}
+
+void QtMainWindow::PrepareZooming()
+{
+    // Add values in the combo box for zoom
+    myZoomComboBox.addItem("1.0");
+    myZoomComboBox.addItem("0.5");
+    myZoomComboBox.addItem("1.5");
+    myZoomComboBox.setEditable(true);
+    myZoomComboBox.setStatusTip("Set zoom factor for scene");
+    myZoomComboBox.setToolTip("Zoom factor for scene");
+    myZoomComboBox.setMinimumContentsLength(10);
+    ui.toolBar->addWidget(&myZoomComboBox);
+    // make the connection between the combo box and a slot
+    connect(&myZoomComboBox, SIGNAL(currentIndexChanged(int)),
+        SLOT(zoomComboIndexChanged(int)));
+    connect(&myZoomComboBox, SIGNAL(activated(const QString&)),
+        SLOT(zoomComboStringChanged(const QString&)));
+    connect(ui.graphicsView, &MyGraphicsView::zoomed,
+        this, &QtMainWindow::zoomed);
+}
+
+void QtMainWindow::PicturePropertyConnections()
+{
+    // Properties
+    connect(ui.ScaleFactor, SIGNAL(valueChanged(double)), this, SLOT(setSelScale(double)));
+    connect(ui.Rotation, SIGNAL(valueChanged(double)), this, SLOT(setSelRotation(double)));
+    connect(ui.Brightness, SIGNAL(valueChanged(double)), this, SLOT(setSelGamma(double)));
+    connect(ui.dial_Red, SIGNAL(valueChanged(int)), this, SLOT(setSelGammaRed(int)));
+    connect(ui.dial_Green, SIGNAL(valueChanged(int)), this, SLOT(setSelGammaGreen(int)));
+    connect(ui.dial_Blue, SIGNAL(valueChanged(int)), this, SLOT(setSelGammaBlue(int)));
+    connect(ui.ZValue, SIGNAL(valueChanged(double)), this, SLOT(setSelZvalue(double)));
+    connect(ui.fontComboBox, SIGNAL(activated(const QString&)), this, SLOT(setSelFont(double)));
+    connect(ui.fontComboBox, SIGNAL(currentIndexChanged(int)), SLOT(fontComboIndexChanged(int)));
 }
 
 void QtMainWindow::showMessage(QString msg)
