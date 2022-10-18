@@ -13,66 +13,19 @@ QtMainWindow::QtMainWindow(QWidget *parent)
     ui.setupUi(this);
     ui.graphicsView->setScene(&scene);
     scene.SetView(ui.graphicsView);
-    ui.graphicsView->contextMenu.addAction(ui.action_Rect);
-    ui.graphicsView->contextMenu.addAction(ui.action_Picture);
-    ui.graphicsView->contextMenu.addAction(ui.action_Textfield);
-    ui.graphicsView->contextMenu.addAction(ui.action_Farbe);
-    ui.graphicsView->contextMenu.addAction(ui.action_Font);
+    PrepareGeneralContextMenu();
 
-    ui.graphicsView->pictureContextMenu.addAction(ui.action_Brightnesss);
-    ui.graphicsView->pictureContextMenu.addAction(ui.action_RGB_scale);
-    ui.graphicsView->pictureContextMenu.addAction(ui.action_AddImage);
-    ui.graphicsView->pictureContextMenu.addAction(ui.action_Sobel);
-    ui.graphicsView->pictureContextMenu.addAction(ui.action_HistogramEqualize);
-    ui.graphicsView->pictureContextMenu.addAction(ui.action_SubPicture);
-    undoView.setWindowTitle(tr("Kommando Liste"));
-    undoView.show();
-    undoView.move(0, 0);
-    move(undoView.size().width(), 0);
-    undoView.setAttribute(Qt::WA_QuitOnClose, false);
-    QIcon icon;
-    icon.addFile(QString::fromUtf8(":/QtMainWindow/images/ok.png"), QSize(), QIcon::Normal, QIcon::Off);
-    undoView.setWindowIcon(icon);
-
-    QAction* undoAction = undoStack.createUndoAction(this);
-    QAction* redoAction = undoStack.createRedoAction(this);
-    auto seqs = QList< QKeySequence>{ QKeySequence::Undo, Qt::ALT + Qt::Key_Backspace};
-    undoAction->setShortcuts(seqs); //Ctrl+Z, Alt+Backspace:setShortcuts() function for shortcut keys
-    redoAction->setShortcut(QKeySequence::Redo); //QKeySequence of Ctrl+Y, Shift+Ctrl+Z:Qt defines many built-in shortcut keys for us
-    undoAction->setText(tr("&Zur\303\274ck"));
-    redoAction->setText(tr("&Wiederholen"));
-    undoAction->setToolTip("Mache letzte Aktion weg");
-    redoAction->setToolTip("Mache letzte Aktion wieder hin");
-    QIcon icon11;
-    icon11.addFile(QString::fromUtf8(":/QtMainWindow/images/undo.png"), QSize(), QIcon::Normal, QIcon::Off);
-    undoAction->setIcon(icon11);
-    QIcon icon12;
-    icon12.addFile(QString::fromUtf8(":/QtMainWindow/images/redo.png"), QSize(), QIcon::Normal, QIcon::Off);
-    redoAction->setIcon(icon12);
-    ui.mainToolBar->addAction(undoAction);
-    ui.mainToolBar->addAction(redoAction);
-    ui.menuEdit->addAction(undoAction);
-    ui.menuEdit->addAction(redoAction);  //Add two actions to edit
-    connect(&undoStack, SIGNAL(indexChanged(int)), this, SLOT(undoIndexChanged(int)));
+    PreparePictureContextMenu();
+    PrepareUndoRedo();
 
     PicturePropertyConnections();
 
     PrepareZooming();
 
-    connect(&scene, &MyScene::itemMoved,
-        this, &QtMainWindow::itemMoved);
-    connect(ui.graphicsView, &MyGraphicsView::itemScaled,
-        this, &QtMainWindow::itemScaled);
-    connect(ui.graphicsView, &MyGraphicsView::itemRotated,
-        this, &QtMainWindow::itemRotated);
-    connect(&scene, &MyScene::selectionChanged,
-        this, &QtMainWindow::sceneSelectionChanged);
+    PrepareTopologyChanges();
 
 
-    connect(ui.menuEdit, &QMenu::aboutToShow,
-        this, &QtMainWindow::itemMenuAboutToShow);
-    connect(ui.menuEdit, &QMenu::aboutToHide,
-        this, &QtMainWindow::itemMenuAboutToHide);
+    PrepareUpdateUI();
     
     //Associate signal with slot: when m_scene transmits message signal, MainWindow receives signal and executes showMessage slot function
     connect(&scene, SIGNAL(message(QString)), this, SLOT(showMessage(QString)));
@@ -90,6 +43,78 @@ QtMainWindow::QtMainWindow(QWidget *parent)
 
     // Keyboard events et al.
     scene.installEventFilter(this);
+}
+
+void QtMainWindow::PrepareUpdateUI()
+{
+    connect(ui.menuEdit, &QMenu::aboutToShow,
+        this, &QtMainWindow::itemMenuAboutToShow);
+    connect(ui.menuEdit, &QMenu::aboutToHide,
+        this, &QtMainWindow::itemMenuAboutToHide);
+}
+
+void QtMainWindow::PreparePictureContextMenu()
+{
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_Brightnesss);
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_RGB_scale);
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_AddImage);
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_Sobel);
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_HistogramEqualize);
+    ui.graphicsView->pictureContextMenu.addAction(ui.action_SubPicture);
+}
+
+void QtMainWindow::PrepareGeneralContextMenu()
+{
+    ui.graphicsView->contextMenu.addAction(ui.action_Rect);
+    ui.graphicsView->contextMenu.addAction(ui.action_Picture);
+    ui.graphicsView->contextMenu.addAction(ui.action_Textfield);
+    ui.graphicsView->contextMenu.addAction(ui.action_Farbe);
+    ui.graphicsView->contextMenu.addAction(ui.action_Font);
+}
+
+void QtMainWindow::PrepareUndoRedo()
+{
+    undoView.setWindowTitle(tr("Kommando Liste"));
+    undoView.show();
+    undoView.move(0, 0);
+    move(undoView.size().width(), 0);
+    undoView.setAttribute(Qt::WA_QuitOnClose, false);
+    QIcon icon;
+    icon.addFile(QString::fromUtf8(":/QtMainWindow/images/ok.png"), QSize(), QIcon::Normal, QIcon::Off);
+    undoView.setWindowIcon(icon);
+
+    QAction* undoAction = undoStack.createUndoAction(this);
+    QAction* redoAction = undoStack.createRedoAction(this);
+    auto seqs = QList< QKeySequence>{ QKeySequence::Undo, Qt::ALT + Qt::Key_Backspace };
+    undoAction->setShortcuts(seqs); //Ctrl+Z, Alt+Backspace:setShortcuts() function for shortcut keys
+    redoAction->setShortcut(QKeySequence::Redo); //QKeySequence of Ctrl+Y, Shift+Ctrl+Z:Qt defines many built-in shortcut keys for us
+    undoAction->setText(tr("&Zur\303\274ck"));
+    redoAction->setText(tr("&Wiederholen"));
+    undoAction->setToolTip("Mache letzte Aktion weg");
+    redoAction->setToolTip("Mache letzte Aktion wieder hin");
+    QIcon icon11;
+    icon11.addFile(QString::fromUtf8(":/QtMainWindow/images/undo.png"), QSize(), QIcon::Normal, QIcon::Off);
+    undoAction->setIcon(icon11);
+    QIcon icon12;
+    icon12.addFile(QString::fromUtf8(":/QtMainWindow/images/redo.png"), QSize(), QIcon::Normal, QIcon::Off);
+    redoAction->setIcon(icon12);
+    ui.mainToolBar->addAction(undoAction);
+    ui.mainToolBar->addAction(redoAction);
+    ui.menuEdit->addAction(undoAction);
+    ui.menuEdit->addAction(redoAction);  //Add two actions to edit
+    connect(&undoStack, SIGNAL(indexChanged(int)), this, SLOT(undoIndexChanged(int)));
+}
+
+void QtMainWindow::PrepareTopologyChanges()
+{
+    connect(&scene, &MyScene::itemMoved,
+        this, &QtMainWindow::itemMoved);
+    connect(ui.graphicsView, &MyGraphicsView::itemScaled,
+        this, &QtMainWindow::itemScaled);
+    connect(ui.graphicsView, &MyGraphicsView::itemRotated,
+        this, &QtMainWindow::itemRotated);
+    connect(&scene, &MyScene::selectionChanged,
+        this, &QtMainWindow::sceneSelectionChanged);
 }
 
 void QtMainWindow::PrepareZooming()

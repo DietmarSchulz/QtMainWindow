@@ -17,6 +17,11 @@ class QtMainWindow : public QMainWindow
 
 public:
     QtMainWindow(QWidget *parent = Q_NULLPTR);
+    void PrepareUpdateUI();
+    void PreparePictureContextMenu();
+    void PrepareGeneralContextMenu();
+    void PrepareUndoRedo();
+    void PrepareTopologyChanges();
     void PrepareZooming();
     void PicturePropertyConnections();
     bool eventFilter(QObject* watched, QEvent* event) override;
