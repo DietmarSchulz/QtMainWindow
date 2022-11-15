@@ -43,6 +43,7 @@ private:
     QUndoStack& undoStack;
     std::unique_ptr<QRubberBand> rubberBand;
     QPointF origin;
+    QPoint upperLeft{ 10, 67 };
 
     static void write(const QGraphicsRectItem* rectItem, QJsonObject& jObject);
     static void write(const QGraphicsTextItem* textItem, QJsonObject& jObject);

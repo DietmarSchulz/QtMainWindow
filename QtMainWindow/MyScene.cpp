@@ -163,7 +163,7 @@ void MyScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     else {
         if (rubberBand) {
             if (rubberBand->isVisible()) {
-                auto rect = QRect (pview->mapToScene(rubberBand->rect().topLeft() - QPoint(10, 67)).toPoint(), pview->mapToScene(rubberBand->rect().bottomRight() - QPoint(10, 67)).toPoint());
+                auto rect = QRect (pview->mapToScene(rubberBand->rect().topLeft() - upperLeft).toPoint(), pview->mapToScene(rubberBand->rect().bottomRight() - upperLeft).toPoint());
                 clearSelection();
                 for (auto& item : items()) {
                     if (rect.contains(item->scenePos().toPoint())) {
@@ -182,8 +182,8 @@ void MyScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     if (rubberBand) {
         auto offset = pview->pos();
-        auto start = pview->mapFromScene(origin.toPoint()) + QPoint(10, 67);
-        auto end = pview->mapFromScene(event->scenePos().toPoint()) + QPoint(10, 67);
+        auto start = pview->mapFromScene(origin.toPoint()) + upperLeft;
+        auto end = pview->mapFromScene(event->scenePos().toPoint()) + upperLeft;
         rubberBand->setGeometry(QRect(start,
             end).normalized());
     }
