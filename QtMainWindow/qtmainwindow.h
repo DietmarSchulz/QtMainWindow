@@ -7,7 +7,7 @@
 #include <QUndoStack>
 #include <QUndoView>
 #include <qcombobox>
-#include <qt5/QtPrintSupport/qprinter.h>
+#include <QtPrintSupport/qprinter.h>
 #include "OpenCVWrapper.h"
 #include <memory>
 

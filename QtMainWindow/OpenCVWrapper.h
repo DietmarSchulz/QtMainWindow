@@ -4,7 +4,7 @@
 #include <opencv2/line_descriptor.hpp>
 #include <opencv2/xfeatures2d/nonfree.hpp>
 #include <opencv2/ximgproc.hpp>
-#include <qt5/QtGui/qimage.h>
+#include <QtGui/qimage.h>
 #include <qfiledialog.h>
 
 class OpenCVWrapper

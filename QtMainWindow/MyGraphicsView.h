@@ -1,8 +1,8 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
-#include <qt5/QtWidgets/qgraphicsview.h>
-#include <qt5/QtGui/QWheelEvent>
-#include <qt5/QtWidgets/qmenu.h>
+#include <QtWidgets/qgraphicsview.h>
+#include <QtGui/QWheelEvent>
+#include <QtWidgets/qmenu.h>
 
 #include "MyScene.h"
 

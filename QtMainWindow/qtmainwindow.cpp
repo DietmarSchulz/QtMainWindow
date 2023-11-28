@@ -1,6 +1,6 @@
 #include <filesystem>
-#include <qt5/QtPrintSupport/qprintdialog.h>
-#include <qt5/QtPrintSupport/qprintpreviewdialog.h>
+#include <QtPrintSupport/qprintdialog.h>
+#include <QtPrintSupport/qprintpreviewdialog.h>
 
 #include "qtmainwindow.h"
 #include "stdafx.h"
@@ -542,7 +542,7 @@ void QtMainWindow::on_action_Sobel_triggered()
         cv::Mat orgImg = cv::imread(mPic->getCurrPath());
         hide();
         cv::Mat res = lSobel.Sobel(orgImg);
-        auto sobelPath = QString::fromStdString(mPic->getCurrPath()).replace(QRegExp(R"(\.(\w+))"), R"(_Sobel.\1)");
+        auto sobelPath = QString::fromStdString(mPic->getCurrPath()).replace(QRegularExpression(R"(\.(\w+))"), R"(_Sobel.\1)");
         res.convertTo(res, CV_8UC4, 255.0);
         cv::imwrite(sobelPath.toStdString(), res);
         undoStack.push(new AddPictureCommand(sobelPath.toStdString(), &scene));
@@ -565,7 +565,7 @@ void QtMainWindow::on_action_HistogramEqualize_triggered()
         cv::Mat orgImg = cv::imread(mPic->getCurrPath());
         hide();
         cv::Mat res = OpenCVWrapper::ColorHistEqualization(orgImg);
-        auto histPath = QString::fromStdString(mPic->getCurrPath()).replace(QRegExp(R"(\.(\w+))"), R"(_Hist.\1)");
+        auto histPath = QString::fromStdString(mPic->getCurrPath()).replace(QRegularExpression(R"(\.(\w+))"), R"(_Hist.\1)");
         cv::imwrite(histPath.toStdString(), res);
         undoStack.push(new AddPictureCommand(histPath.toStdString(), &scene));
         show();

@@ -1,4 +1,4 @@
-#include <qt5/QtWidgets/qgraphicsitem.h>
+#include <QtWidgets/qgraphicsitem.h>
 #include "MyGraphicsView.h"
 
 void MyGraphicsView::keyPressEvent(QKeyEvent* event)
@@ -50,7 +50,7 @@ void MyGraphicsView::wheelEvent(QWheelEvent* event)
         if (event->modifiers() & Qt::ShiftModifier)
         {
             // Rotate
-            if (event->delta() > 0) {
+            if (event->angleDelta().y() > 0) {
                 rotateLeft();
             }
             else {
@@ -60,7 +60,7 @@ void MyGraphicsView::wheelEvent(QWheelEvent* event)
         else if (event->modifiers() & Qt::ControlModifier)
         {
             // Zoom
-            if (event->delta() > 0) {
+            if (event->angleDelta().y() > 0) {
                 zoomIn();
             }
             else {
@@ -79,7 +79,7 @@ void MyGraphicsView::wheelEvent(QWheelEvent* event)
         {
             // Rotate
             auto currRot = sceneItem->rotation();
-            if (event->delta() > 0) {
+            if (event->angleDelta().y() > 0) {
                 sceneItem->setRotation(currRot - 10);
             }
             else {
@@ -91,7 +91,7 @@ void MyGraphicsView::wheelEvent(QWheelEvent* event)
         {
             // Zoom
             auto currScale = sceneItem->scale();
-            if (event->delta() > 0) {
+            if (event->angleDelta().y() > 0) {
                 sceneItem->setScale(currScale * 1.2);
             }
             else {
