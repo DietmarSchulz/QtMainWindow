@@ -76,16 +76,6 @@
     <Link>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(VcpkgRoot)\installed\x64-windows\debug\lib\opencv*.lib</AdditionalDependencies>
     </Link>
-    <CustomBuildStep>
-      <Command>
-      </Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <TreatOutputAsContent>
-      </TreatOutputAsContent>
-      <Message>
-      </Message>
-    </CustomBuildStep>
     <PostBuildEvent>
       <Message>Copy Debug Dlls</Message>
       <Command>copyDebDlls.cmd $(VcpkgRoot)</Command>
