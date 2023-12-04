@@ -709,6 +709,8 @@ void QtMainWindow::fontComboIndexChanged(int index)
 void QtMainWindow::textChange()
 {
     auto* focused = scene.focusItem();
+    if (focused == nullptr)
+        return;
     if (focused->type() == QGraphicsTextItem::Type) {
         auto* myText = static_cast<QGraphicsTextItem*>(focused);
         auto cmd = std::make_unique<ChangeTextCommand>(myText);
